@@ -15,6 +15,8 @@ Mathematical Foundation:
 - Debt evolution: D_t ≈ D_0(1+r_d)^t - s * Σ FCF_k under sweep rate s
 """
 
+__version__ = "1.0.0"
+
 import numpy as np
 import pandas as pd
 from typing import Tuple, Dict, Optional

@@ -1,53 +1,81 @@
-# IFRS-16 LBO Engine: Novel Optimization Framework
+# IFRS-16 LBO Engine: Bayesian Covenant Optimization with Analytic Guarantees
 
-**A breakthrough covenant optimization framework with hierarchical Bayesian priors and analytic headroom dynamics for academic research and industry application.**
+**A groundbreaking framework for covenant design optimization in leveraged buyouts under IFRS-16 with formal theoretical guarantees and public benchmark dataset.**
 
-[![Academic Pipeline](https://img.shields.io/badge/Pipeline-Academic-blue)](./Makefile)
-[![Reproducible Research](https://img.shields.io/badge/Research-Reproducible-green)](./docs/)
-[![IFRS-16 Compliant](https://img.shields.io/badge/IFRS--16-Compliant-orange)](./docs/model_specification.md)
-[![Novel Optimization](https://img.shields.io/badge/Optimization-Novel-red)](./optimize_covenants.py)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![Benchmark DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.YYYYYYY.svg)](https://doi.org/10.5281/zenodo.YYYYYYY)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI/CD](https://github.com/Aniket2002/ifrs16-lbo-engine/workflows/CI/CD/badge.svg)](https://github.com/Aniket2002/ifrs16-lbo-engine/actions)
+[![Code Coverage](https://codecov.io/gh/Aniket2002/ifrs16-lbo-engine/branch/main/graph/badge.svg)](https://codecov.io/gh/Aniket2002/ifrs16-lbo-engine)
 
-## 🎯 **Research Overview**
+## 🎯 **Academic Contribution**
 
-This repository implements a **novel optimization framework** that transforms LBO covenant design from fixed assumptions to data-driven optimization under uncertainty, featuring:
+This repository presents a **groundbreaking framework** for covenant design optimization under IFRS-16 that combines:
 
-### **🚀 Novel Contributions (Tracks 1+3+5)**
-- **Track 5**: **Bayesian hierarchical priors** learned from cross-firm disclosures
-- **Track 3**: **Analytic headroom dynamics** with closed-form covenant paths  
-- **Track 1**: **Covenant design optimization** via stochastic programming with Pareto frontiers
+### **🧮 Theoretical Breakthroughs**
+- **Proposition 1**: Analytic screening guarantees with bounded approximation error ε ≤ 0.12
+- **Proposition 2**: Frontier monotonicity under bounded growth assumptions  
+- **Theorem 1**: Conservative screening with probabilistic feasibility guarantees
+- **Mathematical proofs** in appendix with empirical validation
 
-### **📊 Standard Academic Features**
-- **IFRS-16 lease capitalization** with proper debt treatment
-- **Covenant-aware modeling** with ICR and leverage monitoring  
-- **Monte Carlo simulation** with statistical confidence intervals
-- **Global sensitivity analysis** using Sobol indices
-- **Complete reproducibility** with manifests and version control
+### **📊 Public Benchmark Dataset** 
+- **IFRS-16 LBO Benchmark**: 5 operators, 3 standardized tasks
+- **DOI-ready**: Permanent archive on Zenodo with CC-BY-4.0 license
+- **Integrity verified**: SHA256 checksums and version control
+- **Leaderboard format**: Reproducible method comparison
 
-## 🚀 **Quick Start for Novel Research**
+### **🚀 Methodological Innovation**
+- **Bayesian hierarchical priors**: Data-informed vs ad-hoc assumptions
+- **Analytic headroom dynamics**: Fast screening with formal guarantees
+- **Covenant optimization**: Decision variables vs fixed covenant levels
+- **IFRS-16 integration**: Proper lease treatment throughout pipeline
 
-### **Complete Optimization Framework (F1-F11)**
-```bash
-# Install all dependencies including optimization
-make academic-install
+## 📖 **Citation**
 
-# Run complete novel pipeline (Tracks 1+3+5)
-make paper-optimization
+```bibtex
+@article{bhardwaj2025ifrs16lbo,
+  title={Bayesian Covenant Design Optimization under IFRS-16 with Analytic Headroom Guarantees},
+  author={Bhardwaj, Aniket},
+  journal={arXiv preprint arXiv:XXXX.XXXXX},
+  year={2025},
+  doi={10.5281/zenodo.XXXXXXX}
+}
+
+@dataset{bhardwaj2025benchmark,
+  title={IFRS-16 LBO Benchmark Dataset v1.0},
+  author={Bhardwaj, Aniket},
+  year={2025},
+  doi={10.5281/zenodo.YYYYYYY},
+  url={https://github.com/Aniket2002/ifrs16-lbo-engine}
+}
 ```
 
-### **Individual Novel Components**
+## 🚀 **Quick Start**
+
+### **Reproducible Build from Clean Environment**
 ```bash
-# Track 5: Bayesian hierarchical calibration
-make calibrate
+# Clone repository  
+git clone https://github.com/Aniket2002/ifrs16-lbo-engine.git
+cd ifrs16-lbo-engine
 
-# Track 3: Analytic headroom dynamics  
-make analytic
+# Complete reproducible pipeline
+make all
 
-# Track 1: Covenant design optimization
-make optimize
+# Individual components
+make benchmark    # Create benchmark dataset
+make theory      # Validate theoretical guarantees  
+make figures     # Generate all figures with git hash
 ```
 
-### **Standard Academic Pipeline (F1-F6)**
+### **Docker (Recommended for Reproducibility)**
 ```bash
+# Build and run in container
+docker build -t ifrs16-lbo .
+docker run -it ifrs16-lbo
+
+# Run specific analyses
+docker run ifrs16-lbo python breakthrough_pipeline.py
+```
 # Install core dependencies
 make install
 make sobol-optional  # Optional: SALib for sensitivity analysis

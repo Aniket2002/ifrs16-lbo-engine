@@ -12,6 +12,8 @@ Features:
 - Reproducible data preparation pipeline
 """
 
+__version__ = "1.0.0"
+
 import pandas as pd
 import numpy as np
 import json

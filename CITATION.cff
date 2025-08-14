@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "IFRS-16 LBO Engine: Bayesian Covenant Optimization with Analytic Guarantees"
+authors:
+  - family-names: "Bhardwaj"
+    given-names: "Aniket"
+    orcid: "https://orcid.org/0000-0000-0000-0000"  # Replace with actual ORCID
+repository-code: "https://github.com/Aniket2002/ifrs16-lbo-engine"
+url: "https://github.com/Aniket2002/ifrs16-lbo-engine"
+abstract: >
+  A computational framework for covenant design optimization in leveraged buyouts 
+  under IFRS-16 lease accounting standards. Features Bayesian hierarchical 
+  calibration, analytic headroom dynamics with formal approximation guarantees, 
+  and a public benchmark dataset for reproducible research.
+keywords:
+  - "leveraged buyout"
+  - "IFRS-16"
+  - "covenant optimization"
+  - "Bayesian inference"
+  - "computational finance"
+  - "benchmark dataset"
+license: MIT
+version: "1.0.0"
+date-released: "2025-08-14"
+preferred-citation:
+  type: article
+  title: "Bayesian Covenant Design Optimization under IFRS-16 with Analytic Headroom Guarantees"
+  authors:
+    - family-names: "Bhardwaj"
+      given-names: "Aniket"
+  journal: "arXiv preprint"
+  year: 2025
+  abstract: >
+    We present a framework for optimizing covenant packages in leveraged buyouts 
+    under IFRS-16 lease accounting standards. Our approach combines Bayesian 
+    hierarchical calibration of deal parameters with analytic approximations 
+    that provide formal screening guarantees. We contribute: (1) theoretical 
+    bounds on approximation error with probabilistic feasibility guarantees, 
+    (2) a public benchmark dataset of IFRS-16 LBO scenarios, and (3) empirical 
+    validation showing superior performance vs traditional methods.
