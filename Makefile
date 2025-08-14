@@ -119,6 +119,46 @@ figures: analysis
 # Create analysis manifest for full provenance
 manifest: analysis
 	@echo "📋 Creating analysis manifest..."
+	python -c "import git; repo = git.Repo('.'); print(f'Git hash: {repo.head.commit.hexsha[:8]}')" > analysis/manifest.txt
+	echo "Build date: $(shell date -u +%Y-%m-%dT%H:%M:%SZ)" >> analysis/manifest.txt
+	echo "Python version: $(shell python --version)" >> analysis/manifest.txt
+	pip freeze >> analysis/manifest.txt
+	@echo "✅ Manifest created in analysis/"
+
+# arXiv submission preparation
+arxiv: paper-optimization theoretical_config benchmark_creation
+	@echo "📄 Preparing arXiv submission..."
+	mkdir -p arxiv_submission
+	
+	# Generate all figures with git hash stamps
+	python breakthrough_pipeline.py
+	python failure_mode_analysis.py
+	python theoretical_config.py
+	
+	# Copy manuscript files
+	cp paper/main.tex arxiv_submission/
+	cp paper/references.bib arxiv_submission/
+	cp mathematical_appendix.tex arxiv_submission/
+	cp theoretical_assumptions.tex arxiv_submission/
+	
+	# Copy vector figures
+	mkdir -p arxiv_submission/figures
+	cp analysis/figures/*.pdf arxiv_submission/figures/ 2>/dev/null || true
+	
+	# Compile bibliography
+	cd arxiv_submission && pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
+	
+	# Create submission archive
+	cd arxiv_submission && tar -czf ../ifrs16_lbo_arxiv_$(shell git rev-parse --short HEAD).tar.gz *.tex *.bib *.bbl figures/
+	
+	@echo "✅ arXiv submission ready: ifrs16_lbo_arxiv_$(shell git rev-parse --short HEAD).tar.gz"
+	@echo "📝 Categories: q-fin.GN (primary), stat.ME (secondary)"
+
+# Clean arXiv build artifacts
+clean-arxiv:
+	rm -rf arxiv_submission/
+	rm -f ifrs16_lbo_arxiv_*.tar.gz
+	@echo "📋 Creating analysis manifest..."
 	@echo "✅ Manifest includes git hash, seed, N tracking"
 
 # Full academic pipeline with optimization
