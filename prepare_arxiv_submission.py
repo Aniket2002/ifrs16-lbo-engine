@@ -86,6 +86,22 @@ def compile_manuscript(submission_dir: Path):
     """Compile LaTeX manuscript with bibliography"""
     print("📝 Compiling LaTeX manuscript...")
     
+    # Check if pdflatex is available
+    try:
+        subprocess.run(["pdflatex", "--version"], capture_output=True, check=True)
+        latex_available = True
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        latex_available = False
+    
+    if not latex_available:
+        print("   ⚠️  pdflatex not found - skipping compilation")
+        print("   📋 For full arXiv submission, install LaTeX distribution:")
+        print("      Windows: MiKTeX or TeX Live")
+        print("      macOS: MacTeX")
+        print("      Linux: texlive-full")
+        print("   ✓ LaTeX source files prepared for manual compilation")
+        return
+    
     original_dir = os.getcwd()
     
     try:

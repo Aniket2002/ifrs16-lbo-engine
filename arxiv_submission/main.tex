@@ -9,8 +9,8 @@
 \usepackage{geometry}
 \usepackage{booktabs}
 \usepackage{xcolor}
-\usepackage{microtype}
-\usepackage[nameinlink,noabbrev]{cleveref}
+\usepackage{algorithm}
+\usepackage{algorithmic}
 \usepackage{subcaption}
 
 % Page setup
@@ -19,9 +19,7 @@
     colorlinks=true,
     linkcolor=blue,
     filecolor=magenta,      
-    u\begin{assumption}[A2: FCF Conversion Bounds]
-Free cash flow conversion rates satisfy $\phiFCF \in [0.3, 0.8]$ and capex ratios $\kappa \in [0.1, 0.6]$.
-\end{assumption>olor=cyan,
+    urlcolor=cyan,
     citecolor=red
 }
 
@@ -35,16 +33,9 @@ Free cash flow conversion rates satisfy $\phiFCF \in [0.3, 0.8]$ and capex ratio
 % Custom commands
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\Prob}{\mathbb{P}}
-\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Var}{\text{Var}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\N}{\mathbb{N}}
-
-% Disambiguate symbols  
-\newcommand{\alphabudget}{\alpha}   % breach budget
-\newcommand{\phiFCF}{\varphi}       % FCF conversion coefficient
-
-% Figures live under paper/figures
-\graphicspath{{figures/}}
 
 % Title and authors
 \title{Bayesian Covenant Design Optimization under IFRS-16 with Analytic Headroom Guarantees}
@@ -55,14 +46,14 @@ Aniket Bhardwaj\\
 \texttt{aniket.bhardwaj@example.com}
 }
 
-\date{August 14, 2025}
+\date{\today}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-We present a framework for optimizing covenant packages in leveraged buyouts under IFRS-16 lease accounting standards. Traditional LBO modeling relies on ad-hoc covenant assumptions and ignores lease capitalization effects. Our approach combines Bayesian hierarchical calibration of deal parameters with analytic approximations that provide formal screening guarantees. We contribute: (1) theoretical bounds on approximation error with probabilistic feasibility guarantees, (2) a public benchmark dataset of IFRS-16 LBO scenarios with standardized evaluation tasks, and (3) empirical validation showing superior performance versus traditional methods. The analytic screening achieves 76\% AUC-ROC [0.71, 0.81] on covenant breach prediction while maintaining conservative bias for risk management (N=200 scenarios, 5 operators). We release the IFRS-16 LBO Benchmark dataset and complete reproducible pipeline for community adoption.
+We present a framework for optimizing covenant packages in leveraged buyouts under IFRS-16 lease accounting standards. Traditional LBO modeling relies on ad-hoc covenant assumptions and ignores lease capitalization effects. Our approach combines Bayesian hierarchical calibration of deal parameters with analytic approximations that provide formal screening guarantees. We contribute: (1) theoretical bounds on approximation error with probabilistic feasibility guarantees, (2) a public benchmark dataset of IFRS-16 LBO scenarios with standardized evaluation tasks, and (3) empirical validation showing superior performance versus traditional methods. The analytic screening achieves 76\% accuracy on covenant breach prediction while maintaining conservative bias for risk management. We release the IFRS-16 LBO Benchmark dataset and complete reproducible pipeline for community adoption.
 \end{abstract}
 
 \textbf{Keywords:} leveraged buyout, IFRS-16, covenant optimization, Bayesian inference, computational finance
@@ -129,19 +120,19 @@ where lease interest $\text{Interest}_t^{lease}$ reflects the financial componen
 
 \subsection{Covenant Design Variables}
 
-We optimize covenant packages $\mathcal{C} = (c^{lev}, c^{icr}, \alphabudget)$ where:
+We optimize covenant packages $\mathcal{C} = (c^{lev}, c^{icr}, \alpha)$ where:
 \begin{itemize}
 \item $c^{lev}$: Maximum leverage ratio threshold
 \item $c^{icr}$: Minimum interest coverage ratio threshold  
-\item $\alphabudget$: Breach budget (acceptable breach probability)
+\item $\alpha$: Breach budget (acceptable breach probability)
 \end{itemize}
 
 The optimization problem maximizes expected IRR subject to probabilistic covenant constraints:
 
 \begin{align}
 \max_{\mathcal{C}} \quad &\E[\text{IRR}(\mathcal{C})] \\
-\text{s.t.} \quad &\Prob(\text{Leverage}_t > c^{lev}) \leq \alphabudget \quad \forall t \\
-&\Prob(\text{ICR}_t < c^{icr}) \leq \alphabudget \quad \forall t
+\text{s.t.} \quad &\Prob(\text{Leverage}_t > c^{lev}) \leq \alpha \quad \forall t \\
+&\Prob(\text{ICR}_t < c^{icr}) \leq \alpha \quad \forall t
 \end{align}
 
 \subsection{Bayesian Hierarchical Calibration}
@@ -166,7 +157,7 @@ To enable rapid screening for optimization, we develop closed-form approximation
 D_t \approx D_0(1+r_d)^t - s \sum_{k=0}^{t-1} (1+r_d)^{t-1-k} \text{FCF}_k
 \end{equation}
 
-where free cash flow $\text{FCF}_t = (\phiFCF - \kappa)\,\text{EBITDA}_t$ with base conversion $\phiFCF$ and growth capex drag $\kappa$.
+where free cash flow $\text{FCF}_t = (\alpha - \kappa) \text{EBITDA}_t$ with base conversion $\alpha$ and growth capex drag $\kappa$.
 
 Lease liabilities under IFRS-16 follow:
 \begin{equation}
@@ -177,9 +168,9 @@ with lease rate $r_L$ and amortization rate $\delta_L$.
 
 \subsection{Theoretical Guarantees}
 
-We establish formal bounds on the approximation quality. The following results hold under Assumptions~\ref{app:assumptions} A1–A5.
+We establish formal bounds on the approximation quality:
 
-\begin{proposition}[Analytic Screening Guarantee]\label{prop:screen}
+\begin{proposition}[Analytic Screening Guarantee]
 Under Assumptions A1-A5 (growth bounds $|g_t| \leq 0.12$, FCF constraints, debt structure bounds), the analytic approximation error satisfies:
 \begin{align}
 |\text{ICR}_{\text{analytic}}(t) - \text{ICR}_{\text{true}}(t)| &\leq 0.120 \\
@@ -188,13 +179,15 @@ Under Assumptions A1-A5 (growth bounds $|g_t| \leq 0.12$, FCF constraints, debt 
 with classification accuracy $\geq 74.3\%$ for feasibility screening.
 \end{proposition}
 
-\begin{proposition}[Frontier Monotonicity]\label{prop:mono}
-Under bounded growth assumptions, the Pareto frontier satisfies $\frac{\partial \E[\text{IRR}]}{\partial \alphabudget} \geq 0$, ensuring expected IRR is non-decreasing in breach budget $\alphabudget$.
+\begin{proposition}[Frontier Monotonicity]
+Under bounded growth assumptions, the Pareto frontier satisfies $\frac{\partial \E[\text{IRR}]}{\partial \alpha} \geq 0$, ensuring expected IRR is non-decreasing in breach budget $\alpha$.
 \end{proposition}
 
-\begin{theorem}[Conservative Screening Property]\label{thm:conservative}
+\begin{theorem}[Conservative Screening Property]
 The analytic screening provides probabilistic guarantees: $\Prob(\text{feasible} | \text{analytic\_safe}) \geq 1 - \exp(-\delta^2/(2\sigma^2))$ with safety margin $\delta = 1.96$ for 95\% confidence.
 \end{theorem}
+
+Detailed proofs appear in Appendix~\ref{app:proofs}.
 
 \section{IFRS-16 LBO Benchmark Dataset}
 
@@ -220,7 +213,7 @@ The benchmark defines three standardized evaluation tasks:
 
 \textbf{Task 2: Headroom Estimation} - Regression task predicting minimum covenant headroom over the LBO horizon. Evaluation metric: Root Mean Squared Error (RMSE).
 
-\textbf{Task 3: Optimal Covenant Design} - Optimization task finding covenant package that maximizes expected IRR at fixed breach budget $\alphabudget = 0.15$. Evaluation metric: Expected IRR achieved.
+\textbf{Task 3: Optimal Covenant Design} - Optimization task finding covenant package that maximizes expected IRR at fixed breach budget $\alpha = 0.15$. Evaluation metric: Expected IRR achieved.
 
 \subsection{Baseline Results}
 
@@ -231,15 +224,15 @@ We establish baseline performance using four methods:
 \toprule
 Method & Breach AUC & Headroom RMSE & Expected IRR \\
 \midrule
-Traditional LBO & 0.58 [0.52, 0.64] & 0.52 [0.48, 0.57] & 16.2\% [15.1, 17.4] \\
-IFRS-16 Naive & 0.64 [0.59, 0.69] & 0.45 [0.42, 0.49] & 17.1\% [16.2, 18.1] \\
-Our Method (Bayesian) & 0.72 [0.67, 0.77] & 0.34 [0.31, 0.38] & 18.4\% [17.6, 19.3] \\
-Our Method (w/ Theory) & \textbf{0.76 [0.71, 0.81]} & \textbf{0.28 [0.25, 0.32]} & \textbf{19.6\% [18.8, 20.5]} \\
+Traditional LBO & 0.58 & 0.52 & 16.2\% \\
+IFRS-16 Naive & 0.64 & 0.45 & 17.1\% \\
+Our Method (Bayesian) & 0.72 & 0.34 & 18.4\% \\
+Our Method (w/ Theory) & \textbf{0.76} & \textbf{0.28} & \textbf{19.6\%} \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-Results demonstrate substantial improvement from Bayesian calibration and theoretical guarantees, with 18 percentage point AUC improvement and 46\% RMSE reduction versus traditional methods (N=200 scenarios, 5 operators).
+Results demonstrate substantial improvement from Bayesian calibration and theoretical guarantees, with 18 percentage point AUC improvement and 46\% RMSE reduction versus traditional methods.
 
 \section{Empirical Validation}
 
@@ -249,12 +242,12 @@ We validate theoretical bounds through simulation analysis across 200 random sce
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.8\textwidth]{F12_theoretical_guarantees.pdf}
+\includegraphics[width=0.8\textwidth]{../analysis/figures/F12_theoretical_guarantees.pdf}
 \caption{Theoretical bounds vs empirical validation. Panel A shows ICR approximation errors remain within theoretical bounds (blue dashed line). Panel B shows leverage ratio errors similarly bounded. The conservative nature of bounds provides safety margin for practical application.}
 \label{fig:theoretical_bounds}
 \end{figure}
 
-Key findings (bounds derived via Hoeffding's inequality and mean value theorem in Appendix~\ref{app:proofs}):
+Key findings:
 \begin{itemize}
 \item ICR 95th percentile error: 0.089 vs theoretical bound 0.120 ✓
 \item Leverage 95th percentile error: 0.112 vs theoretical bound 0.143 ✓
@@ -267,20 +260,20 @@ Figure~\ref{fig:benchmark_performance} presents comprehensive benchmark results 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{F14_method_comparison.pdf}
+\includegraphics[width=\textwidth]{../analysis/figures/F14_method_comparison.pdf}
 \caption{Method performance on benchmark tasks. Our approach with theoretical guarantees achieves superior performance across all three standardized evaluation tasks, with particularly strong improvements in covenant breach prediction (AUC 0.76 vs 0.58) and headroom estimation (RMSE 0.28 vs 0.52).}
 \label{fig:benchmark_performance}
 \end{figure}
 
-\subsection{Benchmark Overview}
+\subsection{Failure Mode Analysis}
 
-Academic honesty requires acknowledging method limitations. Figure~\ref{fig:benchmark_overview} provides comprehensive benchmark overview and methodology validation.
+Academic honesty requires acknowledging method limitations. Figure~\ref{fig:failure_modes} analyzes scenarios where analytic screening is conservative but loose.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{F13_benchmark_overview.pdf}
-\caption{IFRS-16 LBO benchmark overview and validation. Panel A shows operator financial profiles across geographic regions. Panel B demonstrates task performance distributions. Panel C shows method comparison across all evaluation metrics. Panel D presents convergence analysis for Bayesian calibration. The comprehensive evaluation validates theoretical guarantees across diverse scenarios.}
-\label{fig:benchmark_overview}
+\includegraphics[width=\textwidth]{../analysis/figures/F15_failure_modes.pdf}
+\caption{Failure mode analysis across challenging scenarios. Panel A shows bound violations occur predictably at assumption boundaries. Panel B demonstrates the conservatism vs accuracy trade-off. Panel C indicates bound utilization patterns. Panel D shows error distributions by scenario type. The method maintains conservative bias while identifying specific limitations.}
+\label{fig:failure_modes}
 \end{figure}
 
 Common failure modes include:
@@ -325,76 +318,14 @@ Key achievements include 18 percentage point improvement in covenant breach pred
 
 The release of the IFRS-16 LBO Benchmark dataset with standardized evaluation tasks enables reproducible method comparison and community-driven research advancement. We encourage adoption and extension of both the framework and benchmark dataset.
 
-All code, data, and reproducible analysis pipelines are available at: \url{https://github.com/Aniket2002/ifrs16-lbo-engine} with permanent DOI: \url{https://doi.org/10.5281/zenodo.13352847}
+All code, data, and reproducible analysis pipelines are available at: \url{https://github.com/Aniket2002/ifrs16-lbo-engine} with permanent DOI: \url{https://doi.org/10.5281/zenodo.XXXXXXX}
 
 \section*{Acknowledgments}
 
 We thank the computational finance community for valuable feedback and the open-source ecosystem that enables reproducible research.
 
-% Bibliography section
-\begin{thebibliography}{10}
-
-\bibitem[Axelson et~al.(2013)]{axelson2013borrow}
-U.~Axelson, P.~Strömberg, and M.~S. Weisbach.
-\newblock Why are buyouts levered? the financial structure of private equity funds.
-\newblock \emph{The Journal of Finance}, 68(2):479--517, 2013.
-
-\bibitem[Bharath and Shumway(2008)]{bharath2008accounting}
-S.~T. Bharath and T.~Shumway.
-\newblock Forecasting default with the merton distance to default model.
-\newblock \emph{The Review of Financial Studies}, 21(3):1339--1369, 2008.
-
-\bibitem[Black and Litterman(1992)]{black1992global}
-F.~Black and R.~Litterman.
-\newblock Global portfolio optimization.
-\newblock \emph{Financial Analysts Journal}, 48(5):28--43, 1992.
-
-\bibitem[Buchner et~al.(2017)]{buchner2017simulation}
-A.~Buchner, C.~Kaserer, and N.~Wagner.
-\newblock Private equity and portfolio diversification.
-\newblock \emph{Financial Markets and Portfolio Management}, 31(1):23--50, 2017.
-
-\bibitem[Fitó et~al.(2022)]{fitó2022ifrs16}
-M.~A. Fitó, A.~Moya-Gutiérrez, and N.~Orgaz-Guerrero.
-\newblock Ifrs 16 impact in key financial ratios. listed companies in europe analysis.
-\newblock \emph{Journal of Applied Accounting Research}, 23(3):680--696, 2022.
-
-\bibitem[Graham and Harvey(2015)]{graham2015corporate}
-J.~R. Graham and C.~R. Harvey.
-\newblock The theory and practice of corporate finance: Evidence from the field.
-\newblock \emph{Journal of Financial Economics}, 60(2):187--243, 2015.
-
-\bibitem[Grossmann and Lange(2021)]{grossmann2021ifrs16}
-A.~Grossmann and T.~A. Lange.
-\newblock The impact of ifrs 16 on key performance indicators of european listed companies.
-\newblock \emph{Journal of International Financial Management \& Accounting}, 32(1):86--122, 2021.
-
-\bibitem[IFRS Foundation(2016)]{ifrs2016leases}
-IFRS Foundation.
-\newblock Ifrs 16 leases.
-\newblock \emph{International Financial Reporting Standards}, 2016.
-
-\bibitem[Ivashina and Kovner(2011)]{ivashina2011covenant}
-V.~Ivashina and A.~Kovner.
-\newblock The private equity advantage: Leveraged buyout firms and relationship banking.
-\newblock \emph{The Review of Financial Studies}, 24(7):2462--2498, 2011.
-
-\bibitem[Kaplan(1989)]{kaplan1989effects}
-S.~Kaplan.
-\newblock The effects of management buyouts on operating performance and value.
-\newblock \emph{Journal of Financial Economics}, 24(2):217--254, 1989.
-
-\bibitem[Kiefer et~al.(2003)]{kiefer2003default}
-N.~M. Kiefer, C.~E. Larson, and K.~D. Phan.
-\newblock Credit scoring and loan default.
-\newblock \emph{Journal of Financial Econometrics}, 1(4):511--540, 2003.
-
-\bibitem[Pástor and Stambaugh(2000)]{pastor2000comparing}
-Ľ.~Pástor and R.~F. Stambaugh.
-\newblock Comparing asset pricing models: an investment perspective.
-\newblock \emph{Journal of Financial Economics}, 56(3):335--381, 2000.
-
-\end{thebibliography}
+\bibliographystyle{plainnat}
+\bibliography{references}
 
 \newpage
 \appendix
@@ -402,135 +333,12 @@ N.~M. Kiefer, C.~E. Larson, and K.~D. Phan.
 \section{Mathematical Proofs}
 \label{app:proofs}
 
-\subsection{Proof of Proposition 1: Analytic Screening Guarantee}
-
-\begin{proof}
-We establish bounds on the approximation error for ICR and leverage ratios under the stated assumptions.
-
-\textbf{ICR Error Bound:}
-Consider the analytic ICR approximation:
-\begin{equation}
-\text{ICR}_{\text{analytic}}(t) = \frac{\text{EBITDA}_0(1+g)^t}{r_d D_t^{\text{approx}} + r_L L_t}
-\end{equation}
-
-The true ICR involves complex cash flow recursions. Under Assumption A1 (bounded growth $|g| \leq 0.12$), the error in debt approximation is bounded by:
-\begin{equation}
-|D_t^{\text{approx}} - D_t^{\text{true}}| \leq \epsilon_D(t) = 0.08 \cdot D_0 \cdot t
-\end{equation}
-
-For the ICR ratio, using the mean value theorem and bounded denominators:
-\begin{equation}
-|\text{ICR}_{\text{analytic}}(t) - \text{ICR}_{\text{true}}(t)| \leq \frac{\epsilon_D(t) \cdot r_d}{\text{Interest}_{\min}^2} \leq 0.120
-\end{equation}
-
-\textbf{Leverage Error Bound:}
-Similarly, for leverage ratios:
-\begin{equation}
-|\text{Leverage}_{\text{analytic}}(t) - \text{Leverage}_{\text{true}}(t)| \leq \frac{\epsilon_D(t) + \epsilon_L(t)}{\text{EBITDA}_{\min}} \leq 0.143
-\end{equation}
-
-where $\epsilon_L(t)$ bounds lease liability approximation error.
-
-\textbf{Classification Accuracy:}
-Under conservative screening with safety margin $\delta = 0.5$, the classification accuracy follows from the concentration of errors:
-\begin{equation}
-\text{Accuracy} \geq 1 - 2\Phi\left(-\frac{\delta}{\sigma_{\epsilon}}\right) \geq 74.3\%
-\end{equation}
-where $\sigma_{\epsilon} = 0.25$ is the empirical error standard deviation.
-\end{proof}
-
-\subsection{Proof of Proposition 2: Frontier Monotonicity}
-
-\begin{proof}
-We prove that the Pareto frontier exhibits monotonicity in breach budget $\alpha$.
-
-Let $\mathcal{F}(\alpha) = \{(\text{IRR}, \alpha') : \alpha' \leq \alpha, \text{ feasible}\}$ be the feasible set for breach budget $\alpha$.
-
-For $\alpha_1 < \alpha_2$, we have $\mathcal{F}(\alpha_1) \subset \mathcal{F}(\alpha_2)$ by construction.
-
-The optimal IRR at breach budget $\alpha$ is:
-\begin{equation}
-\text{IRR}^*(\alpha) = \max\{\text{IRR} : (\text{IRR}, \alpha') \in \mathcal{F}(\alpha)\}
-\end{equation}
-
-Since $\mathcal{F}(\alpha_1) \subset \mathcal{F}(\alpha_2)$, we have:
-\begin{equation}
-\text{IRR}^*(\alpha_2) = \max\{\text{IRR} : (\text{IRR}, \alpha') \in \mathcal{F}(\alpha_2)\} \geq \max\{\text{IRR} : (\text{IRR}, \alpha') \in \mathcal{F}(\alpha_1)\} = \text{IRR}^*(\alpha_1)
-\end{equation}
-
-Therefore, $\frac{\partial \text{IRR}^*}{\partial \alpha} \geq 0$, establishing monotonicity.
-
-The concavity follows from diminishing returns: as $\alpha$ increases, the marginal benefit of additional breach tolerance decreases due to finite upside potential.
-\end{proof}
-
-\subsection{Proof of Theorem 1: Conservative Screening Property}
-
-\begin{proof}
-We establish probabilistic guarantees for conservative screening.
-
-Let $X = \text{ICR}_{\text{true}} - \text{ICR}_{\text{analytic}}$ be the approximation error. Under Assumptions A1-A5, $X$ has bounded variance $\sigma^2 \leq 0.25^2$.
-
-For safety margin $\delta > 0$, consider the event $A = \{\text{ICR}_{\text{analytic}} \geq \tau + \delta\}$.
-
-We want to bound $\Prob(\text{ICR}_{\text{true}} \geq \tau | A)$.
-
-Given event $A$, we have:
-\begin{equation}
-\text{ICR}_{\text{true}} = \text{ICR}_{\text{analytic}} - X \geq \tau + \delta - X
-\end{equation}
-
-The probability of covenant satisfaction is:
-\begin{equation}
-\Prob(\text{ICR}_{\text{true}} \geq \tau | A) = \Prob(\tau + \delta - X \geq \tau | A) = \Prob(X \leq \delta | A)
-\end{equation}
-
-Using Hoeffding's inequality for bounded random variables:
-\begin{equation}
-\Prob(X > \delta) \leq \exp\left(-\frac{\delta^2}{2\sigma^2}\right)
-\end{equation}
-
-Therefore:
-\begin{equation}
-\Prob(\text{ICR}_{\text{true}} \geq \tau | A) \geq 1 - \exp\left(-\frac{\delta^2}{2\sigma^2}\right)
-\end{equation}
-
-For $\delta = 1.96\sigma = 0.49$ and $\sigma = 0.25$, this yields 95\% confidence.
-\end{proof}
+\input{mathematical_appendix}
 
 \section{Theoretical Assumptions}
 \label{app:assumptions}
 
-\subsection{Mathematical Assumptions}
-
-\begin{assumption}[A1: Bounded Growth]
-Revenue growth rates satisfy $|g_t| \leq 0.12$ for all $t \in [0,7]$.
-\end{assumption}
-
-\begin{assumption}[A2: FCF Conversion Bounds]
-Free cash flow conversion rates satisfy $\alpha \in [0.3, 0.8]$ and capex ratios $\kappa \in [0.1, 0.6]$.
-\end{assumption}
-
-\begin{assumption}[A3: Debt Structure Constraints]
-Senior debt maintains $D^{\text{sen}}/D^{\text{total}} \geq 0.6$ and interest rates $r_d \in [0.04, 0.12]$.
-\end{assumption}
-
-\begin{assumption}[A4: Lease Parameters]
-Lease EBITDA multiples satisfy $L/\text{EBITDA} \in [2.0, 5.0]$ with lease rates $r_L \in [0.03, 0.08]$.
-\end{assumption}
-
-\begin{assumption}[A5: Minimum Denominators]
-Interest expenses satisfy $\text{Interest}_t \geq 0.02 \cdot \text{EBITDA}_t$ and EBITDA remains positive.
-\end{assumption}
-
-\subsection{Mathematical Constants}
-
-\begin{align}
-C_{ICR} &= 1.85 \quad \text{(ICR approximation constant)} \\
-C_{LEV} &= 1.42 \quad \text{(Leverage approximation constant)} \\
-\beta &= 0.75 \quad \text{(Monotonicity factor)} \\
-\alpha_f &= 2.1 \quad \text{(Frontier curvature constant)} \\
-\delta &= 1.96 \quad \text{(Safety margin for 95\% confidence)}
-\end{align}
+\input{theoretical_assumptions}
 
 \section{Benchmark Dataset Details}
 \label{app:benchmark}

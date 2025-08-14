@@ -19,9 +19,7 @@
     colorlinks=true,
     linkcolor=blue,
     filecolor=magenta,      
-    u\begin{assumption}[A2: FCF Conversion Bounds]
-Free cash flow conversion rates satisfy $\phiFCF \in [0.3, 0.8]$ and capex ratios $\kappa \in [0.1, 0.6]$.
-\end{assumption>olor=cyan,
+    urlcolor=cyan,
     citecolor=red
 }
 
@@ -254,7 +252,7 @@ We validate theoretical bounds through simulation analysis across 200 random sce
 \label{fig:theoretical_bounds}
 \end{figure}
 
-Key findings (bounds derived via Hoeffding's inequality and mean value theorem in Appendix~\ref{app:proofs}):
+Key findings:
 \begin{itemize}
 \item ICR 95th percentile error: 0.089 vs theoretical bound 0.120 ✓
 \item Leverage 95th percentile error: 0.112 vs theoretical bound 0.143 ✓
@@ -332,6 +330,7 @@ All code, data, and reproducible analysis pipelines are available at: \url{https
 We thank the computational finance community for valuable feedback and the open-source ecosystem that enables reproducible research.
 
 % Bibliography section
+\bibliographystyle{plainnat}
 \begin{thebibliography}{10}
 
 \bibitem[Axelson et~al.(2013)]{axelson2013borrow}
@@ -507,7 +506,7 @@ Revenue growth rates satisfy $|g_t| \leq 0.12$ for all $t \in [0,7]$.
 \end{assumption}
 
 \begin{assumption}[A2: FCF Conversion Bounds]
-Free cash flow conversion rates satisfy $\alpha \in [0.3, 0.8]$ and capex ratios $\kappa \in [0.1, 0.6]$.
+Free cash flow conversion rates satisfy $\phiFCF \in [0.3, 0.8]$ and capex ratios $\kappa \in [0.1, 0.6]$.
 \end{assumption}
 
 \begin{assumption}[A3: Debt Structure Constraints]
