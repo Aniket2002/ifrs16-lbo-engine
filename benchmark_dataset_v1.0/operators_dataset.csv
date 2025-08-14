@@ -1,0 +1,6 @@
+name,sector,region,revenue_2019,ebitda_2019,capex_2019,revenue_growth_historical,projected_recovery_rate,lease_liability_2020,lease_ebitda_multiple,avg_lease_rate,lease_maturity_profile,senior_debt_2019,total_debt_2019,interest_coverage_2019,trading_multiple_2019,credit_rating,covenant_breach_2020_2021,actual_recovery_timeline
+HotelCorp_A,Hotels,US,4200.0,1150.0,420.0,0.045,0.85,3680.0,3.2,0.048,"[0.12, 0.15, 0.18, 0.16, 0.14, 0.1, 0.08, 0.04, 0.02, 0.01]",2800.0,3200.0,4.1,11.5,BB+,True,18
+HotelCorp_B,Hotels,Europe,2800.0,720.0,280.0,0.032,0.78,2300.0,3.2,0.045,"[0.1, 0.14, 0.16, 0.18, 0.15, 0.12, 0.08, 0.04, 0.02, 0.01]",1800.0,2100.0,3.8,10.2,BB,True,24
+HotelCorp_C,Hotels,APAC,1650.0,445.0,165.0,0.067,0.92,1425.0,3.2,0.042,"[0.08, 0.12, 0.15, 0.17, 0.16, 0.14, 0.1, 0.05, 0.02, 0.01]",1100.0,1280.0,4.5,9.8,BBB-,False,12
+HotelCorp_D,Hotels,US,6800.0,1900.0,680.0,0.038,0.88,6080.0,3.2,0.046,"[0.14, 0.16, 0.18, 0.16, 0.13, 0.1, 0.07, 0.04, 0.01, 0.01]",4500.0,5200.0,3.9,12.1,BB+,True,15
+HotelCorp_E,Hotels,Europe,3400.0,950.0,340.0,0.041,0.82,3040.0,3.2,0.047,"[0.11, 0.15, 0.17, 0.16, 0.14, 0.11, 0.09, 0.04, 0.02, 0.01]",2200.0,2650.0,4.2,10.8,BB,False,20
