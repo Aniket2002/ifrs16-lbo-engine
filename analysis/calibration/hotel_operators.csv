@@ -1,0 +1,11 @@
+name,revenue_growth,terminal_margin,lease_multiple,senior_rate,mezz_rate,region,rating,brand_tier
+Accor,0.025,0.28,3.2,0.048,0.085,Europe,BBB,Premium
+Marriott,0.035,0.32,2.8,0.045,0.080,Americas,BBB+,Premium
+Hilton,0.030,0.35,3.0,0.050,0.090,Global,BB+,Premium
+IHG,0.028,0.29,3.1,0.052,0.088,Global,BBB-,Premium
+Hyatt,0.040,0.31,2.9,0.048,0.085,Americas,BBB,Premium
+Wyndham,0.025,0.24,3.4,0.055,0.095,Americas,BB,Economy
+Choice_Hotels,0.032,0.26,3.3,0.053,0.092,Americas,BBB-,Economy
+Extended_Stay,0.028,0.22,3.8,0.058,0.100,Americas,B+,Economy
+La_Quinta,0.030,0.25,3.5,0.056,0.098,Americas,BB-,Midscale
+Red_Roof,0.020,0.20,4.0,0.062,0.105,Americas,B,Budget

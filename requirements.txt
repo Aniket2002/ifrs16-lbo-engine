@@ -1,0 +1,10 @@
+# Core Requirements - Always needed
+numpy>=1.21.0
+pandas>=1.3.0
+matplotlib>=3.5.0
+seaborn>=0.11.0
+scipy>=1.7.0
+openpyxl>=3.0.0
+
+# Optional: Enhanced Academic Features
+# Install with: pip install -r requirements-academic.txt
