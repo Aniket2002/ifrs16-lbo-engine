@@ -1,0 +1,8 @@
+company,entry_multiple,exit_multiple,debt_ratio,hold_years,revenue_mln,ebitda_margin,lease_multiple
+Accor,8.5,10.0,0.60,5,5000,0.22,3.2
+Marriott,9.2,11.0,0.65,5,8500,0.24,2.8
+Hilton,8.8,10.5,0.62,6,7200,0.23,3.0
+IHG,9.0,10.8,0.63,5,6800,0.22,3.1
+Hyatt,9.5,11.2,0.58,4,4200,0.25,2.9
+Choice Hotels,7.5,9.0,0.55,5,1200,0.28,2.5
+Wyndham,8.0,9.5,0.58,5,2100,0.26,2.7

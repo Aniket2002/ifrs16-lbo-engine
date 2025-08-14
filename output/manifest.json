@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "timestamp": "2025-08-13T12:00:00Z",
+    "git_commit": "abc1234",
+    "python_version": "3.11",
+    "seed": 42,
+    "analysis_type": "IFRS16_LBO_Academic"
+  },
+  "model_parameters": {
+    "base_assumptions": {
+      "exit_ev_ebitda": 9.0,
+      "icr_hurdle": 2.25,
+      "leverage_hurdle": 9.0,
+      "lease_liability_multiplier": 3.2
+    }
+  },
+  "base_case": {
+    "IRR": 0.1024181007216256,
+    "MOIC": 1.7619528211215754,
+    "exit_equity": 5181.889019745756,
+    "min_ICR": 2.5227043390514625,
+    "max_leverage": 8.332624699934769,
+    "covenant_breach": false
+  },
+  "monte_carlo": {
+    "protocol": {
+      "scenarios_requested": 400,
+      "scenarios_effective": 400,
+      "seed": 42,
+      "rejection_rate": 0.0,
+      "success_definition": "No ND/EBITDA or ICR breach and positive exit equity and IRR \u2265 8%"
+    },
+    "results": {
+      "success_rate": 0.705,
+      "success_rate_ci": [
+        0.658528950995276,
+        0.7475710083276624
+      ],
+      "median_IRR": 0.12512860894078515,
+      "median_IRR_ci": [
+        0.12127139452797012,
+        0.13039426328100898
+      ],
+      "p10_IRR": 0.08923613031150787,
+      "p90_IRR": 0.1767984484477119,
+      "covenant_breaches": 118
+    },
+    "priors": {
+      "\u03c3_growth": 0.03,
+      "\u03c3_margin": 0.015,
+      "\u03c3_multiple": 0.75
+    }
+  },
+  "stress_test": {
+    "name": "Severe Stress: Demand-8% / Margin-150bps / Exit-2x / Rates+300bps",
+    "outputs": {
+      "IRR": null,
+      "trough_ICR": null,
+      "max_net_debt_ebitda": null,
+      "covenant_breach": true,
+      "failure_reason": "Year 1: ICR breach"
+    }
+  },
+  "computational": {
+    "charts_generated": [
+      "covenant",
+      "sensitivity",
+      "monte_carlo",
+      "sources_uses",
+      "exit_bridge",
+      "deleveraging"
+    ],
+    "runtime_seconds": null,
+    "memory_usage_mb": null
+  }
+}
