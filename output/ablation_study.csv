@@ -1,0 +1,5 @@
+feature_set,n_features,performance,features
+baseline,2,0.8876586304305082,"revenue, ebitda"
+debt_features,3,0.9257921281550738,"revenue, ebitda, net_debt"
+lease_features,4,0.937674347291529,"revenue, ebitda, net_debt..."
+full_model,6,0.9653052561406504,"revenue, ebitda, net_debt..."

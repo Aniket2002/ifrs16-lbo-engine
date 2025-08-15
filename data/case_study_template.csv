@@ -1,0 +1,6 @@
+entity,year,revenue,ebitda,ebitda_margin,capex,net_debt,lease_liability,lease_expense,interest_expense,tax_rate,currency
+"Accor SA",2018,4059,687,0.169,180,1823,2840,340,89,0.28,EUR
+"Accor SA",2019,4048,692,0.171,195,1456,2950,355,76,0.28,EUR
+"Accor SA",2020,2741,196,0.071,98,2134,2845,348,82,0.28,EUR
+"Accor SA",2021,2616,273,0.104,87,1987,2756,342,79,0.28,EUR
+"Accor SA",2022,3510,598,0.170,145,1534,2698,335,71,0.28,EUR

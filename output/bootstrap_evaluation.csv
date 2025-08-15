@@ -1,0 +1,2 @@
+mean_accuracy,std_accuracy,ci_lower_accuracy,ci_upper_accuracy,mean_coverage,std_coverage,n_clusters,n_bootstrap
+0.7999999999999998,2.2316322462394835e-16,0.8,0.8,1.0,0.0,2,100
