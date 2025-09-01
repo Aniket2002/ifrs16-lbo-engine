@@ -6,8 +6,8 @@ setup(
     description="Fast analytic LBO covenant optimization with IFRS-16 dual conventions",
     author="Academic Research Team",
     author_email="research@university.edu",
-    packages=find_packages(),
-    package_dir={"": "."},
+    packages=find_packages(where="src") + find_packages(where="analysis"),
+    package_dir={"": "src", "analysis": "analysis"},
     python_requires=">=3.8",
     install_requires=[
         "numpy>=1.21.0",

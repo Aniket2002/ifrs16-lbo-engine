@@ -140,10 +140,10 @@ def calculate_bootstrap_metrics(data: pd.DataFrame) -> Dict[str, float]:
     coverage = np.mean(np.abs(prediction_errors) <= ci_width)
     
     return {
-        'accuracy': accuracy,
-        'coverage': coverage,
-        'mean_error': np.mean(np.abs(prediction_errors)),
-        'n_observations': n
+        'accuracy': float(accuracy),
+        'coverage': float(coverage),
+        'mean_error': float(np.mean(np.abs(prediction_errors))),
+        'n_observations': float(n)
     }
 
 def ablation_study(

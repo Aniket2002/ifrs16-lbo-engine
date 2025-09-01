@@ -205,3 +205,17 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Project-specific artifacts
+output/
+analysis/figures/
+analysis/paper/figures/
+*.pdf
+*.png
+*.csv
+calibration_diagnostics.png
+calibration_summary.json
+
+# IDEs
+.vscode/
+.idea/
