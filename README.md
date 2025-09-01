@@ -27,19 +27,14 @@ python analysis/scripts/case_study_accor.py
 pytest -q
 ```
 
-## Structure (short)
+## Structure
 - `src/lbo/` — core library (installable)
 - `analysis/` — experiments, scripts, and `paper/` (manuscript + figures)
 - `data/` — small CSV inputs and benchmark
 - `tests/` — unit and integration tests
 
-## If you are hiring
-- Demonstrates: Bayesian inference, mathematical modeling, optimization, reproducible research, and production packaging.
-- Contact: bhardwaj.aniket2002@gmail.com
-
 License: MIT
 
-## 🚀 **Quick Start**
 ## 🚀 **Quick Start** 
 
 ### **Installation**
