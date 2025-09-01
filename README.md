@@ -1,50 +1,43 @@
-# 🚀 IFRS-16 LBO Engine: Advanced Covenant Optimization
+# IFRS-16 LBO Engine — Short README
 
-> **Cutting-edge quantitative finance framework combining Bayesian machine learning, mathematical optimization, and regulatory compliance for leveraged buyout structures**
+Practical research code for optimizing LBO covenants under IFRS-16 and frozen-GAAP conventions.
+Clean, installable Python package with reproducible analysis and a public benchmark.
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Research Paper](https://img.shields.io/badge/📄-Research_Paper-red.svg)](analysis/paper/main.tex)
-[![Benchmark Dataset](https://img.shields.io/badge/📊-Public_Benchmark-orange.svg)](benchmark_dataset_v1.0/)
+Purpose: reproducible experiments, publishable manuscript, and an optimization library for covenant design.
 
-## 💡 **What This Project Demonstrates**
+## Quick start
+- Clone and install (editable):
 
-**For Recruiters & Technical Leaders:**
-- 🧠 **Advanced ML/AI**: Bayesian hierarchical modeling with bounded-support priors
-- ⚡ **High-Performance Computing**: Closed-form approximations with deterministic error bounds  
-- 📈 **Quantitative Finance**: Real-world LBO covenant optimization under regulatory frameworks
-- 🔬 **Research Excellence**: Publication-ready academic work with reproducible benchmarks
-- 🛠️ **Production Engineering**: Clean Python packaging, CI/CD, comprehensive testing
-
-## 🎯 **Core Innovation**
-
-### **The Problem**
-Traditional LBO models use **ad-hoc covenant assumptions** and ignore **IFRS-16 lease accounting complexity**. This leads to:
-- ❌ Suboptimal capital structures
-- ❌ Covenant breach surprises  
-- ❌ Regulatory compliance gaps
-
-### **My Solution**
-**Data-driven covenant optimization** with **mathematical guarantees**:
-
-```python
-# Instead of guessing covenant levels...
-covenants = {"leverage": 4.5, "icr": 3.0}  # ❌ Ad-hoc
-
-# Optimize them as decision variables with uncertainty
-optimal_covenants = optimize_bayesian_covenants(
-    data=hotel_operators_benchmark,
-    conventions=["ifrs16", "frozen_gaap"], 
-    error_bounds="deterministic",  # ✅ Guaranteed feasibility
-    priors="hierarchical"          # ✅ Data-informed
-)
+```bash
+git clone https://github.com/Aniket2002/ifrs16-lbo-engine.git
+cd ifrs16-lbo-engine
+pip install -e .
 ```
 
-### **Key Results**
-- 📊 **+18% AUC-ROC** breach prediction improvement (0.76 vs 0.58)
-- ⚡ **46% faster** headroom calculation (0.28s vs 0.52s RMSE)
-- 🎯 **Mathematical guarantees**: ε ≤ 0.12 approximation error bounds
-- 🏆 **Real validation**: Accor SA case study with material impact quantification
+## Run a quick demo
+- Accor case study (small, reproducible):
+
+```bash
+python analysis/scripts/case_study_accor.py
+```
+
+## Tests
+
+```bash
+pytest -q
+```
+
+## Structure (short)
+- `src/lbo/` — core library (installable)
+- `analysis/` — experiments, scripts, and `paper/` (manuscript + figures)
+- `data/` — small CSV inputs and benchmark
+- `tests/` — unit and integration tests
+
+## If you are hiring
+- Demonstrates: Bayesian inference, mathematical modeling, optimization, reproducible research, and production packaging.
+- Contact: bhardwaj.aniket2002@gmail.com
+
+License: MIT
 
 ## 🚀 **Quick Start**
 ## 🚀 **Quick Start** 
