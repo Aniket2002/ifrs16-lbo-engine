@@ -1,8 +1,11 @@
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import numpy_financial as npf
 
 from lbo import (
     AnalyticAssumptions,
@@ -12,23 +15,28 @@ from lbo import (
 )
 from lbo.covenants import ratios_frozen_gaap, ratios_ifrs16
 from analysis.run_benchmark import ensure_synthetic_data
+from lbo.full_simulation import equity_cash_flow_vector, equity_return_metrics
 
 
 def test_cash_flow_reconciliation():
     sim = FullSimulationModel(FullSimulationAssumptions(years=3)).simulate()
     df = pd.DataFrame(sim)
     lhs = (
-        df["ebitda"]
-        - df["capex"]
+        df["opening_cash"]
+        + df["ebitda"]
         - df["delta_working_capital"]
         - df["cash_taxes"]
         - df["cash_interest"]
         - df["lease_interest"]
+        - df["capex"]
+        - df["lease_principal_cash_payment"]
     )
     rhs = (
-        df["scheduled_debt_amortisation"]
-        + (df["cash"] - df["cash"].shift(1).fillna(40.0))
-        - df["revolver_draws"]
+        df["ending_cash"]
+        + df["actual_mandatory_amortisation"]
+        + df["cash_sweep"]
+        + df["revolver_repayment"]
+        - df["revolver_draw"]
     )
     np.testing.assert_allclose(lhs.to_numpy(), rhs.to_numpy(), rtol=0, atol=1e-6)
 
@@ -39,7 +47,8 @@ def test_debt_roll_forward():
     opening = 450.0
     for _, r in rows.iterrows():
         expected = max(
-            0.0, opening - min(opening, r["scheduled_debt_amortisation"] + r["cash_sweep"])
+            0.0,
+            opening - r["actual_mandatory_amortisation"] - r["cash_sweep"],
         )
         assert abs(expected - r["debt_balance"]) <= 1e-6
         opening = r["debt_balance"]
@@ -53,10 +62,37 @@ def test_lease_roll_forward():
     for _, r in rows.iterrows():
         expected = max(
             0.0,
-            opening + r["lease_interest"] + r["lease_additions"] - r["lease_principal_payments"],
+            opening
+            + r["lease_interest"]
+            + r["lease_additions"]
+            - r["lease_principal_cash_payment"],
         )
         assert abs(expected - r["lease_liability"]) <= 1e-6
         opening = r["lease_liability"]
+
+
+def test_revolver_limit_and_insolvency_are_recorded():
+    a = FullSimulationAssumptions(
+        years=1,
+        revenue_0=100.0,
+        revenue_growth=0.0,
+        ebitda_margin=0.0,
+        capex_pct_revenue=1.0,
+        tax_rate=0.0,
+        debt_opening=0.0,
+        lease_opening=0.0,
+        initial_cash=0.0,
+        revolver_limit=0.0,
+        scheduled_debt_amort=0.0,
+        cash_sweep=0.0,
+        lease_interest_rate=0.0,
+        lease_additions_pct_revenue=0.0,
+        lease_principal_pct_opening=0.0,
+    )
+    rows = pd.DataFrame(FullSimulationModel(a).simulate())
+    assert bool(rows.iloc[0]["insolvency_flag"])
+    assert rows.iloc[0]["funding_deficit"] > 0
+    assert rows.iloc[0]["ending_cash"] < a.min_cash
 
 
 def test_ifrs_vs_frozen_gaap_definitions():
@@ -130,3 +166,28 @@ def test_exact_benchmark_checksums():
 
     assert ops == checksums["operators_csv_sha256"]
     assert scn == checksums["scenario_parameters_csv_sha256"]
+
+
+def test_exit_bridge_and_equity_cash_flow_vector():
+    a = FullSimulationAssumptions(years=5)
+    rows = FullSimulationModel(a).simulate()
+    df = pd.DataFrame(rows)
+    metrics = equity_return_metrics(rows, a)
+    vector = equity_cash_flow_vector(rows, a)
+
+    assert len(vector) == a.years + 1
+    assert np.isfinite(npf.irr(vector))
+    assert abs(metrics["irr"] - npf.irr(vector)) < 1e-9
+    assert abs(metrics["moic"] - (metrics["exit_equity"] / metrics["initial_equity"])) < 1e-9
+
+    final = df.iloc[-1]
+    sale_costs = final["exit_enterprise_value"] * a.sale_cost_pct
+    expected_exit_equity = (
+        final["exit_enterprise_value"]
+        - final["debt_balance"]
+        - final["revolver_balance"]
+        - final["lease_liability"]
+        + final["ending_cash"]
+        - sale_costs
+    )
+    assert abs(final["exit_equity"] - expected_exit_equity) <= 1e-6

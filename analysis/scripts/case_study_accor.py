@@ -4,17 +4,28 @@ Real Case Study: Accor SA IFRS-16 Impact Analysis
 Demonstrates dual-convention covenant analysis on public hospitality company
 """
 
-import pandas as pd
-import numpy as np
+from pathlib import Path
+
 import matplotlib.pyplot as plt
-from lbo import load_case_csv, ratios_ifrs16, ratios_frozen_gaap
+import numpy as np
+import pandas as pd
+
+from lbo import load_case_csv, ratios_frozen_gaap, ratios_ifrs16
+
+
+ROOT = Path(__file__).resolve().parents[2]
+FIGURES_DIR = ROOT / "analysis" / "figures"
+OUTPUT_DIR = ROOT / "output"
 
 
 def run_accor_case_study():
     """Execute full Accor SA case study with dual-convention comparison."""
 
+    FIGURES_DIR.mkdir(parents=True, exist_ok=True)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
     # Load public financial data
-    df = load_case_csv("data/case_study/accor.csv")
+    df = load_case_csv(str(ROOT / "data" / "case_study" / "accor.csv"))
     accor = df[df["entity"] == "Accor SA"].copy()
 
     print("=== ACCOR SA IFRS-16 CASE STUDY ===")
@@ -31,15 +42,15 @@ def run_accor_case_study():
         std_row = pd.Series(
             {
                 "ebitda": row["ebitda"],
-                "debt_senior": row["net_debt"] * 0.8,  # Assume 80% senior debt
-                "debt_mezz": row["net_debt"] * 0.2,  # Assume 20% mezzanine
+                "debt_senior": row["net_debt"] * 0.8,  # Scenario assumption: 80/20 split
+                "debt_mezz": row["net_debt"] * 0.2,  # Scenario assumption: 80/20 split
                 "lease_liability": row["lease_liability"],
                 "cash": 0,  # Assume net debt already accounts for cash
                 "fin_rate": row["interest_expense"] / row["net_debt"]
                 if row["net_debt"] > 0
                 else 0.06,
                 "lease_rate": 0.04,  # Typical lease discount rate
-                "rent": row["lease_expense"],
+                "rent": row.get("lease_expense", row["lease_liability"] * 0.04),
             }
         )
 
@@ -93,7 +104,7 @@ def run_accor_case_study():
     )
 
     print("\n=== COVENANT BREACH ANALYSIS ===")
-    print(f"Hypothetical covenants: ICR ≥ {covenant_icr:.1f}, Leverage ≤ {covenant_lev:.1f}x")
+    print(f"Hypothetical covenants: ICR >= {covenant_icr:.1f}, Leverage <= {covenant_lev:.1f}x")
     print(f"IFRS-16 breaches: {breaches_ifrs16.sum()}/{len(results_df)} years")
     print(f"Frozen GAAP breaches: {breaches_frozen.sum()}/{len(results_df)} years")
     print(
@@ -144,12 +155,12 @@ def run_accor_case_study():
     ax2.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig("analysis/figures/accor_case_study.png", dpi=300, bbox_inches="tight")
-    print("\nFigure saved: analysis/figures/accor_case_study.png")
+    plt.savefig(FIGURES_DIR / "accor_case_study.png", dpi=300, bbox_inches="tight")
+    print(f"\nFigure saved: {FIGURES_DIR / 'accor_case_study.png'}")
 
     # Export detailed results
-    results_df.to_csv("output/accor_case_study_results.csv", index=False)
-    print("Detailed results exported: output/accor_case_study_results.csv")
+    results_df.to_csv(OUTPUT_DIR / "accor_case_study_results.csv", index=False)
+    print(f"Detailed results exported: {OUTPUT_DIR / 'accor_case_study_results.csv'}")
 
     return results_df
 

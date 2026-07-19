@@ -72,7 +72,7 @@
   filecolor=magenta,
   urlcolor=cyan,
   citecolor=red,
-  pdftitle={Covenant Optimization in LBO Structures Under IFRS-16: Fast Analytic Approximations with Deterministic Error Bounds},
+  pdftitle={Assumption-Bounded Analytic Screening for IFRS-16 Covenant Analysis},
   pdfauthor={Aniket Bhardwaj},
   pdfkeywords={leveraged buyout, IFRS-16, covenant optimization, Bayesian inference, computational finance},
   pdfcreator={LaTeX}
@@ -98,7 +98,7 @@
 
 % Title and authors
 \title{Covenant Optimization in LBO Structures Under IFRS-16: \\
-Fast Analytic Approximations with Deterministic Error Bounds}
+Assumption-Bounded Analytic Screening for IFRS-16 Covenant Analysis}
 \author{
 Aniket Bhardwaj\\
 \textit{Independent Researcher}\\
@@ -110,7 +110,7 @@ Aniket Bhardwaj\\
 \maketitle
 
 \begin{abstract}
-We optimize LBO covenants under IFRS-16 and frozen-GAAP conventions. A Bayesian hierarchical calibration supplies data-informed priors; closed-form headroom approximations provide deterministic error bounds used to screen and certify solutions. On simulated hotel-operator archetypes, breach AUC-ROC reaches 0.76 (95\% CI [0.71, 0.81]) and headroom RMSE falls from 0.52 to 0.28. A case study on Accor SA illustrates material convention risk (ICR $\approx$10.6x vs 2.6x; leverage $\approx$5.1x vs 12.6x). We release an IFRS-16 LBO benchmark, code, and scripts for full reproducibility.
+We optimize LBO covenants under IFRS-16 and frozen-GAAP conventions. A Bayesian hierarchical calibration supplies data-informed priors; closed-form headroom approximations provide assumption-bounded diagnostics for rapid screening and comparison with full simulation. The repository releases a reproducible IFRS-16 LBO benchmark, code, and scripts for regenerating reported artifacts.
 \end{abstract}
 
 \textbf{Keywords:} leveraged buyout, IFRS-16, covenant optimization, Bayesian inference, computational finance\\
@@ -122,17 +122,17 @@ Leveraged buyouts (LBOs) represent one of the largest asset classes in private e
 
 The implementation of IFRS-16 ``Leases'' in 2019 materially changed LBO financial reporting by requiring lease capitalization on balance sheets. However, many credit agreements operate under ``frozen GAAP'' provisions or define covenants to neutralize IFRS-16 effects (e.g., using EBITDAR or fixed-charge coverage). For lease-intensive industries such as retail and hospitality, practitioners must consider both IFRS-16-inclusive and neutralized covenant formulations. Despite this regulatory complexity, existing LBO modeling frameworks have not adequately addressed the dual-convention optimization problem.
 
-We address this gap by developing a framework that treats covenant levels as optimization variables under Bayesian uncertainty across both accounting conventions. Our approach replaces ad hoc covenant assumptions with data-informed priors using bounded-support transformations, incorporates proper IFRS-16 lease amortization schedules, and provides deterministic approximation guarantees for rapid screening.
+We address this gap by developing a framework that treats covenant levels as optimization variables under Bayesian uncertainty across both accounting conventions. Our approach replaces ad hoc covenant assumptions with data-informed priors using bounded-support transformations, incorporates explicit IFRS-16 lease amortization schedules, and provides assumption-bounded diagnostics for rapid screening.
 
 \subsection{Contributions}
 
 \begin{itemize}\setlength{\itemsep}{0pt}
-\item \textbf{Theory:} Deterministic error bounds for leverage and ICR approximations; a certification rule when analytic headroom exceeds a computable $\varepsilon_{\max}$.
+\item \textbf{Theory:} Assumption-bounded diagnostics for leverage and ICR approximations; a conservative screening rule when analytic headroom exceeds a computable $\varepsilon_{\max}$.
 \item \textbf{Method:} Bayesian hierarchical calibration with bounded-support priors; a screen-then-optimize algorithm that respects covenant conventions (IFRS-16 vs frozen-GAAP).
-\item \textbf{Resource:} An open, reproducible IFRS-16 LBO Benchmark Generator with scripts that regenerate all figures/tables in one command.
+\item \textbf{Resource:} An open, reproducible IFRS-16 LBO benchmark with scripts that regenerate all figures and tables in one command.
 \end{itemize}
 
-The framework demonstrates improved performance: AUC-ROC 0.76 [0.71, 0.81] for breach prediction (+0.18 vs traditional), headroom RMSE reduction of 46\% (0.28 vs 0.52). We report results under both covenant conventions with posterior-predictive frontiers and 95\% credible bands.
+The framework reports evaluation metrics from the benchmark artifacts at runtime and compares analytic screening against full simulation under both covenant conventions.
 
 \section{Related Work and Background}
 
@@ -236,7 +236,7 @@ $\Lev_t=\ND_t/\EBITDA_t$, $\ICR_t = \EBITDAR_t/\Ifin_t$, where $\EBITDAR_t=\EBIT
 
 \subsection{Covenant Design Variables}
 
-We optimize covenant packages $\mathcal{C} = (c^{\text{lev}}, c^{\text{icr}})$ under safety-constrained feasibility where $c^{\text{lev}}$ is the maximum leverage ratio threshold and $c^{\text{icr}}$ is the minimum interest coverage ratio threshold. The safety-constrained optimization maximizes expected IRR subject to deterministic constraints:
+We optimize covenant packages $\mathcal{C} = (c^{\text{lev}}, c^{\text{icr}})$ under safety-constrained feasibility where $c^{\text{lev}}$ is the maximum leverage ratio threshold and $c^{\text{icr}}$ is the minimum interest coverage ratio threshold. The safety-constrained optimization maximizes expected IRR subject to assumption-bounded screening constraints:
 \begin{align}
 \max_{\mathcal{C}} \quad &\E_{\theta \sim \text{posterior}}\!\left[\text{IRR}(\mathcal{C};\theta)\right] \\
 \text{s.t.} \quad &\Lev_{\text{analytic}}(t) + \epsilon_{\text{Lev}}(t) \leq c^{\text{lev}} \quad \forall t, \\
@@ -261,7 +261,7 @@ with $\mu_s\in[-0.6,-0.3]$ and total growth truncated to $g_i\in[-0.8,0.5]$.
 \text{Corr}(\theta_i) &\sim \text{LKJ}(\eta=2.0).
 \end{align}
 
-\section{Deterministic Approximation Bounds}
+\section{Assumption-Bounded Approximation Diagnostics}
 
 \subsection{Closed-Form Approximations}
 
@@ -274,11 +274,11 @@ where $\FCF_t = (\varphi-\kappa)\,\EBITDA_t$. Lease liabilities follow:
 L_{t+1} = L_t(1+r_L) - P_0(1+\CPI)^{t-1}.
 \end{equation}
 
-\subsection{Deterministic Approximation Guarantees}
+\subsection{Approximation Diagnostics}
 
 \textbf{Structural Assumptions:} We refer to Assumptions \ref{ass:growth}--\ref{ass:bs} (Appendix~\ref{app:assumptions}) for formal statements.
 
-\begin{proposition}[Deterministic Screening Guarantee]\label{prop:screening}
+\begin{proposition}[Assumption-Bounded Screening Result]\label{prop:screening}
 Under Assumptions A1--A6, the analytic approximation error satisfies:
 \begin{align}
 \bigl|\ICR_{\text{analytic}}(t) - \ICR_{\text{true}}(t)\bigr| &\le \epsilon_{\text{ICR}}(t), \\
@@ -314,7 +314,7 @@ Under Assumptions A1--A6 with fixed testing cadence, no equity-cure effects, and
 
 \begin{proposition}[Conservative Certification]\label{prop:certification}
 For analytic covenant headroom $h_{\text{analytic}}=\min(\ICR_{\text{analytic}}-c^{\text{icr}},\, c^{\text{lev}}-\Lev_{\text{analytic}})$ and $\epsilon_{\max}=\max_t \max\{\epsilon_{\text{ICR}}(t),\epsilon_{\text{Lev}}(t)\}$:
-If $h_{\text{analytic}}(t)>\epsilon_{\max}$ for all $t$, the true covenant package is feasible with certainty under our approximation assumptions.
+If $h_{\text{analytic}}(t)>\epsilon_{\max}$ for all $t$, the true covenant package is expected to remain feasible within the stated approximation assumptions.
 \end{proposition}
 
 \subsection{Covenant Implementation Details}
@@ -331,7 +331,7 @@ If $h_{\text{analytic}}(t)>\epsilon_{\max}$ for all $t$, the true covenant packa
 
 \subsection{Benchmark Generator Construction}
 
-We calibrate to hotel operator disclosures, defining 10 archetypes across regions. Targets: revenues $\$1.2$B--$\$4.8$B (2019), EBITDA margins 18\%--32\%, lease/EBITDA 2.1x--4.1x, asset-light/heavy mixes, and geographic diversification.
+We calibrate to hotel operator disclosures, defining 5 tracked archetypes across regions. Targets: revenues $\$0.8$B--$\$1.7$B, EBITDA margins 20\%--24\%, lease/EBITDA 2.8x--3.4x, and asset-light/heavy mixes.
 
 \textbf{Calibration:} Public 10-K summaries inform priors; hierarchical mapping yields bounded-support parameter distributions with cross-firm heterogeneity. No issuer-specific confidential data.
 
@@ -345,7 +345,7 @@ We calibrate to hotel operator disclosures, defining 10 archetypes across region
 
 \textbf{Task 1: Covenant Breach Prediction} (AUC-ROC). \\
 \textbf{Task 2: Headroom Estimation} (RMSE). \\
-\textbf{Task 3: Optimal Covenant Design} (expected IRR subject to deterministic feasibility).
+\textbf{Task 3: Optimal Covenant Design} (expected IRR subject to assumption-bounded screening).
 
 \subsection{Baseline Results}
 
@@ -369,15 +369,15 @@ Our Method (w/ Theory) & Full framework: bounded-support priors + deterministic 
 
 \subsection{Methods: Evaluation Protocol and Uncertainty Quantification}
 
-\textbf{Sample Size and Clustering:} We evaluate on 10 hotel operator archetypes with 50 scenarios per archetype (500 total scenarios), each simulated over 20 quarters. Operators vary by region (US, Europe, Asia), scale ($\$1.2$B--$\$4.8$B revenue), and asset profile (management vs ownership). 
+\textbf{Sample Size and Clustering:} We evaluate on 5 tracked hotel archetypes with 40 sampled scenarios per archetype (200 total scenarios), each simulated over 5 annual steps. Operators vary by region and balance-sheet intensity.
 
 \textbf{Confidence Interval Construction:} We estimate AUC-ROC CIs via 2,000 stratified bootstrap resamples clustered at the operator level (resampling operators with replacement, keeping within-operator quarters intact). We report percentile CIs and verify with BCa; both agree within ±0.01 AUC. RMSE CIs use the same clustered bootstrap on squared errors aggregated over the forecast horizon.
 
 \textbf{Model Selection and Test Protocol:} Hyperparameters are tuned on 70\% training data using 5-fold cross-validation within operators. Final evaluation uses the remaining 30\% held-out quarters. Forecast horizon is 5 years (20 quarters) with quarterly covenant testing. Performance metrics are weighted equally across operators to prevent large operators from dominating results.
 
-\textbf{Baseline Comparison:} We report $\Delta$AUC vs. traditional LBO (0.76 - 0.58 = +0.18, 95\% CI [0.12, 0.24]) and $\Delta$RMSE vs. traditional (0.28 - 0.52 = -0.24, 95\% CI [-0.31, -0.17]), confirming statistically significant improvements ($p < 0.001$ via clustered permutation test).
+\textbf{Baseline Comparison:} We report the benchmark metrics directly from the regenerated artifact so the manuscript remains synchronized with the code and data.
 
-\textbf{Reproducibility:} All results generated from tag \texttt{v1.0-camera-ready} with fixed seed=42 for deterministic replication. Environment specification in \texttt{environment.yml} ensures exact package versions.
+\textbf{Reproducibility:} All reported results are generated from the repository at a fixed seed. Environment specification in \texttt{environment.yml} ensures exact package versions.
 
 \section{Empirical Validation}
 
@@ -548,7 +548,7 @@ Future extensions: online Bayesian updates, multi-sector generator, full IFRS-16
 
 \section{Conclusion}
 
-We advance safety-constrained covenant design under IFRS-16 via Bayesian calibration, analytic approximations with deterministic guarantees, and a standardized benchmark. Achievements include AUC-ROC 0.76 (95\% CI [0.71, 0.81]), 46\% RMSE reduction (0.28 vs 0.52), and +3.4pp expected IRR vs traditional methods, while preserving conservative bias.
+We advance safety-constrained covenant design under IFRS-16 via Bayesian calibration, assumption-bounded analytic screening, and a standardized benchmark. Reported metrics are regenerated from the repository artifacts so the manuscript stays synchronized with the code and data.
 
 All code, data, and reproducible pipelines: \url{https://github.com/Aniket2002/ifrs16-lbo-engine} (CC-BY-4.0) from tag \texttt{v1.0-camera-ready}. DOI: \url{https://doi.org/10.5281/zenodo.8234567}.
 

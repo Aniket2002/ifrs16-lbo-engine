@@ -1,6 +1,9 @@
 from dataclasses import dataclass
 from typing import Any, Dict, List
 
+import numpy as np
+import numpy_financial as npf
+
 
 @dataclass
 class FullSimulationAssumptions:
@@ -22,6 +25,8 @@ class FullSimulationAssumptions:
     cash_sweep: float = 0.5
     revolver_limit: float = 200.0
     initial_cash: float = 40.0
+    min_cash: float = 25.0
+    sale_cost_pct: float = 0.015
     exit_multiple: float = 8.0
 
 
@@ -46,6 +51,11 @@ class FullSimulationModel:
             if year > 1:
                 revenue *= 1 + a.revenue_growth
 
+            opening_cash = cash
+            opening_debt = debt
+            opening_revolver = revolver
+            opening_lease = lease
+
             ebitda = revenue * a.ebitda_margin
             da = revenue * a.da_pct_revenue
             ebit = ebitda - da
@@ -63,54 +73,135 @@ class FullSimulationModel:
             taxable_income = ebit - cash_interest - lease_interest
             cash_taxes = max(0.0, taxable_income * a.tax_rate)
 
-            fcf_before_financing = (
-                ebitda - capex - delta_wc - cash_taxes - cash_interest - lease_interest
+            operating_cash_generation = (
+                ebitda - delta_wc - cash_taxes - cash_interest - lease_interest - capex
             )
-            scheduled_amort = min(a.scheduled_debt_amort, max(0.0, debt))
-            cash_sweep = max(0.0, fcf_before_financing) * a.cash_sweep
+            cash_before_financing = opening_cash + operating_cash_generation - lease_principal
 
-            total_debt_paydown = min(debt, scheduled_amort + cash_sweep)
-            debt -= total_debt_paydown
+            actual_mandatory_amortisation = min(a.scheduled_debt_amort, max(0.0, opening_debt))
+            cash_after_mandatory = cash_before_financing - actual_mandatory_amortisation
 
-            cash_after = cash + fcf_before_financing - scheduled_amort
             revolver_draw = 0.0
-            if cash_after < 0:
-                needed = -cash_after
-                revolver_draw = min(a.revolver_limit - revolver, needed)
-                revolver += revolver_draw
-                cash_after += revolver_draw
+            revolver_repayment = 0.0
+            funding_deficit = 0.0
+            insolvency_flag = False
 
-            lease = max(0.0, lease + lease_interest + lease_additions - lease_principal)
-            cash = max(0.0, cash_after)
+            if cash_after_mandatory < a.min_cash:
+                required_cash = a.min_cash - cash_after_mandatory
+                revolver_draw = min(max(0.0, a.revolver_limit - opening_revolver), required_cash)
+                cash_after_draw = cash_after_mandatory + revolver_draw
+                funding_deficit = max(0.0, a.min_cash - cash_after_draw)
+                insolvency_flag = funding_deficit > 0
+            else:
+                cash_after_draw = cash_after_mandatory
 
-            exit_proceeds = 0.0
+            if (
+                not insolvency_flag
+                and opening_revolver + revolver_draw > 0
+                and cash_after_draw > a.min_cash
+            ):
+                revolver_repayment = min(
+                    opening_revolver + revolver_draw, cash_after_draw - a.min_cash
+                )
+                cash_after_draw -= revolver_repayment
+
+            optional_sweep_base = max(0.0, cash_after_draw - a.min_cash)
+            proposed_sweep = max(0.0, cash_before_financing) * a.cash_sweep
+            cash_sweep = min(optional_sweep_base, proposed_sweep)
+
+            ending_cash = cash_after_draw - cash_sweep
+            debt = max(0.0, opening_debt - actual_mandatory_amortisation - cash_sweep)
+            revolver = max(0.0, opening_revolver + revolver_draw - revolver_repayment)
+            lease = max(0.0, opening_lease + lease_interest + lease_additions - lease_principal)
+            cash = ending_cash
+
+            exit_enterprise_value = 0.0
+            exit_equity = 0.0
             if year == a.years:
-                exit_proceeds = ebitda * a.exit_multiple - debt - revolver - lease
+                exit_enterprise_value = ebitda * a.exit_multiple
+                sale_costs = exit_enterprise_value * a.sale_cost_pct
+                exit_equity = (
+                    exit_enterprise_value - debt - revolver - lease + ending_cash - sale_costs
+                )
 
             rows.append(
                 {
                     "year": year,
+                    "opening_cash": opening_cash,
+                    "opening_financial_debt": opening_debt,
+                    "opening_revolver": opening_revolver,
+                    "opening_lease_liability": opening_lease,
                     "revenue": revenue,
                     "ebitda": ebitda,
                     "da": da,
                     "ebit": ebit,
+                    "operating_cash_generation": operating_cash_generation,
+                    "cash_before_financing": cash_before_financing,
                     "cash_taxes": cash_taxes,
                     "capex": capex,
                     "working_capital": wc,
                     "delta_working_capital": delta_wc,
                     "cash_interest": cash_interest,
                     "lease_interest": lease_interest,
-                    "lease_principal_payments": lease_principal,
+                    "lease_principal_cash_payment": lease_principal,
                     "lease_additions": lease_additions,
-                    "scheduled_debt_amortisation": scheduled_amort,
+                    "scheduled_debt_amortisation": actual_mandatory_amortisation,
+                    "actual_mandatory_amortisation": actual_mandatory_amortisation,
+                    "cash_after_mandatory_amortisation": cash_after_mandatory,
+                    "revolver_draw": revolver_draw,
+                    "revolver_repayment": revolver_repayment,
                     "cash_sweep": cash_sweep,
-                    "revolver_draws": revolver_draw,
+                    "funding_deficit": funding_deficit,
+                    "insolvency_flag": insolvency_flag,
+                    "cash_after_financing": ending_cash,
                     "debt_balance": debt,
                     "revolver_balance": revolver,
                     "lease_liability": lease,
                     "cash": cash,
-                    "exit_proceeds": exit_proceeds,
+                    "ending_cash": ending_cash,
+                    "exit_enterprise_value": exit_enterprise_value,
+                    "exit_equity": exit_equity,
                 }
             )
 
         return rows
+
+
+def equity_cash_flow_vector(
+    rows: List[Dict[str, Any]], assumptions: FullSimulationAssumptions
+) -> List[float]:
+    if not rows:
+        return []
+
+    initial_equity = max(
+        1e-9,
+        assumptions.debt_opening + assumptions.lease_opening - assumptions.initial_cash,
+    )
+    return [-initial_equity] + [0.0] * (len(rows) - 1) + [float(rows[-1]["exit_equity"])]
+
+
+def equity_return_metrics(
+    rows: List[Dict[str, Any]], assumptions: FullSimulationAssumptions
+) -> Dict[str, Any]:
+    cash_flows = equity_cash_flow_vector(rows, assumptions)
+    if len(cash_flows) < 2:
+        return {
+            "equity_cash_flow_vector": cash_flows,
+            "irr": float("nan"),
+            "moic": float("nan"),
+            "initial_equity": float("nan"),
+            "exit_equity": float("nan"),
+        }
+
+    initial_equity = abs(cash_flows[0])
+    exit_equity = cash_flows[-1]
+    irr = npf.irr(cash_flows)
+    moic = exit_equity / initial_equity if initial_equity > 0 else float("nan")
+
+    return {
+        "equity_cash_flow_vector": cash_flows,
+        "irr": float(irr) if irr is not None and np.isfinite(irr) else float("nan"),
+        "moic": float(moic),
+        "initial_equity": float(initial_equity),
+        "exit_equity": float(exit_equity),
+    }

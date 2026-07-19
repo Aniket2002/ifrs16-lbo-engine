@@ -8,7 +8,12 @@ from .covenants import ratios_ifrs16, ratios_frozen_gaap, covenant_headroom
 from .lbo_model import *
 from .lbo_model_analytic import *
 from .analytic_bounds import AnalyticBoundsModel, AssumptionBounds
-from .full_simulation import FullSimulationModel, FullSimulationAssumptions
+from .full_simulation import (
+    FullSimulationModel,
+    FullSimulationAssumptions,
+    equity_cash_flow_vector,
+    equity_return_metrics,
+)
 
 # Submodules
 __all__ = [
@@ -20,4 +25,6 @@ __all__ = [
     "AssumptionBounds",
     "FullSimulationModel",
     "FullSimulationAssumptions",
+    "equity_cash_flow_vector",
+    "equity_return_metrics",
 ]
