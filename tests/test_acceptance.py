@@ -4,9 +4,10 @@ import sys
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
 import numpy_financial as npf
+import pandas as pd
 
+from analysis.run_benchmark import ensure_synthetic_data
 from lbo import (
     AnalyticAssumptions,
     AnalyticLBOModel,
@@ -14,8 +15,11 @@ from lbo import (
     FullSimulationModel,
 )
 from lbo.covenants import ratios_frozen_gaap, ratios_ifrs16
-from analysis.run_benchmark import ensure_synthetic_data
-from lbo.full_simulation import equity_cash_flow_vector, equity_return_metrics
+from lbo.full_simulation import (
+    entry_sources_and_uses,
+    equity_cash_flow_vector,
+    equity_return_metrics,
+)
 
 
 def test_cash_flow_reconciliation():
@@ -27,7 +31,7 @@ def test_cash_flow_reconciliation():
         - df["delta_working_capital"]
         - df["cash_taxes"]
         - df["cash_interest"]
-        - df["lease_interest"]
+        - df["lease_interest_cash_payment"]
         - df["capex"]
         - df["lease_principal_cash_payment"]
     )
@@ -62,10 +66,7 @@ def test_lease_roll_forward():
     for _, r in rows.iterrows():
         expected = max(
             0.0,
-            opening
-            + r["lease_interest"]
-            + r["lease_additions"]
-            - r["lease_principal_cash_payment"],
+            opening + r["lease_additions"] - r["lease_principal_cash_payment"],
         )
         assert abs(expected - r["lease_liability"]) <= 1e-6
         opening = r["lease_liability"]
@@ -174,11 +175,14 @@ def test_exit_bridge_and_equity_cash_flow_vector():
     df = pd.DataFrame(rows)
     metrics = equity_return_metrics(rows, a)
     vector = equity_cash_flow_vector(rows, a)
+    sources_and_uses = entry_sources_and_uses(a)
 
     assert len(vector) == a.years + 1
     assert np.isfinite(npf.irr(vector))
     assert abs(metrics["irr"] - npf.irr(vector)) < 1e-9
     assert abs(metrics["moic"] - (metrics["exit_equity"] / metrics["initial_equity"])) < 1e-9
+    assert abs(metrics["initial_equity"] - sources_and_uses["sponsor_equity"]) < 1e-9
+    assert abs(vector[0] + sources_and_uses["sponsor_equity"]) < 1e-9
 
     final = df.iloc[-1]
     sale_costs = final["exit_enterprise_value"] * a.sale_cost_pct

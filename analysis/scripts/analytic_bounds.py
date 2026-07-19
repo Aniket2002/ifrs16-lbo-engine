@@ -1,4 +1,3 @@
-from lbo.analytic_bounds import AnalyticBoundsModel, AssumptionBounds
+from lbo.analytic_bounds import AnalyticBoundsModel, DiagnosticEnvelope
 
-
-__all__ = ["AnalyticBoundsModel", "AssumptionBounds"]
+__all__ = ["AnalyticBoundsModel", "DiagnosticEnvelope"]

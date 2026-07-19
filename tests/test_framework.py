@@ -13,6 +13,10 @@ def test_benchmark_smoke(tmp_path):
     assert "false_negative_rate" in report
     assert "false_positive_rate" in report
     assert "leverage_mae" in report
+    assert "failure_type_counts" in report
+    assert "diagnostic_envelopes" in report
+    assert "scenario_records" in report
+    assert all("operator_id" in row and "scenario_id" in row for row in report["scenario_records"])
     assert report["failed_scenario_count"] == 0
 
 

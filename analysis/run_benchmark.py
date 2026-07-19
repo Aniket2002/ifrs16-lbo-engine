@@ -3,10 +3,10 @@ import hashlib
 import json
 import subprocess
 import time
-from pathlib import Path
-from typing import Any, Dict, List
-
+from collections import Counter
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
 
 import matplotlib
 
@@ -20,7 +20,6 @@ from sklearn.metrics import brier_score_loss, mean_absolute_error, mean_squared_
 from lbo.analytic_bounds import AnalyticBoundsModel
 from lbo.full_simulation import FullSimulationAssumptions, FullSimulationModel
 from lbo.lbo_model_analytic import AnalyticAssumptions, AnalyticLBOModel
-
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "output" / "benchmark"
@@ -200,7 +199,7 @@ def _git_sha() -> str:
 
 def _bootstrap_auc_ci(
     y_true: np.ndarray, y_score: np.ndarray, seed: int, n_boot: int = 500
-) -> List[float]:
+) -> list[float]:
     rng = np.random.default_rng(seed)
     aucs = []
     for _ in range(n_boot):
@@ -219,123 +218,101 @@ def _file_sha256(path: Path) -> str:
 
 @dataclass(frozen=True)
 class BenchmarkScenario:
+    operator_id: str
+    scenario_id: str
+    scenario_type: str
     simulation: FullSimulationAssumptions
     analytic: AnalyticAssumptions
     label: str
 
 
-def _build_scenario_pool(operators: pd.DataFrame) -> List[BenchmarkScenario]:
-    scenarios: List[BenchmarkScenario] = []
+def _draw_scenario(row: pd.Series, scenario_id: int, rng: np.random.Generator) -> BenchmarkScenario:
+    scenario_type = str(rng.choice(["base", "downside", "distressed"], p=[0.5, 0.3, 0.2]))
 
-    for _, row in operators.iterrows():
-        base_sim = FullSimulationAssumptions(
-            years=5,
-            revenue_0=float(row["revenue_0"]),
-            revenue_growth=float(row["revenue_growth_mean"]),
-            ebitda_margin=float(row["ebitda_margin_mean"]),
-            debt_opening=float(row["financial_debt_0"]),
-            lease_opening=float(row["lease_liability_0"]),
-            initial_cash=float(row["cash_0"]),
-            cash_sweep=float(row["cash_sweep"]),
-        )
-        base_analytic = AnalyticAssumptions(
-            ebitda_0=float(row["ebitda_0"]),
-            growth_rate=float(row["revenue_growth_mean"]),
-            financial_debt_0=float(row["financial_debt_0"]),
-            lease_liability_0=float(row["lease_liability_0"]),
-            lambda_lease=float(row["lambda_lease"]),
-            cash_sweep=float(row["cash_sweep"]),
-            n_years=5,
-            lease_treatment="run_off",
-            lease_principal_rate=float(row["lease_principal_rate"]),
-            lease_additions_rate=float(row["lease_additions_rate"]),
-        )
+    revenue_growth = float(
+        np.clip(rng.normal(row["revenue_growth_mean"], row["revenue_growth_std"]), -0.12, 0.18)
+    )
+    ebitda_margin = float(np.clip(rng.normal(row["ebitda_margin_mean"], 0.02), 0.10, 0.35))
+    cash_sweep = float(np.clip(rng.normal(row["cash_sweep"], 0.04), 0.30, 0.85))
+    lease_principal_rate = float(np.clip(rng.normal(row["lease_principal_rate"], 0.01), 0.05, 0.20))
+    lease_additions_rate = float(np.clip(rng.normal(row["lease_additions_rate"], 0.003), 0.0, 0.05))
+    ebitda_0 = float(row["ebitda_0"])
+    revenue_0 = float(row["revenue_0"])
+    financial_debt_0 = float(row["financial_debt_0"])
+    lease_liability_0 = float(row["lease_liability_0"])
+    cash_0 = float(row["cash_0"])
 
-        downside_sim = FullSimulationAssumptions(
-            years=5,
-            revenue_0=float(row["revenue_0"]),
-            revenue_growth=max(-0.08, float(row["revenue_growth_mean"]) - 0.05),
-            ebitda_margin=max(0.10, float(row["ebitda_margin_mean"]) - 0.06),
-            debt_opening=float(row["financial_debt_0"]) * 1.10,
-            lease_opening=float(row["lease_liability_0"]) * 1.08,
-            initial_cash=float(row["cash_0"]) * 0.75,
-            cash_sweep=min(0.8, float(row["cash_sweep"]) + 0.05),
-        )
-        downside_analytic = AnalyticAssumptions(
-            ebitda_0=float(row["ebitda_0"]),
-            growth_rate=max(-0.08, float(row["revenue_growth_mean"]) - 0.05),
-            alpha=0.72,
-            kappa=0.08,
-            financial_debt_0=float(row["financial_debt_0"]) * 1.10,
-            lease_liability_0=float(row["lease_liability_0"]) * 1.08,
-            lambda_lease=float(row["lambda_lease"]),
-            cash_sweep=min(0.8, float(row["cash_sweep"]) + 0.05),
-            n_years=5,
-            lease_treatment="run_off",
-            lease_principal_rate=float(row["lease_principal_rate"]),
-            lease_additions_rate=float(row["lease_additions_rate"]),
-        )
+    if scenario_type == "downside":
+        revenue_growth -= 0.04
+        ebitda_margin -= 0.03
+        financial_debt_0 *= 1.05
+        lease_liability_0 *= 1.04
+        cash_0 *= 0.85
+    elif scenario_type == "distressed":
+        revenue_growth -= 0.08
+        ebitda_margin -= 0.06
+        financial_debt_0 *= 1.20
+        lease_liability_0 *= 1.10
+        cash_0 *= 0.60
 
-        distressed_sim = FullSimulationAssumptions(
-            years=5,
-            revenue_0=float(row["revenue_0"]) * 0.9,
-            revenue_growth=max(-0.10, float(row["revenue_growth_mean"]) - 0.08),
-            ebitda_margin=max(0.08, float(row["ebitda_margin_mean"]) - 0.10),
-            debt_opening=float(row["financial_debt_0"]) * 1.25,
-            lease_opening=float(row["lease_liability_0"]) * 1.15,
-            initial_cash=float(row["cash_0"]) * 0.50,
-            cash_sweep=min(0.85, float(row["cash_sweep"]) + 0.10),
-            revolver_limit=100.0,
-        )
-        distressed_analytic = AnalyticAssumptions(
-            ebitda_0=float(row["ebitda_0"]) * 0.9,
-            growth_rate=max(-0.10, float(row["revenue_growth_mean"]) - 0.08),
-            alpha=0.68,
-            kappa=0.10,
-            financial_debt_0=float(row["financial_debt_0"]) * 1.25,
-            lease_liability_0=float(row["lease_liability_0"]) * 1.15,
-            lambda_lease=float(row["lambda_lease"]) + 0.5,
-            cash_sweep=min(0.85, float(row["cash_sweep"]) + 0.10),
-            n_years=5,
-            lease_treatment="run_off",
-            lease_principal_rate=float(row["lease_principal_rate"]),
-            lease_additions_rate=float(row["lease_additions_rate"]),
-        )
+    simulation = FullSimulationAssumptions(
+        years=5,
+        entry_enterprise_value=revenue_0 * 7.5,
+        transaction_fees_pct=0.03,
+        revenue_0=revenue_0,
+        revenue_growth=max(-0.12, revenue_growth),
+        ebitda_margin=max(0.08, ebitda_margin),
+        debt_opening=financial_debt_0,
+        lease_opening=lease_liability_0,
+        initial_cash=cash_0,
+        cash_sweep=cash_sweep,
+        revolver_limit=100.0 if scenario_type == "distressed" else 200.0,
+        lease_principal_pct_opening=lease_principal_rate,
+        lease_additions_pct_revenue=lease_additions_rate,
+    )
 
-        scenarios.extend(
-            [
-                BenchmarkScenario(base_sim, base_analytic, f"{row['operator_id']}:base"),
-                BenchmarkScenario(
-                    downside_sim, downside_analytic, f"{row['operator_id']}:downside"
-                ),
-                BenchmarkScenario(
-                    distressed_sim, distressed_analytic, f"{row['operator_id']}:distressed"
-                ),
-            ]
-        )
+    analytic = AnalyticAssumptions(
+        ebitda_0=ebitda_0,
+        growth_rate=max(-0.12, revenue_growth),
+        alpha=0.72 if scenario_type == "base" else 0.68,
+        kappa=0.08 if scenario_type != "distressed" else 0.10,
+        financial_debt_0=financial_debt_0,
+        lease_liability_0=lease_liability_0,
+        lambda_lease=float(row["lambda_lease"]),
+        cash_sweep=cash_sweep,
+        n_years=5,
+        lease_treatment="run_off",
+        lease_principal_rate=lease_principal_rate,
+        lease_additions_rate=lease_additions_rate,
+    )
 
-    return scenarios
+    operator_id = str(row["operator_id"])
+    scenario_label = f"{operator_id}:{scenario_id:04d}:{scenario_type}"
+    return BenchmarkScenario(
+        operator_id, f"{scenario_id:04d}", scenario_type, simulation, analytic, scenario_label
+    )
 
 
-def run_benchmark(seed: int, smoke_test: bool = False) -> Dict[str, Any]:
+def run_benchmark(seed: int, smoke_test: bool = False) -> dict[str, Any]:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     ensure_synthetic_data()
 
     operators = pd.read_csv(DATA_DIR / "operators.csv")
     rng = np.random.default_rng(seed)
 
-    scenario_pool = _build_scenario_pool(operators)
     n_scenarios = 20 if smoke_test else 200
+    operator_indices = rng.integers(0, len(operators), size=n_scenarios)
     scenario_inputs = [
-        scenario_pool[int(i)] for i in rng.choice(len(scenario_pool), n_scenarios, replace=True)
+        _draw_scenario(operators.iloc[int(operator_index)], scenario_id=index, rng=rng)
+        for index, operator_index in enumerate(operator_indices)
     ]
 
     # Warm up both model paths before timing.
     FullSimulationModel(scenario_inputs[0].simulation).simulate()
     AnalyticLBOModel(scenario_inputs[0].analytic).solve_paths()
 
-    sim_times: List[float] = []
-    analytic_times: List[float] = []
+    sim_times: list[float] = []
+    analytic_times: list[float] = []
     n_repeats = 5
     for _ in range(n_repeats):
         start = time.perf_counter()
@@ -348,16 +325,18 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> Dict[str, Any]:
             AnalyticLBOModel(scenario.analytic).solve_paths()
         analytic_times.append(time.perf_counter() - start)
 
-    y_true: List[int] = []
-    y_score: List[float] = []
-    leverage_mae: List[float] = []
-    leverage_rmse: List[float] = []
-    icr_mae: List[float] = []
-    icr_rmse: List[float] = []
-    headroom_mae: List[float] = []
-    headroom_rmse: List[float] = []
+    y_true: list[int] = []
+    y_score: list[float] = []
+    leverage_mae: list[float] = []
+    leverage_rmse: list[float] = []
+    icr_mae: list[float] = []
+    icr_rmse: list[float] = []
+    headroom_mae: list[float] = []
+    headroom_rmse: list[float] = []
     failed = 0
-    failure_details: List[Dict[str, Any]] = []
+    failure_details: list[dict[str, Any]] = []
+    failure_type_counts: Counter[str] = Counter()
+    scenario_records: list[dict[str, Any]] = []
 
     for scenario in scenario_inputs:
         try:
@@ -365,6 +344,8 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> Dict[str, Any]:
             analytic = AnalyticLBOModel(scenario.analytic).solve_paths()
             sim_df = pd.DataFrame(sim_rows)
 
+            negative_ebitda = bool((sim_df["ebitda"] <= 0).any())
+            insolvency = bool(sim_df["insolvency_flag"].any())
             sim_lev = (
                 sim_df["debt_balance"]
                 + sim_df["revolver_balance"]
@@ -383,24 +364,64 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> Dict[str, Any]:
             headroom_s = float(min(6.0 - simulated_max_leverage, simulated_min_icr - 1.8))
             headroom_a = float(min(6.0 - analytic_max_leverage, analytic_min_icr - 1.8))
 
-            true_breach = int(simulated_max_leverage > 6.0 or simulated_min_icr < 1.8)
-            pred_breach_prob = float(1.0 / (1.0 + np.exp(2.0 * headroom_a)))
+            breach = bool(simulated_max_leverage > 6.0 or simulated_min_icr < 1.8)
+            true_failure = int(negative_ebitda or insolvency or breach)
+            analytic_risk_score = float(1.0 / (1.0 + np.exp(2.0 * headroom_a)))
 
-            y_true.append(true_breach)
-            y_score.append(pred_breach_prob)
+            if negative_ebitda:
+                failure_type = "negative_ebitda"
+            elif insolvency and breach:
+                failure_type = "insolvency_and_covenant_breach"
+            elif insolvency:
+                failure_type = "insolvency"
+            elif breach:
+                failure_type = "covenant_breach"
+            else:
+                failure_type = "none"
+
+            y_true.append(true_failure)
+            y_score.append(analytic_risk_score)
+            failure_type_counts[failure_type] += 1
+            scenario_records.append(
+                {
+                    "operator_id": scenario.operator_id,
+                    "scenario_id": scenario.scenario_id,
+                    "scenario_type": scenario.scenario_type,
+                    "analytic_risk_score": analytic_risk_score,
+                    "true_failure": true_failure,
+                    "failure_type": failure_type,
+                    "simulated_max_leverage": simulated_max_leverage,
+                    "simulated_min_icr": simulated_min_icr,
+                }
+            )
 
             leverage_diff = np.abs(analytic.leverage_ratio[1:] - sim_lev.to_numpy())
             icr_diff = np.abs(analytic.icr_ratio[1:] - sim_icr.to_numpy())
 
-            leverage_mae.append(float(np.mean(leverage_diff)))
-            leverage_rmse.append(float(np.sqrt(np.mean(leverage_diff**2))))
-            icr_mae.append(float(np.mean(icr_diff)))
-            icr_rmse.append(float(np.sqrt(np.mean(icr_diff**2))))
+            leverage_mae.append(
+                float(mean_absolute_error(sim_lev.to_numpy(), analytic.leverage_ratio[1:]))
+            )
+            leverage_rmse.append(
+                float(np.sqrt(mean_squared_error(sim_lev.to_numpy(), analytic.leverage_ratio[1:])))
+            )
+            icr_mae.append(float(mean_absolute_error(sim_icr.to_numpy(), analytic.icr_ratio[1:])))
+            icr_rmse.append(
+                float(np.sqrt(mean_squared_error(sim_icr.to_numpy(), analytic.icr_ratio[1:])))
+            )
             headroom_mae.append(abs(headroom_a - headroom_s))
             headroom_rmse.append((headroom_a - headroom_s) ** 2)
         except Exception as exc:
             failed += 1
-            failure_details.append({"label": scenario.label, "error": str(exc)})
+            failure_details.append(
+                {
+                    "operator_id": scenario.operator_id,
+                    "scenario_id": scenario.scenario_id,
+                    "scenario_type": scenario.scenario_type,
+                    "label": scenario.label,
+                    "error": str(exc),
+                    "failure_type": "exception",
+                }
+            )
 
     if failed > 0:
         raise RuntimeError(f"Benchmark failed for {failed} scenario(s): {failure_details[:3]}")
@@ -439,17 +460,17 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> Dict[str, Any]:
 
     frac_pos, mean_pred = calibration_curve(y_true_a, y_score_a, n_bins=8, strategy="uniform")
     fig, ax = plt.subplots(figsize=(6, 4))
-    ax.plot(mean_pred, frac_pos, marker="o", label="Model")
+    ax.plot(mean_pred, frac_pos, marker="o", label="Analytic risk score")
     ax.plot([0, 1], [0, 1], linestyle="--", color="gray", label="Perfect calibration")
-    ax.set_xlabel("Predicted breach probability")
+    ax.set_xlabel("Predicted risk score")
     ax.set_ylabel("Observed breach frequency")
-    ax.set_title("Calibration Curve")
+    ax.set_title("Calibration Curve for Analytic Risk Score")
     ax.legend()
     fig.tight_layout()
     fig.savefig(OUTPUT_DIR / "calibration_curve.png", dpi=200)
     plt.close(fig)
 
-    bounds = AnalyticBoundsModel().calculate_assumption_bounds()
+    envelopes = AnalyticBoundsModel().calculate_diagnostic_envelopes()
 
     report = {
         "seed": seed,
@@ -466,6 +487,8 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> Dict[str, Any]:
         "icr_rmse": icr_rmse_mean,
         "minimum_headroom_mae": headroom_mae_mean,
         "minimum_headroom_rmse": headroom_rmse_mean,
+        "failure_type_counts": dict(failure_type_counts),
+        "scenario_records": scenario_records,
         "speed_benchmark": {
             "simulation_seconds_median": sim_median,
             "simulation_seconds_iqr": sim_iqr,
@@ -473,9 +496,9 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> Dict[str, Any]:
             "analytic_seconds_iqr": analytic_iqr,
             "speedup_x": speedup,
         },
-        "analytic_bounds": {
-            "icr_error_bound": bounds.icr_error_bound,
-            "leverage_error_bound": bounds.leverage_error_bound,
+        "diagnostic_envelopes": {
+            "icr_error_bound": envelopes.icr_error_bound,
+            "leverage_error_bound": envelopes.leverage_error_bound,
         },
         "git_sha": _git_sha(),
         "data_checksums": {

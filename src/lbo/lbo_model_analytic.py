@@ -1,5 +1,4 @@
-"""
-Analytic Headroom Dynamics for IFRS-16 LBO Models
+"""Analytic Headroom Dynamics for IFRS-16 LBO Models
 
 This module provides closed-form approximations for covenant headroom paths
 under IFRS-16, enabling transparent analysis of first-order elasticities
@@ -17,15 +16,16 @@ References:
 - Leland (1994) - Corporate debt value, bond covenants
 """
 
+import warnings
+from dataclasses import dataclass
+from typing import Dict, Optional
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from typing import Dict, Optional
-from dataclasses import dataclass
-import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
 import seaborn as sns
+from matplotlib.figure import Figure
 from scipy.optimize import fsolve
-import warnings
 
 
 @dataclass

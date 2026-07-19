@@ -1,13 +1,13 @@
 import numpy as np
 
-from lbo import AnalyticAssumptions, AnalyticBoundsModel, AnalyticLBOModel
+from lbo import AnalyticAssumptions, AnalyticBoundsModel, AnalyticLBOModel, DiagnosticEnvelope
 
 
 def test_calculate_assumption_bounds():
-    b = AnalyticBoundsModel().calculate_assumption_bounds()
+    b = AnalyticBoundsModel().calculate_diagnostic_envelopes()
     assert np.isfinite(b.icr_error_bound)
     assert np.isfinite(b.leverage_error_bound)
-    assert 0 <= b.classification_accuracy_estimate <= 1
+    assert isinstance(b, DiagnosticEnvelope)
 
 
 def test_analytic_model_supports_two_lease_treatments():

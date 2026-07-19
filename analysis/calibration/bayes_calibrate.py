@@ -1,5 +1,4 @@
-"""
-Bayesian Hierarchical Calibration for LBO Parameters
+"""Bayesian Hierarchical Calibration for LBO Parameters
 
 This module implements hierarchical Bayesian estimation of LBO model parameters
 from cross-firm disclosure data, replacing ad-hoc priors with data-informed
@@ -16,22 +15,22 @@ References:
 - Betancourt (2017) A Conceptual Introduction to Hamiltonian Monte Carlo
 """
 
-import numpy as np
-import pandas as pd
 import json
 import warnings
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
-from dataclasses import dataclass
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
 from scipy import stats
 from scipy.optimize import minimize
-import matplotlib.pyplot as plt
-import seaborn as sns
 
-# Optional: PyMC for full Bayesian inference
 try:
-    import pymc as pm  # type: ignore
     import arviz as az  # type: ignore
+    import pymc as pm  # type: ignore
 
     HAS_PYMC = True
 except ImportError:
