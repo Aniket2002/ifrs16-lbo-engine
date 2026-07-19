@@ -9,7 +9,7 @@ This repository contains:
 - A reduced-form analytic screening approximation.
 - Synthetic benchmark utilities for method comparison.
 
-This repository does not claim deterministic mathematical guarantees in its current implementation.
+Research framing: assumption-bounded analytic approximations evaluated against simulation.
 
 ## What Is Implemented
 
@@ -17,14 +17,19 @@ This repository does not claim deterministic mathematical guarantees in its curr
 - Dual-convention covenant reporting (IFRS-16 and frozen-GAAP views).
 - Bayesian-style calibration scripts and sensitivity analysis utilities.
 - Test modules for integration and acceptance checks.
+- Two distinct model families:
+	- Reduced-form analytical model for fast screening.
+	- Full simulation model with explicit operating and financing line items.
 
 ## Benchmark Data Positioning
 
 The benchmark package is synthetic and intended for method evaluation.
 
-- Data package: `benchmark_dataset_v1.0/`
-- Core table: `benchmark_dataset_v1.0/operators_dataset.csv`
-- Data dictionary: `benchmark_dataset_v1.0/data_dictionary.md`
+- Data package: `data/synthetic/`
+- Core table: `data/synthetic/operators.csv`
+- Data dictionary: `data/DATA_DICTIONARY.md`
+- Provenance notes: `data/PROVENANCE.md`
+- Separate reported case study: `data/case_study/accor.csv`
 
 Use the benchmark as a transparent synthetic testbed, not as a cleaned panel of public-company financial statements.
 
@@ -42,6 +47,12 @@ Run a small reproducible case:
 python analysis/scripts/case_study_accor.py
 ```
 
+Run benchmark regeneration (single command):
+
+```bash
+python -m analysis.run_benchmark --seed 42
+```
+
 Run tests:
 
 ```bash
@@ -51,14 +62,14 @@ pytest -q
 ## Reproducibility
 
 - Core assumptions are explicitly parameterized in the workflow code.
-- Benchmark generation is scripted in `analysis/scripts/benchmark_creation.py`.
-- Integrity hashes are emitted for benchmark CSV artifacts.
+- Benchmark reporting is scripted in `analysis/run_benchmark.py`.
+- Outputs include metrics, calibration curve, scenario/failure counts, speed benchmarks, and git SHA in `output/benchmark/benchmark_report.json`.
 
 ## Research Framing
 
 Recommended wording for external summaries:
 
-> Developed a reproducible framework for comparing IFRS-16 and frozen-GAAP covenant metrics using simulation, calibration, and analytic screening approximations under explicit modeling assumptions.
+> Developed a reproducible framework for comparing IFRS-16 and frozen-GAAP covenant metrics using simulation, calibration, and assumption-bounded analytic screening approximations under explicit modeling assumptions.
 
 ## Citation
 

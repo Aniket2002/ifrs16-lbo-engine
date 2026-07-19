@@ -12,11 +12,7 @@ import os
 import sys
 import time
 from pathlib import Path
-
-# Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-
-from orchestrator_advanced import (
+from lbo.workflows.orchestrator_advanced import (
     read_accor_assumptions,
     run_comprehensive_lbo_analysis,
     monte_carlo_analysis,

@@ -7,13 +7,13 @@ Demonstrates dual-convention covenant analysis on public hospitality company
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from src.lbo import load_case_csv, ratios_ifrs16, ratios_frozen_gaap
+from lbo import load_case_csv, ratios_ifrs16, ratios_frozen_gaap
 
 def run_accor_case_study():
     """Execute full Accor SA case study with dual-convention comparison."""
     
     # Load public financial data
-    df = load_case_csv('data/case_study_template.csv')
+    df = load_case_csv('data/case_study/accor.csv')
     accor = df[df['entity'] == 'Accor SA'].copy()
     
     print("=== ACCOR SA IFRS-16 CASE STUDY ===")

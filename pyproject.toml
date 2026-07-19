@@ -1,0 +1,24 @@
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+exclude = [
+  ".git",
+  ".venv",
+  "__pycache__",
+  "src/lbo/workflows/orchestrator_advanced.py",
+  "src/lbo/workflows/breakthrough_pipeline.py",
+  "src/lbo/workflows/fund_waterfall.py",
+  "src/lbo/optimization/frontier_optimizer_safety_constrained.py",
+  "src/lbo/optimization/optimize_covenants.py",
+  "streamlit_app.py",
+  "analysis/scripts/*.py",
+  "analysis/scripts/failure_mode_analysis.py",
+  "analysis/scripts/evaluation_protocol.py",
+  "analysis/scripts/generate_arxiv_figures.py",
+  "analysis/scripts/run_single_case.py"
+]
+
+[tool.ruff.lint]
+select = ["E", "F"]
+ignore = ["E501", "F401", "F403", "F841"]

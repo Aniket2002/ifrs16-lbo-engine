@@ -17,8 +17,8 @@ from fpdf import FPDF
 plt.switch_backend('Agg')
 
 # Local imports
-from fund_waterfall import compute_waterfall_by_year, summarize_waterfall
-from lbo_model import CovenantBreachError, DebtTranche, InsolvencyError, LBOModel
+from .fund_waterfall import compute_waterfall_by_year, summarize_waterfall
+from ..lbo_model import CovenantBreachError, DebtTranche, InsolvencyError, LBOModel
 
 # -----------------------------
 # Output Configuration
