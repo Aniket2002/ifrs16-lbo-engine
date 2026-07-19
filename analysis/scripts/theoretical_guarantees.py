@@ -1,13 +1,17 @@
 """
-Theoretical Framework: Analytic Screening Guarantees
+Theoretical Framework: Analytic Screening Bounds
 
-This module implements formal guarantees for the analytic headroom approximation,
-providing bounded error classification for covenant feasibility under IFRS-16.
+This module implements assumption-bound analytic screening metrics for the
+headroom approximation used in IFRS-16 covenant analysis.
+
+Important scope note:
+- These bounds are implementation-level approximations, not formal proofs.
+- They are intended for screening diagnostics and empirical validation.
 
 Key Results:
-- Proposition 1: Analytic screening correctly classifies feasibility with error ≤ ε
-- Proposition 2: Frontier monotonicity under bounded growth assumptions
-- Theorem 1: Dominance property for analytic vs simulation ICR/Leverage paths
+- Screening bound formulas under stated modeling assumptions
+- Frontier monotonicity statements used as diagnostic checks
+- Conservative screening inequality templates for risk filtering
 
 Mathematical Foundation:
 - IFRS-16 lease dynamics: L_t = L_0 * (1 + r_L - δ_L)^t
@@ -27,7 +31,7 @@ from scipy.optimize import minimize_scalar
 
 @dataclass
 class TheoreticalBounds:
-    """Theoretical error bounds for analytic approximation"""
+    """Assumption-bound error metrics for the analytic approximation."""
     icr_error_bound: float
     leverage_error_bound: float
     feasibility_classification_accuracy: float
@@ -35,10 +39,10 @@ class TheoreticalBounds:
 
 class AnalyticScreeningTheory:
     """
-    Formal theoretical framework for analytic screening guarantees
-    
-    This class implements the mathematical proofs and bounds for our
-    analytic headroom approximation under IFRS-16.
+    Analytic framework for assumption-bound screening metrics.
+
+    This class implements approximation formulas and validation helpers for
+    the analytic headroom approximation under IFRS-16.
     """
     
     def __init__(self):
@@ -49,7 +53,7 @@ class AnalyticScreeningTheory:
                                         capex_ratio_bound: float = 0.8,
                                         lease_decay_bound: float = 0.12) -> TheoreticalBounds:
         """
-        Proposition 1: Analytic Screening Guarantee
+        Screening bound approximation (legacy method name retained).
         
         Under conditions:
         - Revenue growth g ∈ [0, g_max]  
@@ -60,11 +64,11 @@ class AnalyticScreeningTheory:
         |ICR_analytic(t) - ICR_simulation(t)| ≤ ε_ICR(t)
         |Leverage_analytic(t) - Leverage_simulation(t)| ≤ ε_Lev(t)
         
-        With feasibility classification accuracy ≥ 1 - δ
+        Classification accuracy estimate is heuristic and empirical.
         """
         
-        # Derive theoretical bounds (simplified for implementation)
-        # In practice, these would come from detailed mathematical analysis
+        # Screening bounds are simplified for implementation.
+        # They should be validated empirically against simulation outputs.
         
         # ICR error bound (decreases with time as approximations compound)
         icr_bound = 0.25 * (1 + growth_bound)**2 * (1 + capex_ratio_bound)
@@ -126,17 +130,17 @@ class AnalyticScreeningTheory:
     
     def theorem_1_dominance_property(self) -> Dict[str, str]:
         """
-        Theorem 1: Dominance Property for Conservative Screening
+        Conservative screening inequality template (legacy method name retained).
         
         If analytic ICR_t ≥ τ + δ for safety margin δ > 0,
         then simulated ICR_t ≥ τ with probability ≥ 1 - exp(-δ²/σ²)
         
-        This provides a conservative screening guarantee.
+        This is a conservative screening heuristic, not a formal theorem proof.
         """
         
         return {
             'statement': """
-            Theorem 1 (Conservative Screening):
+            Conservative screening inequality template:
             Let ICR_a(t) be analytic approximation, ICR_s(t) be simulation.
             For safety margin δ > 0 and error variance σ²:
             
@@ -144,9 +148,9 @@ class AnalyticScreeningTheory:
             """,
             
             'proof_sketch': """
-            Proof: By Hoeffding's inequality and bounded approximation error.
-            Key insight: Conservative analytic screen provides probabilistic
-            guarantee on true feasibility.
+            Template rationale: motivated by concentration-inequality style
+            arguments with bounded approximation error assumptions.
+            A complete proof is not provided in this implementation module.
             """,
             
             'practical_implication': """
@@ -213,7 +217,7 @@ class AnalyticScreeningTheory:
         bars1 = ax1.bar(categories, icr_values, 
                        color=['lightblue', 'orange', 'red'], alpha=0.7)
         ax1.axhline(validation_results['theoretical_icr_bound'], 
-                   color='blue', linestyle='--', label='Theoretical Guarantee')
+               color='blue', linestyle='--', label='Screening Bound')
         ax1.set_ylabel('ICR Approximation Error')
         ax1.set_title('ICR Error Bounds vs Empirical Validation')
         ax1.legend()
@@ -235,7 +239,7 @@ class AnalyticScreeningTheory:
         bars2 = ax2.bar(categories, leverage_values,
                        color=['lightgreen', 'orange', 'red'], alpha=0.7)
         ax2.axhline(validation_results['theoretical_leverage_bound'],
-                   color='green', linestyle='--', label='Theoretical Guarantee')
+               color='green', linestyle='--', label='Screening Bound')
         ax2.set_ylabel('Leverage Approximation Error')
         ax2.set_title('Leverage Error Bounds vs Empirical Validation')
         ax2.legend()

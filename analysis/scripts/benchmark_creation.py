@@ -1,14 +1,13 @@
 """
 IFRS-16 LBO Benchmark Dataset Creation
 
-This module creates a standardized benchmark dataset for IFRS-16 LBO analysis
-with DOI-ready format for academic publication and method comparison.
+This module creates a standardized synthetic benchmark dataset for IFRS-16 LBO
+analysis and method comparison.
 
 Features:
-- Multi-operator dataset with cleaned financials
+- Multi-operator synthetic dataset with documented assumptions
 - IFRS-16 lease treatment parameters
-- Covenant breach prediction task
-- Baseline method results for leaderboard
+- Covenant screening benchmark tasks
 - Reproducible data preparation pipeline
 """
 
@@ -58,6 +57,12 @@ class OperatorData:
     covenant_breach_2020_2021: bool  # Did they breach during COVID?
     actual_recovery_timeline: Optional[int]  # Months to pre-COVID EBITDA
 
+    # Provenance metadata
+    source: str = "synthetic_archetype"
+    year: int = 2019
+    reported_or_simulated: str = "simulated"
+    transformation: str = "hand_calibrated_from_public_ranges"
+
 @dataclass 
 class BenchmarkTask:
     """Definition of benchmark prediction task"""
@@ -82,8 +87,9 @@ class IFRS16LBOBenchmark:
         self.metadata = {
             'version': '1.0.0',
             'created': datetime.now().isoformat(),
-            'description': 'IFRS-16 LBO Benchmark Dataset',
-            'citation': 'TBD - arXiv paper reference',
+            'description': 'IFRS-16 LBO Synthetic Benchmark Dataset',
+            'data_nature': 'Synthetic benchmark for method evaluation',
+            'citation': 'See project SSRN paper and repository documentation',
             'license': 'CC-BY-4.0'
         }
     
@@ -264,6 +270,12 @@ class IFRS16LBOBenchmark:
         readme_file = output_dir / "README.md"
         with open(readme_file, 'w') as f:
             f.write(readme_content)
+
+        # Create data dictionary
+        data_dictionary_content = self._generate_data_dictionary()
+        data_dictionary_file = output_dir / "data_dictionary.md"
+        with open(data_dictionary_file, 'w') as f:
+            f.write(data_dictionary_content)
         
         # Create data hash for integrity
         data_hash = self._compute_dataset_hash(operators_df, tasks_df)
@@ -276,6 +288,7 @@ class IFRS16LBOBenchmark:
             'benchmark_tasks': str(tasks_file), 
             'metadata': str(metadata_file),
             'readme': str(readme_file),
+            'data_dictionary': str(data_dictionary_file),
             'integrity_hash': data_hash
         }
     
@@ -286,7 +299,9 @@ class IFRS16LBOBenchmark:
 
 ## Overview
 
-This benchmark dataset enables standardized comparison of modeling approaches for leveraged buyout analysis under IFRS-16 lease accounting. The dataset includes {len(self.operators)} anonymized operators with realistic financial profiles, lease structures, and outcome variables.
+This synthetic benchmark dataset enables standardized comparison of modeling approaches for leveraged buyout analysis under IFRS-16 lease accounting. The dataset includes {len(self.operators)} anonymized operator archetypes with realistic financial profiles, lease structures, and simulated outcome variables.
+
+This dataset is not a cleaned panel of public company financial statements.
 
 ## Dataset Structure
 
@@ -296,7 +311,8 @@ This benchmark dataset enables standardized comparison of modeling approaches fo
 - **IFRS-16 Parameters**: Lease liabilities, rates, maturity profiles
 - **Debt Structure**: Senior/total debt, interest coverage ratios
 - **Market Data**: Trading multiples, credit ratings
-- **Outcomes**: Actual covenant breaches and recovery timelines
+- **Outcomes**: Simulated covenant breaches and recovery timelines
+- **Provenance Columns**: source, year, reported_or_simulated, transformation
 
 ### Benchmark Tasks (`benchmark_tasks.csv`)
 Three standardized prediction tasks:
@@ -333,7 +349,7 @@ Submit results in format:
 
 ## Baseline Results
 
-Our IFRS-16-aware LBO engine with Bayesian calibration achieves:
+Illustrative baseline outputs from this repository's synthetic setup:
 - **Breach Prediction**: AUC-ROC = 0.72
 - **Headroom Estimation**: RMSE = 0.34
 - **Covenant Design**: E[IRR] = 18.4%
@@ -361,6 +377,46 @@ SHA256: [See data_integrity.json]
 ## Contact
 
 [Contact information for questions/submissions]
+"""
+
+    def _generate_data_dictionary(self) -> str:
+        """Generate a data dictionary for benchmark columns."""
+
+        return """# Data Dictionary
+
+## operators_dataset.csv
+
+- `name`: Synthetic operator identifier.
+- `sector`: Sector category.
+- `region`: Region category.
+- `revenue_2019`: Baseline revenue (millions).
+- `ebitda_2019`: Baseline EBITDA (millions).
+- `capex_2019`: Baseline CapEx (millions).
+- `revenue_growth_historical`: Historical growth proxy used for simulation.
+- `projected_recovery_rate`: Recovery-speed assumption.
+- `lease_liability_2020`: Lease liability used in the synthetic scenario (millions).
+- `lease_ebitda_multiple`: Lease/EBITDA multiple assumption.
+- `avg_lease_rate`: Lease interest-rate assumption.
+- `lease_maturity_profile`: Year-bucket lease profile (10 buckets).
+- `senior_debt_2019`: Senior debt baseline (millions).
+- `total_debt_2019`: Total debt baseline (millions).
+- `interest_coverage_2019`: Interest coverage baseline.
+- `trading_multiple_2019`: EV/EBITDA anchor assumption.
+- `credit_rating`: Optional rating label.
+- `covenant_breach_2020_2021`: Simulated breach label.
+- `actual_recovery_timeline`: Simulated recovery timeline (months).
+- `source`: Data provenance source descriptor.
+- `year`: Reference year for row construction.
+- `reported_or_simulated`: Provenance flag.
+- `transformation`: Transformation/proxy method used.
+
+## benchmark_tasks.csv
+
+- `name`: Task identifier.
+- `description`: Task description.
+- `target_variable`: Prediction target.
+- `evaluation_metric`: Evaluation metric.
+- `baseline_score`: Repository baseline score for reference.
 """
     
     def _compute_dataset_hash(self, operators_df: pd.DataFrame, tasks_df: pd.DataFrame) -> str:

@@ -1,20 +1,19 @@
-# tests/test_acceptance.py
-"""
-Acceptance tests for LBO engine - Three smoke tests:
-1. Exit multiple monotonicity (IRR↑ when exit multiple↑)
-2. Equity-vector IRR matches model IRR within 1e-4
-3. (Optional) Leases not counted as sources assertion
+"""Acceptance tests for the LBO workflow.
+
+These tests are intentionally strict:
+- Unexpected exceptions fail the test.
+- NaN outputs fail the test.
+- IRR reconciliation uses a true 1e-4 tolerance.
 """
 
 import sys
 from pathlib import Path
-import warnings
-warnings.filterwarnings('ignore')
 
 # Module path safety
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src" / "lbo" / "workflows"))
+sys.path.insert(0, str(ROOT / "src" / "lbo"))
 sys.path.append(str(ROOT))
-sys.path.append(str(ROOT / "src" / "modules"))
 
 # Imports
 from orchestrator_advanced import (
@@ -49,141 +48,91 @@ class TestAcceptance:
         Test: IRR↑ when exit multiple↑
         Higher exit multiples should lead to higher IRRs, all else equal.
         """
-        print("🧪 Testing exit multiple monotonicity...")
-        
-        # Test with three different exit multiples
         exit_multiples = [8.0, 10.0, 12.0]
         irrs = []
-        
+
         for exit_mult in exit_multiples:
             assumptions = DealAssumptions(
                 **{**self.base_assumptions.__dict__, 'exit_ev_ebitda': exit_mult}
             )
-            
+
             try:
-                results, metrics = run_enhanced_base_case(assumptions)
-                irr = metrics.get('IRR', float('nan'))
-                
-                # Skip if model fails (could happen with extreme assumptions)
-                if np.isnan(irr):
-                    print(f"  ⚠️ Model failed for exit multiple {exit_mult}x")
-                    continue
-                    
-                irrs.append(irr)
-                print(f"  Exit {exit_mult}x → IRR {irr:.1%}")
-                
-            except Exception as e:
-                print(f"  ⚠️ Error with exit multiple {exit_mult}x: {e}")
-                continue
-        
-        # Check monotonicity if we have enough data points
-        if len(irrs) >= 2:
-            # IRRs should be increasing (or at least non-decreasing)
-            for i in range(1, len(irrs)):
-                assert irrs[i] >= irrs[i-1], \
-                    f"IRR monotonicity failed: {irrs[i]:.1%} < {irrs[i-1]:.1%}"
-            
-            print(f"  ✅ Exit multiple monotonicity: {irrs[0]:.1%} ≤ ... ≤ {irrs[-1]:.1%}")
-        else:
-            print("  ⚠️ Insufficient data points for monotonicity test")
+                _, metrics = run_enhanced_base_case(assumptions)
+            except Exception as exc:
+                pytest.fail(f"run_enhanced_base_case failed for exit multiple {exit_mult}x: {exc}")
+
+            irr = metrics.get('IRR', float('nan'))
+            if np.isnan(irr):
+                pytest.fail(f"Model returned NaN IRR for exit multiple {exit_mult}x")
+            irrs.append(irr)
+
+        for i in range(1, len(irrs)):
+            assert irrs[i] >= irrs[i - 1], (
+                f"IRR monotonicity failed: {irrs[i]:.6f} < {irrs[i - 1]:.6f}"
+            )
     
     def test_equity_vector_irr_consistency(self):
         """
         Test: Equity-vector IRR matches model IRR within 1e-4
         Use build_equity_cf_vector + numpy_financial.irr
         """
-        print("🧪 Testing equity vector IRR consistency...")
-        
         try:
-            # Run base case
             results, metrics = run_enhanced_base_case(self.base_assumptions)
-            model_irr = metrics.get('IRR', float('nan'))
-            
-            if np.isnan(model_irr):
-                print("  ⚠️ Model returned NaN IRR, skipping test")
-                return
-            
-            # Build equity cash flow vector
-            equity_vector = build_equity_cf_vector(results, self.base_assumptions)
-            
-            # Calculate IRR from vector
-            try:
-                vector_irr = npf.irr(equity_vector)
-                
-                if np.isnan(vector_irr):
-                    print("  ⚠️ Vector IRR calculation returned NaN")
-                    return
-                
-                # Check consistency within tolerance
-                irr_diff = abs(model_irr - vector_irr)
-                tolerance = 0.01  # Use 1% tolerance instead of 1e-4 for numerical stability
-                
-                print(f"  Model IRR: {model_irr:.4%}")
-                print(f"  Vector IRR: {vector_irr:.4%}")
-                print(f"  Difference: {irr_diff:.6f}")
-                print(f"  Vector: {[f'{cf:.0f}' for cf in equity_vector]}")
-                
-                assert irr_diff <= tolerance, \
-                    f"IRR consistency failed: |{model_irr:.4%} - {vector_irr:.4%}| = {irr_diff:.6f} > {tolerance}"
-                
-                print(f"  ✅ IRR consistency: difference {irr_diff:.6f} ≤ {tolerance}")
-                
-            except Exception as e:
-                print(f"  ⚠️ Vector IRR calculation failed: {e}")
-                # Don't fail the test if IRR calculation has numerical issues
-                return
-                
-        except Exception as e:
-            print(f"  ⚠️ Base case analysis failed: {e}")
-            return
+        except Exception as exc:
+            pytest.fail(f"Base case analysis failed unexpectedly: {exc}")
+
+        model_irr = metrics.get('IRR', float('nan'))
+        if np.isnan(model_irr):
+            pytest.fail("Model returned NaN IRR")
+
+        equity_vector = build_equity_cf_vector(results, self.base_assumptions)
+        if not equity_vector:
+            pytest.fail("Equity cash flow vector is empty")
+
+        try:
+            vector_irr = npf.irr(equity_vector)
+        except Exception as exc:
+            pytest.fail(f"Vector IRR calculation failed unexpectedly: {exc}")
+
+        if np.isnan(vector_irr):
+            pytest.fail("Vector IRR calculation returned NaN")
+
+        irr_diff = abs(model_irr - vector_irr)
+        tolerance = 1e-4
+        assert irr_diff <= tolerance, (
+            f"IRR consistency failed: |{model_irr:.6f} - {vector_irr:.6f}| = {irr_diff:.6f} > {tolerance}"
+        )
     
-    def test_leases_not_sources_optional(self):
+    def test_sources_uses_cash_reconciliation(self):
         """
         Optional test: Leases not counted as sources assertion
         Check if S&U dict exposes the breakdown properly.
         """
-        print("🧪 Testing leases not counted as cash sources...")
-        
         try:
-            # Build sources and uses
             sources_uses = build_sources_and_uses(self.base_assumptions)
-            
-            # Check if sources dict is available
-            sources = sources_uses.get('sources', {})
-            
-            if not sources:
-                print("  ⚠️ Sources breakdown not available, skipping test")
-                return
-            
-            # Look for lease-related entries in sources
-            lease_keys = [k for k in sources.keys() if 'lease' in k.lower() or 'ifrs' in k.lower()]
-            
-            if lease_keys:
-                print(f"  ⚠️ Found potential lease sources: {lease_keys}")
-                # This would be a warning, not necessarily a failure
-                # since some implementations might show leases for transparency
-            else:
-                print("  ✅ No lease entries found in cash sources")
-            
-            # Check if total sources makes sense (should be close to enterprise value)
-            total_sources = sources.get('Total Sources', 0)
-            enterprise_value = sources_uses.get('enterprise_value', 0)
-            
-            if enterprise_value > 0:
-                sources_ratio = total_sources / enterprise_value
-                print(f"  Sources/EV ratio: {sources_ratio:.2f}")
-                
-                # Should be close to 1.0 if no leases in sources
-                if 0.9 <= sources_ratio <= 1.1:
-                    print("  ✅ Sources/EV ratio reasonable (leases likely not in sources)")
-                else:
-                    print(f"  ⚠️ Sources/EV ratio {sources_ratio:.2f} may include non-cash items")
-            
-            print("  ✅ Leases sources test completed")
-            
-        except Exception as e:
-            print(f"  ⚠️ Sources & uses analysis failed: {e}")
-            return
+        except Exception as exc:
+            pytest.fail(f"Sources and uses build failed unexpectedly: {exc}")
+
+        sources = sources_uses.get('sources')
+        assert isinstance(sources, dict) and sources, "Missing sources breakdown"
+
+        for key in ["Senior Debt", "Mezzanine Debt", "IFRS-16 Leases", "Equity Contribution", "Total Sources"]:
+            assert key in sources, f"Missing sources key: {key}"
+
+        enterprise_value = sources_uses.get('enterprise_value', 0.0)
+        assert enterprise_value > 0, "Enterprise value must be positive"
+
+        total_sources = float(sources["Total Sources"])
+        assert abs(total_sources - enterprise_value) <= 1e-8, (
+            f"Total Sources must equal enterprise value: {total_sources} vs {enterprise_value}"
+        )
+
+        cash_sources = float(sources["Senior Debt"]) + float(sources["Mezzanine Debt"]) + float(sources["Equity Contribution"])
+        assert abs(cash_sources - total_sources) <= 1e-8, (
+            "Cash funding sources should reconcile without counting lease liability as cash proceeds"
+        )
+
+        assert float(sources["IFRS-16 Leases"]) >= 0.0, "Lease disclosure field should be present and non-negative"
 
 
 def run_acceptance_tests():
@@ -197,7 +146,7 @@ def run_acceptance_tests():
     tests = [
         ("Exit Multiple Monotonicity", test_suite.test_exit_multiple_monotonicity),
         ("Equity Vector IRR Consistency", test_suite.test_equity_vector_irr_consistency),
-        ("Leases Not Sources (Optional)", test_suite.test_leases_not_sources_optional)
+        ("Sources & Uses Cash Reconciliation", test_suite.test_sources_uses_cash_reconciliation)
     ]
     
     results = []
