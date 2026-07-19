@@ -12,7 +12,6 @@ import pandas as pd
 
 from lbo import load_case_csv, ratios_frozen_gaap, ratios_ifrs16
 
-
 ROOT = Path(__file__).resolve().parents[2]
 FIGURES_DIR = ROOT / "analysis" / "figures"
 OUTPUT_DIR = ROOT / "output"
@@ -23,6 +22,8 @@ def run_accor_case_study():
 
     FIGURES_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    covenant_icr = 4.0
+    covenant_lev = 3.5
 
     # Load public financial data
     df = load_case_csv(str(ROOT / "data" / "case_study" / "accor.csv"))
@@ -37,6 +38,7 @@ def run_accor_case_study():
     results = []
     for _, row in accor.iterrows():
         year = int(row["year"])
+        negative_ebitda = float(row["ebitda"]) <= 0
 
         # Create standardized row format for covenant calculations
         std_row = pd.Series(
@@ -60,15 +62,36 @@ def run_accor_case_study():
         # Frozen GAAP ratios (excludes lease liability)
         lev_frozen, icr_frozen = ratios_frozen_gaap(std_row)
 
+        if negative_ebitda:
+            ifrs16_state = "negative_ebitda_failure"
+            frozen_state = "negative_ebitda_failure"
+            breach_ifrs16 = True
+            breach_frozen = True
+        else:
+            ifrs16_state = "ok"
+            frozen_state = "ok"
+            breach_ifrs16 = (icr_ifrs16 < covenant_icr) or (lev_ifrs16 > covenant_lev)
+            breach_frozen = (icr_frozen < covenant_icr) or (lev_frozen > covenant_lev)
+
         results.append(
             {
                 "year": year,
+                "source_report": row.get("source_report", "Accor Universal Registration Document"),
+                "source_page": row.get("source_page", "reconstructed"),
+                "reconstruction_formula": row.get(
+                    "reconstruction_formula",
+                    "lease expense reconstructed from disclosed lease footprint",
+                ),
                 "icr_ifrs16": icr_ifrs16,
                 "icr_frozen_gaap": icr_frozen,
                 "leverage_ifrs16": lev_ifrs16,
                 "leverage_frozen_gaap": lev_frozen,
                 "covenant_impact_icr": icr_ifrs16 - icr_frozen,
                 "covenant_impact_lev": lev_ifrs16 - lev_frozen,
+                "ifrs16_analysis_state": ifrs16_state,
+                "frozen_gaap_analysis_state": frozen_state,
+                "breach_ifrs16": breach_ifrs16,
+                "breach_frozen_gaap": breach_frozen,
             }
         )
 
@@ -93,14 +116,16 @@ def run_accor_case_study():
     print(f"Average Leverage impact: {results_df['covenant_impact_lev'].mean():.3f}x")
 
     # Covenant sensitivity analysis
-    covenant_icr = 4.0  # Hypothetical ICR covenant
-    covenant_lev = 3.5  # Hypothetical leverage covenant
 
     breaches_ifrs16 = (results_df["icr_ifrs16"] < covenant_icr) | (
         results_df["leverage_ifrs16"] > covenant_lev
     )
     breaches_frozen = (results_df["icr_frozen_gaap"] < covenant_icr) | (
         results_df["leverage_frozen_gaap"] > covenant_lev
+    )
+    breaches_ifrs16 = breaches_ifrs16 | results_df["ifrs16_analysis_state"].eq("negative_ebitda_failure")
+    breaches_frozen = breaches_frozen | results_df["frozen_gaap_analysis_state"].eq(
+        "negative_ebitda_failure"
     )
 
     print("\n=== COVENANT BREACH ANALYSIS ===")

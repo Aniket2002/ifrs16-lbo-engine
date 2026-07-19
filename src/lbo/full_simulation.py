@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, Dict, List
+from typing import Any
 
 import numpy as np
 import numpy_financial as npf
@@ -8,6 +8,8 @@ import numpy_financial as npf
 @dataclass
 class FullSimulationAssumptions:
     years: int = 5
+    entry_enterprise_value: float = 1000.0
+    transaction_fees_pct: float = 0.03
     revenue_0: float = 1000.0
     revenue_growth: float = 0.03
     ebitda_margin: float = 0.22
@@ -36,9 +38,10 @@ class FullSimulationModel:
     def __init__(self, assumptions: FullSimulationAssumptions | None = None) -> None:
         self.a = assumptions or FullSimulationAssumptions()
 
-    def simulate(self) -> List[Dict[str, Any]]:
+    def simulate(self) -> list[dict[str, Any]]:
         a = self.a
-        rows: List[Dict[str, Any]] = []
+        rows: list[dict[str, Any]] = []
+        sources_and_uses = entry_sources_and_uses(a)
 
         revenue = a.revenue_0
         debt = a.debt_opening
@@ -59,6 +62,7 @@ class FullSimulationModel:
             ebitda = revenue * a.ebitda_margin
             da = revenue * a.da_pct_revenue
             ebit = ebitda - da
+            negative_ebitda_flag = ebitda <= 0
 
             wc = revenue * a.wc_pct_revenue
             delta_wc = wc - prev_wc
@@ -66,17 +70,24 @@ class FullSimulationModel:
 
             capex = revenue * a.capex_pct_revenue
             cash_interest = (debt + revolver) * a.cash_interest_rate
-            lease_interest = lease * a.lease_interest_rate
+            lease_interest_cash_payment = lease * a.lease_interest_rate
             lease_additions = revenue * a.lease_additions_pct_revenue
-            lease_principal = lease * a.lease_principal_pct_opening
+            lease_principal_cash_payment = lease * a.lease_principal_pct_opening
 
-            taxable_income = ebit - cash_interest - lease_interest
+            taxable_income = ebit - cash_interest - lease_interest_cash_payment
             cash_taxes = max(0.0, taxable_income * a.tax_rate)
 
             operating_cash_generation = (
-                ebitda - delta_wc - cash_taxes - cash_interest - lease_interest - capex
+                ebitda
+                - delta_wc
+                - cash_taxes
+                - cash_interest
+                - lease_interest_cash_payment
+                - capex
             )
-            cash_before_financing = opening_cash + operating_cash_generation - lease_principal
+            cash_before_financing = (
+                opening_cash + operating_cash_generation - lease_principal_cash_payment
+            )
 
             actual_mandatory_amortisation = min(a.scheduled_debt_amort, max(0.0, opening_debt))
             cash_after_mandatory = cash_before_financing - actual_mandatory_amortisation
@@ -112,7 +123,7 @@ class FullSimulationModel:
             ending_cash = cash_after_draw - cash_sweep
             debt = max(0.0, opening_debt - actual_mandatory_amortisation - cash_sweep)
             revolver = max(0.0, opening_revolver + revolver_draw - revolver_repayment)
-            lease = max(0.0, opening_lease + lease_interest + lease_additions - lease_principal)
+            lease = max(0.0, opening_lease + lease_additions - lease_principal_cash_payment)
             cash = ending_cash
 
             exit_enterprise_value = 0.0
@@ -131,10 +142,18 @@ class FullSimulationModel:
                     "opening_financial_debt": opening_debt,
                     "opening_revolver": opening_revolver,
                     "opening_lease_liability": opening_lease,
+                    "entry_enterprise_value": sources_and_uses["entry_enterprise_value"],
+                    "transaction_fees": sources_and_uses["transaction_fees"],
+                    "purchase_price": sources_and_uses["purchase_price"],
+                    "total_uses": sources_and_uses["total_uses"],
+                    "debt_sources": sources_and_uses["debt_sources"],
+                    "cash_sources": sources_and_uses["cash_sources"],
+                    "sponsor_equity": sources_and_uses["sponsor_equity"],
                     "revenue": revenue,
                     "ebitda": ebitda,
                     "da": da,
                     "ebit": ebit,
+                    "negative_ebitda_flag": negative_ebitda_flag,
                     "operating_cash_generation": operating_cash_generation,
                     "cash_before_financing": cash_before_financing,
                     "cash_taxes": cash_taxes,
@@ -142,8 +161,9 @@ class FullSimulationModel:
                     "working_capital": wc,
                     "delta_working_capital": delta_wc,
                     "cash_interest": cash_interest,
-                    "lease_interest": lease_interest,
-                    "lease_principal_cash_payment": lease_principal,
+                    "lease_interest_cash_payment": lease_interest_cash_payment,
+                    "lease_interest": lease_interest_cash_payment,
+                    "lease_principal_cash_payment": lease_principal_cash_payment,
                     "lease_additions": lease_additions,
                     "scheduled_debt_amortisation": actual_mandatory_amortisation,
                     "actual_mandatory_amortisation": actual_mandatory_amortisation,
@@ -167,22 +187,38 @@ class FullSimulationModel:
         return rows
 
 
+def entry_sources_and_uses(assumptions: FullSimulationAssumptions) -> dict[str, float]:
+    purchase_price = float(assumptions.entry_enterprise_value)
+    transaction_fees = purchase_price * float(assumptions.transaction_fees_pct)
+    debt_sources = float(assumptions.debt_opening)
+    cash_sources = float(assumptions.initial_cash)
+    total_uses = purchase_price + transaction_fees
+    sponsor_equity = max(0.0, total_uses - debt_sources - cash_sources)
+
+    return {
+        "entry_enterprise_value": purchase_price,
+        "purchase_price": purchase_price,
+        "transaction_fees": transaction_fees,
+        "total_uses": total_uses,
+        "debt_sources": debt_sources,
+        "cash_sources": cash_sources,
+        "sponsor_equity": sponsor_equity,
+    }
+
+
 def equity_cash_flow_vector(
-    rows: List[Dict[str, Any]], assumptions: FullSimulationAssumptions
-) -> List[float]:
+    rows: list[dict[str, Any]], assumptions: FullSimulationAssumptions
+) -> list[float]:
     if not rows:
         return []
 
-    initial_equity = max(
-        1e-9,
-        assumptions.debt_opening + assumptions.lease_opening - assumptions.initial_cash,
-    )
+    initial_equity = max(1e-9, entry_sources_and_uses(assumptions)["sponsor_equity"])
     return [-initial_equity] + [0.0] * (len(rows) - 1) + [float(rows[-1]["exit_equity"])]
 
 
 def equity_return_metrics(
-    rows: List[Dict[str, Any]], assumptions: FullSimulationAssumptions
-) -> Dict[str, Any]:
+    rows: list[dict[str, Any]], assumptions: FullSimulationAssumptions
+) -> dict[str, Any]:
     cash_flows = equity_cash_flow_vector(rows, assumptions)
     if len(cash_flows) < 2:
         return {
@@ -191,12 +227,15 @@ def equity_return_metrics(
             "moic": float("nan"),
             "initial_equity": float("nan"),
             "exit_equity": float("nan"),
+            "sponsor_equity": float("nan"),
+            "entry_sources_and_uses": {},
         }
 
     initial_equity = abs(cash_flows[0])
     exit_equity = cash_flows[-1]
     irr = npf.irr(cash_flows)
     moic = exit_equity / initial_equity if initial_equity > 0 else float("nan")
+    sources_and_uses = entry_sources_and_uses(assumptions)
 
     return {
         "equity_cash_flow_vector": cash_flows,
@@ -204,4 +243,6 @@ def equity_return_metrics(
         "moic": float(moic),
         "initial_equity": float(initial_equity),
         "exit_equity": float(exit_equity),
+        "sponsor_equity": float(sources_and_uses["sponsor_equity"]),
+        "entry_sources_and_uses": sources_and_uses,
     }

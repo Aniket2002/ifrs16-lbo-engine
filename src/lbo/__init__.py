@@ -3,17 +3,17 @@
 __version__ = "1.0.0"
 __author__ = "Aniket Bhardwaj"
 
+from .analytic_bounds import AnalyticBoundsModel, DiagnosticEnvelope
+from .covenants import covenant_headroom, ratios_frozen_gaap, ratios_ifrs16
 from .data import load_case_csv
-from .covenants import ratios_ifrs16, ratios_frozen_gaap, covenant_headroom
-from .lbo_model import *
-from .lbo_model_analytic import *
-from .analytic_bounds import AnalyticBoundsModel, AssumptionBounds
 from .full_simulation import (
-    FullSimulationModel,
     FullSimulationAssumptions,
+    FullSimulationModel,
     equity_cash_flow_vector,
     equity_return_metrics,
 )
+from .lbo_model import *
+from .lbo_model_analytic import *
 
 # Submodules
 __all__ = [
@@ -22,7 +22,7 @@ __all__ = [
     "ratios_frozen_gaap",
     "covenant_headroom",
     "AnalyticBoundsModel",
-    "AssumptionBounds",
+    "DiagnosticEnvelope",
     "FullSimulationModel",
     "FullSimulationAssumptions",
     "equity_cash_flow_vector",

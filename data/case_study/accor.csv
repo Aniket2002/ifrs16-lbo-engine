@@ -1,6 +1,6 @@
-entity,year,revenue,ebitda,net_debt,lease_liability,lease_expense,interest_expense,source_note
-Accor SA,2019,4049,825,2500,3000,120,190,Compiled from public annual report disclosures; lease expense reconstructed from disclosed lease footprint
-Accor SA,2020,1621,-34,3350,3200,128,180,Compiled from public annual report disclosures; negative EBITDA retained for crisis-year ratio handling
-Accor SA,2021,2204,364,3100,3050,125,175,Compiled from public annual report disclosures; lease expense reconstructed from disclosed lease footprint
-Accor SA,2022,4224,675,2800,2900,118,170,Compiled from public annual report disclosures; lease expense reconstructed from disclosed lease footprint
-Accor SA,2023,5056,1003,2550,2750,110,168,Compiled from public annual report disclosures; lease expense reconstructed from disclosed lease footprint
+entity,year,revenue,ebitda,net_debt,lease_liability,lease_expense,interest_expense,source_report,source_page,reconstruction_formula,source_note
+Accor SA,2019,4049,825,2500,3000,120,190,Accor Universal Registration Document,operating lease / lease-note disclosure,lease_expense = reconstructed lease footprint from disclosed lease obligations and rent note,Compiled from public annual report disclosures; lease expense reconstructed from disclosed lease footprint
+Accor SA,2020,1621,-34,3350,3200,128,180,Accor Universal Registration Document,operating lease / lease-note disclosure,lease_expense = reconstructed lease footprint from disclosed lease obligations and rent note,Compiled from public annual report disclosures; negative EBITDA retained for crisis-year ratio handling
+Accor SA,2021,2204,364,3100,3050,125,175,Accor Universal Registration Document,operating lease / lease-note disclosure,lease_expense = reconstructed lease footprint from disclosed lease obligations and rent note,Compiled from public annual report disclosures; lease expense reconstructed from disclosed lease footprint
+Accor SA,2022,4224,675,2800,2900,118,170,Accor Universal Registration Document,operating lease / lease-note disclosure,lease_expense = reconstructed lease footprint from disclosed lease obligations and rent note,Compiled from public annual report disclosures; lease expense reconstructed from disclosed lease footprint
+Accor SA,2023,5056,1003,2550,2750,110,168,Accor Universal Registration Document,operating lease / lease-note disclosure,lease_expense = reconstructed lease footprint from disclosed lease obligations and rent note,Compiled from public annual report disclosures; lease expense reconstructed from disclosed lease footprint
