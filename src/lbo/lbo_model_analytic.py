@@ -22,10 +22,7 @@ from typing import Dict, Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
-import seaborn as sns
 from matplotlib.figure import Figure
-from scipy.optimize import fsolve
 
 
 @dataclass
@@ -123,15 +120,16 @@ class AnalyticLBOModel:
             financial_debt[t] = max(0, debt_growth - cash_paydown)
 
         # Lease liability path (IFRS-16) with explicit treatment switch.
+        # Consistent with full simulation: closing = opening + additions - principal
+        # Interest is recognized in P&L but not in balance sheet roll-forward
         if a.lease_treatment == "run_off":
             lease_liability = np.zeros(len(years))
             lease_liability[0] = a.lease_liability_0
             for t in range(1, len(years)):
                 opening = lease_liability[t - 1]
-                interest = opening * a.lease_rate
                 additions = a.lease_additions_rate * ebitda[t - 1]
                 principal = a.lease_principal_rate * opening
-                lease_liability[t] = max(0.0, opening + interest + additions - principal)
+                lease_liability[t] = max(0.0, opening + additions - principal)
         else:
             lease_liability = a.lambda_lease * ebitda
 
@@ -392,7 +390,7 @@ class AnalyticLBOModel:
         param_names = [p[0] for p in leverage_params]
         elasticity_matrix = np.array([p[1] for p in leverage_params])
 
-        im = ax.imshow(elasticity_matrix, aspect="auto", cmap="RdBu_r", vmin=-1, vmax=1)
+        ax.imshow(elasticity_matrix, aspect="auto", cmap="RdBu_r", vmin=-1, vmax=1)
         ax.set_xticks(range(len(years_subset)))
         ax.set_xticklabels([f"Year {y}" for y in years_subset])
         ax.set_yticks(range(len(param_names)))
@@ -402,7 +400,7 @@ class AnalyticLBOModel:
         # Add text annotations
         for i in range(len(param_names)):
             for j in range(len(years_subset)):
-                text = ax.text(
+                ax.text(
                     j,
                     i,
                     f"{elasticity_matrix[i, j]:.2f}",
@@ -419,7 +417,7 @@ class AnalyticLBOModel:
         # Cap elasticities for visualization
         elasticity_matrix_capped = np.clip(elasticity_matrix, -2, 2)
 
-        im = ax.imshow(elasticity_matrix_capped, aspect="auto", cmap="RdBu_r", vmin=-2, vmax=2)
+        ax.imshow(elasticity_matrix_capped, aspect="auto", cmap="RdBu_r", vmin=-2, vmax=2)
         ax.set_xticks(range(len(years_subset)))
         ax.set_xticklabels([f"Year {y}" for y in years_subset])
         ax.set_yticks(range(len(param_names)))
@@ -429,7 +427,7 @@ class AnalyticLBOModel:
         # Add text annotations
         for i in range(len(param_names)):
             for j in range(len(years_subset)):
-                text = ax.text(
+                ax.text(
                     j,
                     i,
                     f"{elasticity_matrix_capped[i, j]:.2f}",
@@ -507,12 +505,12 @@ def main():
         print("Generating plots...")
 
         # Path plots
-        fig1 = model.plot_paths()
+        model.plot_paths()
         plt.savefig(f"{args.output_dir}/F8_analytic_vs_sim.pdf", dpi=300, bbox_inches="tight")
         plt.close()
 
         # Elasticity plots
-        fig2 = model.plot_elasticities()
+        model.plot_elasticities()
         plt.savefig(f"{args.output_dir}/F9_elasticities.pdf", dpi=300, bbox_inches="tight")
         plt.close()
 

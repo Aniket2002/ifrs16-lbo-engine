@@ -25,6 +25,6 @@ jobs:
       - name: Format check
         run: python -m ruff format --check .
       - name: Tests
-        run: python -m pytest -q --cov=src/lbo --cov-report=term-missing --cov-fail-under=50
+        run: python -m pytest -q --cov=src/lbo --cov-report=term-missing --cov-fail-under=52
       - name: Benchmark smoke test
         run: python -m analysis.run_benchmark --smoke-test

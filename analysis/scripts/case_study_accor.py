@@ -7,7 +7,6 @@ Demonstrates dual-convention covenant analysis on public hospitality company
 from pathlib import Path
 
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 
 from lbo import load_case_csv, ratios_frozen_gaap, ratios_ifrs16
