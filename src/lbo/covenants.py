@@ -1,6 +1,6 @@
 """Covenant ratio calculations with dual IFRS-16/frozen-GAAP conventions"""
 
-from typing import Any, Dict, Tuple
+from typing import Dict, Tuple
 
 import numpy as np
 import pandas as pd

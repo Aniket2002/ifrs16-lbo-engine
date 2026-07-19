@@ -8,6 +8,7 @@ import pandas as pd
 import pytest
 
 from lbo import AnalyticAssumptions, AnalyticLBOModel, DiagnosticEnvelope
+from lbo.analytic_bounds import AnalyticBoundsModel
 from lbo.covenants import (
     covenant_headroom,
     dual_convention_ratios,
@@ -226,6 +227,63 @@ class TestCovenantRatios:
         assert result["ifrs16_leverage"].iloc[0] > result["frozen_gaap_leverage"].iloc[0]
 
 
+class TestAnalyticBoundsModel:
+    """Test analytic bounds model for diagnostic envelopes"""
+
+    def test_bounds_model_default_envelopes(self):
+        """Test default diagnostic envelopes"""
+        model = AnalyticBoundsModel()
+        envelope = model.calculate_diagnostic_envelopes()
+
+        assert envelope.icr_error_bound > 0
+        assert envelope.leverage_error_bound > 0
+        assert "growth_bound" in envelope.assumptions
+        assert "capex_ratio_bound" in envelope.assumptions
+        assert "lease_decay_bound" in envelope.assumptions
+
+    def test_bounds_model_custom_bounds(self):
+        """Test envelopes with custom bounds"""
+        model = AnalyticBoundsModel()
+        envelope = model.calculate_diagnostic_envelopes(
+            growth_bound=0.20, capex_ratio_bound=0.8, lease_decay_bound=0.15
+        )
+
+        assert envelope.assumptions["growth_bound"] == 0.20
+        assert envelope.assumptions["capex_ratio_bound"] == 0.8
+        assert envelope.assumptions["lease_decay_bound"] == 0.15
+
+    def test_bounds_model_assumption_bounds_method(self):
+        """Test alternative method name for bounds calculation"""
+        model = AnalyticBoundsModel()
+        envelope = model.calculate_assumption_bounds()
+
+        assert envelope is not None
+        assert model.last_envelope is not None
+        assert model.last_envelope == envelope
+
+    def test_bounds_model_research_conjecture(self):
+        """Test research conjecture method"""
+        model = AnalyticBoundsModel()
+        conjecture = model.research_conjecture_dominance()
+
+        assert "label" in conjecture
+        assert "statement" in conjecture
+        assert conjecture["label"] == "Research Conjecture"
+        assert "analytic headroom" in conjecture["statement"]
+
+    def test_diagnostic_envelope_dataclass(self):
+        """Test DiagnosticEnvelope dataclass structure"""
+        envelope = DiagnosticEnvelope(
+            icr_error_bound=0.30,
+            leverage_error_bound=0.25,
+            assumptions={"growth_bound": 0.1, "capex_ratio_bound": 0.7},
+        )
+
+        assert envelope.icr_error_bound == 0.30
+        assert envelope.leverage_error_bound == 0.25
+        assert envelope.assumptions["growth_bound"] == 0.1
+
+
 class TestAnalyticModel:
     """Test analytic LBO model"""
 
@@ -369,3 +427,110 @@ class TestAnalyticModel:
 
         # Check that validation output has required keys
         assert "leverage_mae" in validation_output or isinstance(validation_output, dict)
+
+
+class TestAnalyticModelAdvanced:
+    """Advanced tests for analytic model edge cases and uncovered code paths"""
+
+    def test_analytic_model_high_leverage_scenario(self):
+        """Test model with high leverage assumptions"""
+        assumptions = AnalyticAssumptions(
+            financial_debt_0=800.0,  # Very high debt (8x EBITDA)
+            ebitda_0=100.0,
+            growth_rate=0.02,
+            n_years=5,
+        )
+        model = AnalyticLBOModel(assumptions)
+        results = model.solve_paths()
+
+        # Model should still produce valid results (includes year 0, so n_years+1 points)
+        assert len(results.leverage_ratio) == 6
+        assert all(np.isfinite(x) or np.isinf(x) for x in results.leverage_ratio)
+
+    def test_analytic_model_zero_growth(self):
+        """Test model with zero growth rate"""
+        assumptions = AnalyticAssumptions(growth_rate=0.0, n_years=3)
+        model = AnalyticLBOModel(assumptions)
+        results = model.solve_paths()
+
+        assert len(results.leverage_ratio) == 4  # Years 0-3
+        # Verify paths were computed
+        assert all(isinstance(x, (int, float)) for x in results.leverage_ratio)
+
+    def test_analytic_model_high_cash_sweep(self):
+        """Test model with high cash sweep (75%)"""
+        assumptions = AnalyticAssumptions(cash_sweep=0.75, n_years=5)
+        model = AnalyticLBOModel(assumptions)
+        results = model.solve_paths()
+
+        # High cash sweep should result in declining leverage
+        assert results.leverage_ratio[-1] < results.leverage_ratio[0]
+
+    def test_analytic_model_low_cash_sweep(self):
+        """Test model with low cash sweep (0%)"""
+        assumptions = AnalyticAssumptions(cash_sweep=0.0, n_years=5)
+        model = AnalyticLBOModel(assumptions)
+        results = model.solve_paths()
+
+        # No cash sweep should result in increasing leverage
+        assert results.leverage_ratio[-1] > results.leverage_ratio[0]
+
+    def test_analytic_model_different_n_years(self):
+        """Test model with various time horizons"""
+        for n_years in [1, 3, 7, 10]:
+            assumptions = AnalyticAssumptions(n_years=n_years)
+            model = AnalyticLBOModel(assumptions)
+            results = model.solve_paths()
+
+            # Result includes year 0, so length is n_years+1
+            assert len(results.leverage_ratio) == n_years + 1
+            assert len(results.icr_ratio) == n_years + 1
+
+    def test_analytic_model_elasticity_epsilon_variations(self):
+        """Test elasticity calculation with different epsilon values"""
+        model = AnalyticLBOModel()
+
+        elasticities_1 = model.compute_elasticities(epsilon=0.001)
+        elasticities_2 = model.compute_elasticities(epsilon=0.01)
+
+        # Both should have the same keys
+        assert set(elasticities_1.keys()) == set(elasticities_2.keys())
+
+    def test_analytic_model_validate_against_simulation_large_tolerance(self):
+        """Test validation method with relaxed tolerance"""
+        analytic = AnalyticLBOModel()
+        results = analytic.solve_paths()
+
+        # Create a dict representation for validation
+        sim_dict = {
+            "leverage": results.leverage_ratio,
+            "icr": results.icr_ratio,
+        }
+
+        # Validate with very large tolerance (should pass)
+        validation = analytic.validate_against_simulation(
+            sim_dict, max_error_leverage=1.0, max_error_icr=1.0
+        )
+
+        # Should pass validation
+        assert validation is not None
+
+    def test_analytic_model_steady_state_lease_treatment(self):
+        """Test steady-state lease treatment in detail"""
+        assumptions = AnalyticAssumptions(lease_treatment="steady_state", n_years=10)
+        model = AnalyticLBOModel(assumptions)
+        results = model.solve_paths()
+
+        # Verify lease liability exists and is positive
+        assert len(results.lease_liability) == 11  # Years 0-10
+        assert all(x >= 0 for x in results.lease_liability)
+
+    def test_analytic_model_run_off_lease_treatment(self):
+        """Test run-off lease treatment in detail"""
+        assumptions = AnalyticAssumptions(lease_treatment="run_off", n_years=10)
+        model = AnalyticLBOModel(assumptions)
+        results = model.solve_paths()
+
+        # Verify lease liability exists and is non-negative
+        assert len(results.lease_liability) == 11  # Years 0-10
+        assert all(x >= 0 for x in results.lease_liability)

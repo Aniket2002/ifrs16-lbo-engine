@@ -13,13 +13,10 @@ This validates:
 6. Test suite passes
 """
 
-import hashlib
-import json
 import os
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
 
 
 def check_file_structure() -> bool:
@@ -57,7 +54,7 @@ def check_figures() -> bool:
 
     # Check for git hash in figure metadata (approximation)
     try:
-        git_hash = subprocess.run(
+        subprocess.run(
             ["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True, check=True
         ).stdout.strip()
 

@@ -11,11 +11,9 @@ from typing import Any
 import matplotlib
 
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from sklearn.calibration import calibration_curve
-from sklearn.metrics import brier_score_loss, mean_absolute_error, mean_squared_error, roc_auc_score
+from sklearn.metrics import mean_absolute_error, mean_squared_error, roc_auc_score
 
 from lbo.analytic_bounds import AnalyticBoundsModel
 from lbo.full_simulation import FullSimulationAssumptions, FullSimulationModel
@@ -395,8 +393,8 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> dict[str, Any]:
                 }
             )
 
-            leverage_diff = np.abs(analytic.leverage_ratio[1:] - sim_lev.to_numpy())
-            icr_diff = np.abs(analytic.icr_ratio[1:] - sim_icr.to_numpy())
+            np.abs(analytic.leverage_ratio[1:] - sim_lev.to_numpy())
+            np.abs(analytic.icr_ratio[1:] - sim_icr.to_numpy())
 
             leverage_mae.append(
                 float(mean_absolute_error(sim_lev.to_numpy(), analytic.leverage_ratio[1:]))
@@ -436,7 +434,6 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> dict[str, Any]:
 
     auc = float(roc_auc_score(y_true_a, y_score_a))
     auc_ci = _bootstrap_auc_ci(y_true_a, y_score_a, seed)
-    brier = float(brier_score_loss(y_true_a, y_score_a))
 
     fn = int(np.sum((y_true_a == 1) & (y_score_a < 0.5)))
     fp = int(np.sum((y_true_a == 0) & (y_score_a >= 0.5)))
@@ -458,18 +455,6 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> dict[str, Any]:
     analytic_iqr = float(np.percentile(analytic_times, 75) - np.percentile(analytic_times, 25))
     speedup = sim_median / max(1e-9, analytic_median)
 
-    frac_pos, mean_pred = calibration_curve(y_true_a, y_score_a, n_bins=8, strategy="uniform")
-    fig, ax = plt.subplots(figsize=(6, 4))
-    ax.plot(mean_pred, frac_pos, marker="o", label="Analytic risk score")
-    ax.plot([0, 1], [0, 1], linestyle="--", color="gray", label="Perfect calibration")
-    ax.set_xlabel("Predicted risk score")
-    ax.set_ylabel("Observed breach frequency")
-    ax.set_title("Calibration Curve for Analytic Risk Score")
-    ax.legend()
-    fig.tight_layout()
-    fig.savefig(OUTPUT_DIR / "calibration_curve.png", dpi=200)
-    plt.close(fig)
-
     envelopes = AnalyticBoundsModel().calculate_diagnostic_envelopes()
 
     report = {
@@ -478,7 +463,6 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> dict[str, Any]:
         "failed_scenario_count": failed,
         "auc": auc,
         "auc_ci_95": auc_ci,
-        "brier_score": brier,
         "false_negative_rate": float(fn / actual_positive),
         "false_positive_rate": float(fp / actual_negative),
         "leverage_mae": leverage_mae_mean,

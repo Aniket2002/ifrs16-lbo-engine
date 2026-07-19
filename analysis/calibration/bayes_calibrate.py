@@ -24,9 +24,7 @@ from typing import Dict, List, Optional, Tuple, Union
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import seaborn as sns
 from scipy import stats
-from scipy.optimize import minimize
 
 try:
     import arviz as az  # type: ignore
@@ -161,7 +159,7 @@ class BayesianCalibrator:
         senior_rate_data = np.array([f.senior_rate for f in self.firms])
         mezz_rate_data = np.array([f.mezz_rate for f in self.firms])
 
-        with pm.Model() as model:
+        with pm.Model():
             # Hyperpriors
             mu_g = pm.Normal("mu_g", *self.priors.mu_g_prior)
             sigma_g = pm.HalfNormal("sigma_g", self.priors.sigma_g_prior[1])
@@ -186,7 +184,7 @@ class BayesianCalibrator:
             m = pm.Deterministic("m", pm.math.clip(m_raw, *self.priors.m_bounds))
 
             L_log = pm.Normal("L_log", mu_L, sigma_L, shape=n_firms)
-            L = pm.Deterministic("L", pm.math.exp(L_log))
+            pm.Deterministic("L", pm.math.exp(L_log))
 
             r_sen_raw = pm.Normal("r_sen_raw", mu_r_sen, sigma_r_sen, shape=n_firms)
             r_sen = pm.Deterministic("r_sen", pm.math.clip(r_sen_raw, *self.priors.r_bounds))
@@ -503,14 +501,14 @@ def main():
 
     # Generate samples
     print(f"Generating {args.n_samples} posterior predictive samples...")
-    samples = calibrator.generate_posterior_predictive(n_samples=args.n_samples)
+    calibrator.generate_posterior_predictive(n_samples=args.n_samples)
 
     # Export
     calibrator.export_priors(output_dir / "priors.json")
     calibrator.export_samples(output_dir / "posterior_samples.parquet")
 
     # Plot
-    fig = calibrator.plot_posterior_comparison(save_path=str(output_dir / "F7_posteriors.pdf"))
+    calibrator.plot_posterior_comparison(save_path=str(output_dir / "F7_posteriors.pdf"))
 
     # Summary
     summary = calibrator.get_firm_summary()

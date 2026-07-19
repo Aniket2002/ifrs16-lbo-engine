@@ -84,17 +84,46 @@ class FullSimulationModel:
                 opening_cash + operating_cash_generation - lease_principal_cash_payment
             )
 
-            actual_mandatory_amortisation = min(a.scheduled_debt_amort, max(0.0, opening_debt))
-            cash_after_mandatory = cash_before_financing - actual_mandatory_amortisation
-
+            # Separate scheduled vs actual paid amortisation
+            scheduled_amortisation = min(a.scheduled_debt_amort, max(0.0, opening_debt))
             revolver_draw = 0.0
             revolver_repayment = 0.0
             funding_deficit = 0.0
             insolvency_flag = False
+            unpaid_amortisation = 0.0
+            payment_default_flag = False
 
+            # Check if we can pay scheduled amortisation
+            cash_available_for_amort = max(0.0, cash_before_financing)
+            if cash_available_for_amort >= scheduled_amortisation:
+                # Can pay amortisation from operating cash
+                actual_mandatory_amortisation = scheduled_amortisation
+                cash_after_mandatory = cash_before_financing - actual_mandatory_amortisation
+            else:
+                # Need to assess if revolver can cover shortfall
+                amortisation_shortfall = scheduled_amortisation - cash_available_for_amort
+                available_revolver = max(0.0, a.revolver_limit - opening_revolver)
+
+                if available_revolver >= amortisation_shortfall:
+                    # Revolver can cover the gap
+                    actual_mandatory_amortisation = scheduled_amortisation
+                    revolver_draw += amortisation_shortfall
+                    cash_after_mandatory = 0.0
+                else:
+                    # Revolver insufficient; skip amortisation, track as unpaid
+                    actual_mandatory_amortisation = max(0.0, cash_before_financing)
+                    unpaid_amortisation = scheduled_amortisation - actual_mandatory_amortisation
+                    payment_default_flag = True
+                    cash_after_mandatory = 0.0
+                    revolver_draw = available_revolver
+
+            # Minimum cash check after amortisation attempt
             if cash_after_mandatory < a.min_cash:
                 required_cash = a.min_cash - cash_after_mandatory
-                revolver_draw = min(max(0.0, a.revolver_limit - opening_revolver), required_cash)
+                additional_revolver = min(
+                    max(0.0, a.revolver_limit - opening_revolver - revolver_draw), required_cash
+                )
+                revolver_draw += additional_revolver
                 cash_after_draw = cash_after_mandatory + revolver_draw
                 funding_deficit = max(0.0, a.min_cash - cash_after_draw)
                 insolvency_flag = funding_deficit > 0
@@ -160,8 +189,10 @@ class FullSimulationModel:
                     "lease_interest": lease_interest_cash_payment,
                     "lease_principal_cash_payment": lease_principal_cash_payment,
                     "lease_additions": lease_additions,
-                    "scheduled_debt_amortisation": actual_mandatory_amortisation,
+                    "scheduled_debt_amortisation": scheduled_amortisation,
                     "actual_mandatory_amortisation": actual_mandatory_amortisation,
+                    "unpaid_amortisation": unpaid_amortisation,
+                    "payment_default_flag": payment_default_flag,
                     "cash_after_mandatory_amortisation": cash_after_mandatory,
                     "revolver_draw": revolver_draw,
                     "revolver_repayment": revolver_repayment,
