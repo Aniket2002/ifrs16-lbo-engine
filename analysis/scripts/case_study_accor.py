@@ -123,7 +123,9 @@ def run_accor_case_study():
     breaches_frozen = (results_df["icr_frozen_gaap"] < covenant_icr) | (
         results_df["leverage_frozen_gaap"] > covenant_lev
     )
-    breaches_ifrs16 = breaches_ifrs16 | results_df["ifrs16_analysis_state"].eq("negative_ebitda_failure")
+    breaches_ifrs16 = breaches_ifrs16 | results_df["ifrs16_analysis_state"].eq(
+        "negative_ebitda_failure"
+    )
     breaches_frozen = breaches_frozen | results_df["frozen_gaap_analysis_state"].eq(
         "negative_ebitda_failure"
     )

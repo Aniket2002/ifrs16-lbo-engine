@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-ArXiv Submission Validation Script
+"""ArXiv Submission Validation Script
 
 Performs all possible validation checks for arXiv submission readiness
 without requiring LaTeX compilation on Windows.
@@ -14,13 +13,13 @@ This validates:
 6. Test suite passes
 """
 
-import os
-import sys
-import subprocess
-from pathlib import Path
-import json
 import hashlib
-from typing import List, Dict, Any
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+from typing import Any, Dict, List
 
 
 def check_file_structure() -> bool:

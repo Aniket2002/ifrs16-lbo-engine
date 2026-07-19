@@ -229,7 +229,9 @@ class BenchmarkScenario:
 def _draw_scenario(row: pd.Series, scenario_id: int, rng: np.random.Generator) -> BenchmarkScenario:
     scenario_type = str(rng.choice(["base", "downside", "distressed"], p=[0.5, 0.3, 0.2]))
 
-    revenue_growth = float(np.clip(rng.normal(row["revenue_growth_mean"], row["revenue_growth_std"]), -0.12, 0.18))
+    revenue_growth = float(
+        np.clip(rng.normal(row["revenue_growth_mean"], row["revenue_growth_std"]), -0.12, 0.18)
+    )
     ebitda_margin = float(np.clip(rng.normal(row["ebitda_margin_mean"], 0.02), 0.10, 0.35))
     cash_sweep = float(np.clip(rng.normal(row["cash_sweep"], 0.04), 0.30, 0.85))
     lease_principal_rate = float(np.clip(rng.normal(row["lease_principal_rate"], 0.01), 0.05, 0.20))
@@ -286,7 +288,9 @@ def _draw_scenario(row: pd.Series, scenario_id: int, rng: np.random.Generator) -
 
     operator_id = str(row["operator_id"])
     scenario_label = f"{operator_id}:{scenario_id:04d}:{scenario_type}"
-    return BenchmarkScenario(operator_id, f"{scenario_id:04d}", scenario_type, simulation, analytic, scenario_label)
+    return BenchmarkScenario(
+        operator_id, f"{scenario_id:04d}", scenario_type, simulation, analytic, scenario_label
+    )
 
 
 def run_benchmark(seed: int, smoke_test: bool = False) -> dict[str, Any]:
@@ -394,10 +398,16 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> dict[str, Any]:
             leverage_diff = np.abs(analytic.leverage_ratio[1:] - sim_lev.to_numpy())
             icr_diff = np.abs(analytic.icr_ratio[1:] - sim_icr.to_numpy())
 
-            leverage_mae.append(float(mean_absolute_error(sim_lev.to_numpy(), analytic.leverage_ratio[1:])))
-            leverage_rmse.append(float(np.sqrt(mean_squared_error(sim_lev.to_numpy(), analytic.leverage_ratio[1:]))))
+            leverage_mae.append(
+                float(mean_absolute_error(sim_lev.to_numpy(), analytic.leverage_ratio[1:]))
+            )
+            leverage_rmse.append(
+                float(np.sqrt(mean_squared_error(sim_lev.to_numpy(), analytic.leverage_ratio[1:])))
+            )
             icr_mae.append(float(mean_absolute_error(sim_icr.to_numpy(), analytic.icr_ratio[1:])))
-            icr_rmse.append(float(np.sqrt(mean_squared_error(sim_icr.to_numpy(), analytic.icr_ratio[1:]))))
+            icr_rmse.append(
+                float(np.sqrt(mean_squared_error(sim_icr.to_numpy(), analytic.icr_ratio[1:])))
+            )
             headroom_mae.append(abs(headroom_a - headroom_s))
             headroom_rmse.append((headroom_a - headroom_s) ** 2)
         except Exception as exc:

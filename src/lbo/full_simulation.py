@@ -78,12 +78,7 @@ class FullSimulationModel:
             cash_taxes = max(0.0, taxable_income * a.tax_rate)
 
             operating_cash_generation = (
-                ebitda
-                - delta_wc
-                - cash_taxes
-                - cash_interest
-                - lease_interest_cash_payment
-                - capex
+                ebitda - delta_wc - cash_taxes - cash_interest - lease_interest_cash_payment - capex
             )
             cash_before_financing = (
                 opening_cash + operating_cash_generation - lease_principal_cash_payment
