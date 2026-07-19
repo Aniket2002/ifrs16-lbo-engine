@@ -1,0 +1,6 @@
+operator_id,operator_name,revenue_0,ebitda_0,revenue_growth_mean,revenue_growth_std,ebitda_margin_mean,financial_debt_0,lease_liability_0,cash_0,lambda_lease,cash_sweep,lease_principal_rate,lease_additions_rate,seed
+SYN_HOTEL_001,Hotel Archetype A,1200,260,0.03,0.04,0.22,520,390,45,3.0,0.55,0.11,0.01,42
+SYN_HOTEL_002,Hotel Archetype B,980,205,0.025,0.05,0.21,470,360,35,3.2,0.50,0.12,0.012,42
+SYN_HOTEL_003,Hotel Archetype C,1450,330,0.035,0.03,0.23,610,470,55,2.9,0.58,0.10,0.009,42
+SYN_HOTEL_004,Hotel Archetype D,760,150,0.02,0.05,0.20,390,300,30,3.4,0.48,0.13,0.013,42
+SYN_HOTEL_005,Hotel Archetype E,1680,390,0.04,0.035,0.24,650,500,60,2.8,0.60,0.10,0.008,42

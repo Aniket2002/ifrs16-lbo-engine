@@ -22,7 +22,6 @@ setup(
     entry_points={
         "console_scripts": [
             "ifrs16-case-study=analysis.scripts.case_study_accor:run_accor_case_study",
-            "ifrs16-evaluation=analysis.scripts.evaluation_protocol:run_evaluation_protocol",
             "ifrs16-benchmark=analysis.run_benchmark:main",
         ]
     },

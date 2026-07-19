@@ -6,6 +6,9 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List
 
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -20,6 +23,90 @@ from lbo.lbo_model_analytic import AnalyticAssumptions, AnalyticLBOModel
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "output" / "benchmark"
 DATA_DIR = ROOT / "data" / "synthetic"
+
+
+def _default_operators_df() -> pd.DataFrame:
+    return pd.DataFrame(
+        [
+            {
+                "operator_id": "SYN_HOTEL_001",
+                "operator_name": "Hotel Archetype A",
+                "revenue_0": 1200,
+                "ebitda_0": 260,
+                "revenue_growth_mean": 0.03,
+                "revenue_growth_std": 0.04,
+                "ebitda_margin_mean": 0.22,
+                "financial_debt_0": 520,
+                "lease_liability_0": 390,
+                "cash_0": 45,
+                "lambda_lease": 3.0,
+                "cash_sweep": 0.55,
+                "lease_principal_rate": 0.11,
+                "lease_additions_rate": 0.01,
+                "seed": 42,
+            },
+            {
+                "operator_id": "SYN_HOTEL_002",
+                "operator_name": "Hotel Archetype B",
+                "revenue_0": 980,
+                "ebitda_0": 205,
+                "revenue_growth_mean": 0.025,
+                "revenue_growth_std": 0.05,
+                "ebitda_margin_mean": 0.21,
+                "financial_debt_0": 470,
+                "lease_liability_0": 360,
+                "cash_0": 35,
+                "lambda_lease": 3.2,
+                "cash_sweep": 0.50,
+                "lease_principal_rate": 0.12,
+                "lease_additions_rate": 0.012,
+                "seed": 42,
+            },
+        ]
+    )
+
+
+def _default_scenario_params_df() -> pd.DataFrame:
+    return pd.DataFrame(
+        [
+            {
+                "parameter_name": "revenue_growth",
+                "definition": "Annual revenue growth used in generated scenarios",
+                "unit": "ratio",
+                "parameter_source": "synthetic_design",
+                "reported_or_simulated": "simulated",
+                "permitted_range": "-0.10 to 0.20",
+                "seed": 42,
+            },
+            {
+                "parameter_name": "ebitda_margin",
+                "definition": "EBITDA margin for scenario simulation",
+                "unit": "ratio",
+                "parameter_source": "synthetic_design",
+                "reported_or_simulated": "simulated",
+                "permitted_range": "0.12 to 0.40",
+                "seed": 42,
+            },
+        ]
+    )
+
+
+def ensure_synthetic_data() -> None:
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    operators_path = DATA_DIR / "operators.csv"
+    params_path = DATA_DIR / "scenario_parameters.csv"
+    checksums_path = DATA_DIR / "checksums.json"
+
+    if not operators_path.exists():
+        _default_operators_df().to_csv(operators_path, index=False)
+    if not params_path.exists():
+        _default_scenario_params_df().to_csv(params_path, index=False)
+
+    checksums = {
+        "operators_csv_sha256": _file_sha256(operators_path),
+        "scenario_parameters_csv_sha256": _file_sha256(params_path),
+    }
+    checksums_path.write_text(json.dumps(checksums, indent=2), encoding="utf-8")
 
 
 def _git_sha() -> str:
@@ -52,6 +139,7 @@ def _file_sha256(path: Path) -> str:
 
 def run_benchmark(seed: int, smoke_test: bool = False) -> Dict[str, Any]:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    ensure_synthetic_data()
 
     operators = pd.read_csv(DATA_DIR / "operators.csv")
     rng = np.random.default_rng(seed)

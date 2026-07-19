@@ -11,6 +11,7 @@ from lbo import (
     FullSimulationModel,
 )
 from lbo.covenants import ratios_frozen_gaap, ratios_ifrs16
+from analysis.run_benchmark import ensure_synthetic_data
 
 
 def test_cash_flow_reconciliation():
@@ -118,6 +119,7 @@ def test_monotonicity_under_controlled_shock():
 
 
 def test_exact_benchmark_checksums():
+    ensure_synthetic_data()
     root = Path(__file__).resolve().parents[1]
     checksums = json.loads((root / "data/synthetic/checksums.json").read_text(encoding="utf-8-sig"))
 
