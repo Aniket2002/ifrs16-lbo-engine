@@ -105,7 +105,7 @@ class LBOModel:
         self.da_pct = da_pct
         self.cash_sweep_pct = cash_sweep_pct
         self.sale_cost_pct = sale_cost_pct
-        
+
         # IFRS-16 lease parameters
         self.lease_liability_initial = lease_liability_initial
         self.lease_rate = lease_rate
@@ -113,7 +113,7 @@ class LBOModel:
         self.annual_lease_payment = annual_lease_payment
         self.cpi_indexation = cpi_indexation
         self.covenant_convention = covenant_convention
-        
+
         # Initialize lease amortization schedule
         self.lease_schedule = self._compute_lease_schedule()
 
@@ -152,52 +152,54 @@ class LBOModel:
     def _compute_lease_schedule(self) -> List[Dict[str, float]]:
         """
         Compute IFRS-16 compliant lease amortization schedule.
-        
+
         Under IFRS-16:
         - Lease liability = PV of remaining payments at implicit rate
         - Lease interest = liability_t * lease_rate
         - Liability evolution: L_{t+1} = L_t * (1 + rate) - payment_t
-        
+
         Returns:
             List of dicts with keys: 'year', 'lease_liability', 'lease_interest', 'payment'
         """
         if self.lease_liability_initial == 0:
             return []
-            
+
         schedule = []
         liability = self.lease_liability_initial
-        
+
         for year in range(1, self.lease_term_years + 1):
             # CPI-indexed payment
             payment = self.annual_lease_payment * (1 + self.cpi_indexation) ** (year - 1)
-            
+
             # Interest on beginning balance
             interest = liability * self.lease_rate
-            
+
             # End-of-period liability after payment
             liability_next = liability * (1 + self.lease_rate) - payment
-            
-            schedule.append({
-                'year': year,
-                'lease_liability_bop': liability,
-                'lease_interest': interest,
-                'payment': payment,
-                'lease_liability_eop': max(0, liability_next)  # Can't go negative
-            })
-            
+
+            schedule.append(
+                {
+                    "year": year,
+                    "lease_liability_bop": liability,
+                    "lease_interest": interest,
+                    "payment": payment,
+                    "lease_liability_eop": max(0, liability_next),  # Can't go negative
+                }
+            )
+
             liability = max(0, liability_next)
-            
+
         return schedule
-    
+
     def get_lease_metrics(self, year: int) -> Dict[str, float]:
         """Get IFRS-16 lease metrics for specific year"""
         if not self.lease_schedule or year > len(self.lease_schedule):
-            return {'lease_liability': 0.0, 'lease_interest': 0.0}
-            
+            return {"lease_liability": 0.0, "lease_interest": 0.0}
+
         year_data = self.lease_schedule[year - 1]
         return {
-            'lease_liability': year_data['lease_liability_eop'],
-            'lease_interest': year_data['lease_interest']
+            "lease_liability": year_data["lease_liability_eop"],
+            "lease_interest": year_data["lease_interest"],
         }
 
     def run(self, years: int = 5, exit_year: Optional[int] = None) -> Dict[str, Any]:
@@ -232,12 +234,12 @@ class LBOModel:
 
             # Get IFRS-16 lease metrics for this year
             lease_metrics = self.get_lease_metrics(year)
-            lease_liability = lease_metrics['lease_liability']
-            lease_interest = lease_metrics['lease_interest']
+            lease_liability = lease_metrics["lease_liability"]
+            lease_interest = lease_metrics["lease_interest"]
 
             # Financial debt interest
             financial_interest = sum(t.charge_interest() for t in self.debt_tranches)
-            
+
             # Covenant calculations depend on convention
             if self.covenant_convention == "ifrs16":
                 # IFRS-16 inclusive: lease liability included in net debt, lease interest in ICR
@@ -249,23 +251,27 @@ class LBOModel:
                 total_debt = sum(t.debt for t in self.debt_tranches)
                 total_interest = financial_interest
                 # For ICR under frozen GAAP, some use EBITDAR (adding back lease expense)
-                covenant_ebitda = ebitda + lease_metrics.get('payment', 0.0)
+                covenant_ebitda = ebitda + lease_metrics.get("payment", 0.0)
 
             # ICR covenant test
             if self.icr_hurdle and total_interest > 0:
                 icr = covenant_ebitda / total_interest
                 if icr < self.icr_hurdle:
-                    convention_label = "IFRS-16" if self.covenant_convention == "ifrs16" else "Frozen GAAP"
+                    convention_label = (
+                        "IFRS-16" if self.covenant_convention == "ifrs16" else "Frozen GAAP"
+                    )
                     raise CovenantBreachError(
                         f"Year {year}: ICR breach under {convention_label} "
                         f"({icr:.2f}x < {self.icr_hurdle:.2f}x)"
                     )
-            
+
             # Leverage covenant test (Net Debt / EBITDA)
             if self.ltv_hurdle is not None and covenant_ebitda > 0:
                 leverage_ratio = total_debt / covenant_ebitda
                 if leverage_ratio > self.ltv_hurdle:
-                    convention_label = "IFRS-16" if self.covenant_convention == "ifrs16" else "Frozen GAAP"
+                    convention_label = (
+                        "IFRS-16" if self.covenant_convention == "ifrs16" else "Frozen GAAP"
+                    )
                     raise CovenantBreachError(
                         f"Year {year}: Leverage breach under {convention_label} "
                         f"({leverage_ratio:.2f}x > {self.ltv_hurdle:.2f}x)"
@@ -295,9 +301,7 @@ class LBOModel:
                             rev.draw(short)
                             short = 0.0
                         if short > 1e-8:
-                            raise InsolvencyError(
-                                f"Year {year}: cannot meet amort on {t.name}"
-                            )
+                            raise InsolvencyError(f"Year {year}: cannot meet amort on {t.name}")
 
             sweep_left = lcf * self.cash_sweep_pct
             for t in self.debt_tranches:
@@ -338,11 +342,7 @@ class LBOModel:
             }
             irr_cf.append(remaining_cash)
 
-        tv = (
-            results[f"Year {exit_year}"]["EBITDA"]
-            * self.exit_multiple
-            * (1 - self.sale_cost_pct)
-        )
+        tv = results[f"Year {exit_year}"]["EBITDA"] * self.exit_multiple * (1 - self.sale_cost_pct)
         nd = sum(t.debt for t in self.debt_tranches)
         eqv = tv - nd
 
@@ -362,13 +362,9 @@ class LBOModel:
         if irr is not None and not math.isnan(irr):
             expected_positive_irr = sum(irr_cf[1:]) > -irr_cf[0]
             if expected_positive_irr and irr < 0:
-                print(
-                    f"[WARNING] IRR/MOIC mismatch: IRR={irr:.2%}, " f"MOIC={moic:.2f}x"
-                )
+                print(f"[WARNING] IRR/MOIC mismatch: IRR={irr:.2%}, MOIC={moic:.2f}x")
             if not expected_positive_irr and irr > 0:
-                print(
-                    f"[WARNING] IRR/MOIC mismatch: IRR={irr:.2%}, " f"MOIC={moic:.2f}x"
-                )
+                print(f"[WARNING] IRR/MOIC mismatch: IRR={irr:.2%}, MOIC={moic:.2f}x")
 
         results["Exit Summary"] = {
             "Exit Year": exit_year,

@@ -1,0 +1,6 @@
+parameter_name,definition,unit,parameter_source,reported_or_simulated,permitted_range,seed
+revenue_growth,Annual revenue growth used in generated scenarios,ratio,synthetic_design,simulated,-0.10 to 0.20,42
+ebitda_margin,EBITDA margin for scenario simulation,ratio,synthetic_design,simulated,0.12 to 0.40,42
+cash_sweep,Fraction of positive free cash flow used for debt paydown,ratio,model_assumption,simulated,0.30 to 0.80,42
+lease_principal_rate,Fraction of opening lease liability paid as principal each year,ratio,model_assumption,simulated,0.05 to 0.20,42
+lease_additions_rate,New lease additions as percent of revenue,ratio,model_assumption,simulated,0.00 to 0.05,42

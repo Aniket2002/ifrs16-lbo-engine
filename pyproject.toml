@@ -1,0 +1,14 @@
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+exclude = [
+  ".git",
+  ".venv",
+  "__pycache__",
+  "streamlit_app.py"
+]
+
+[tool.ruff.lint]
+select = ["E", "F"]
+ignore = ["E501", "F401", "F403", "F841"]

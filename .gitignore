@@ -212,7 +212,9 @@ analysis/figures/
 analysis/paper/figures/
 *.pdf
 *.png
-*.csv
+# Keep canonical benchmark/case-study CSVs tracked for reproducibility.
+!data/synthetic/*.csv
+!data/case_study/*.csv
 calibration_diagnostics.png
 calibration_summary.json
 
