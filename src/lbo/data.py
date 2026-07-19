@@ -24,10 +24,6 @@ def load_case_csv(path: str) -> pd.DataFrame:
     if missing_cols:
         raise ValueError(f"Missing required columns: {missing_cols}")
 
-    # Validate data types and ranges
-    if (df["ebitda"] <= 0).any():
-        raise ValueError("EBITDA must be positive")
-
     if (df["interest_expense"] < 0).any():
         raise ValueError("Interest expense must be non-negative")
 

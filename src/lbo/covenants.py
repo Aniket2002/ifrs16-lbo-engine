@@ -7,6 +7,9 @@ from typing import Tuple, Dict, Any
 
 def ratios_ifrs16(row: pd.Series) -> Tuple[float, float]:
     """Calculate leverage and ICR under IFRS-16 convention"""
+    if row.ebitda is None or row.ebitda <= 0:
+        return np.nan, np.nan
+
     # Net debt includes lease liabilities
     net_debt = row.debt_senior + row.debt_mezz + row.lease_liability - row.cash
     leverage = net_debt / row.ebitda
@@ -22,6 +25,9 @@ def ratios_ifrs16(row: pd.Series) -> Tuple[float, float]:
 
 def ratios_frozen_gaap(row: pd.Series) -> Tuple[float, float]:
     """Calculate leverage and ICR under frozen-GAAP convention"""
+    if row.ebitda is None or row.ebitda <= 0:
+        return np.nan, np.nan
+
     # Net debt excludes lease liabilities (pre-IFRS-16)
     net_debt = row.debt_senior + row.debt_mezz - row.cash
     leverage = net_debt / row.ebitda
