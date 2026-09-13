@@ -120,7 +120,8 @@ class AnalyticLBOModel:
             financial_debt[t] = max(0, debt_growth - cash_paydown)
 
         # Lease liability path (IFRS-16) with explicit treatment switch.
-        # Consistent with full simulation: closing = opening + additions - principal
+        # Same roll-forward identity as full simulation; additions here use prior EBITDA,
+        # whereas full simulation uses current revenue.
         # Interest is recognized in P&L but not in balance sheet roll-forward
         if a.lease_treatment == "run_off":
             lease_liability = np.zeros(len(years))

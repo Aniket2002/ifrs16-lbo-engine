@@ -344,6 +344,7 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> dict[str, Any]:
 
             negative_ebitda = bool((sim_df["ebitda"] <= 0).any())
             insolvency = bool(sim_df["insolvency_flag"].any())
+            payment_default = bool(sim_df["payment_default_flag"].any())
             sim_lev = (
                 sim_df["debt_balance"]
                 + sim_df["revolver_balance"]
@@ -363,11 +364,13 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> dict[str, Any]:
             headroom_a = float(min(6.0 - analytic_max_leverage, analytic_min_icr - 1.8))
 
             breach = bool(simulated_max_leverage > 6.0 or simulated_min_icr < 1.8)
-            true_failure = int(negative_ebitda or insolvency or breach)
+            true_failure = int(negative_ebitda or payment_default or insolvency or breach)
             analytic_risk_score = float(1.0 / (1.0 + np.exp(2.0 * headroom_a)))
 
             if negative_ebitda:
                 failure_type = "negative_ebitda"
+            elif payment_default:
+                failure_type = "payment_default"
             elif insolvency and breach:
                 failure_type = "insolvency_and_covenant_breach"
             elif insolvency:
@@ -388,13 +391,13 @@ def run_benchmark(seed: int, smoke_test: bool = False) -> dict[str, Any]:
                     "analytic_risk_score": analytic_risk_score,
                     "true_failure": true_failure,
                     "failure_type": failure_type,
+                    "payment_default": payment_default,
+                    "insolvency": insolvency,
+                    "covenant_breach": breach,
                     "simulated_max_leverage": simulated_max_leverage,
                     "simulated_min_icr": simulated_min_icr,
                 }
             )
-
-            np.abs(analytic.leverage_ratio[1:] - sim_lev.to_numpy())
-            np.abs(analytic.icr_ratio[1:] - sim_icr.to_numpy())
 
             leverage_mae.append(
                 float(mean_absolute_error(sim_lev.to_numpy(), analytic.leverage_ratio[1:]))

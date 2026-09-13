@@ -1,42 +1,21 @@
-# Repository Structure Documentation
+# Repository structure
 
-## Rationale for Organization
+- `src/lbo/full_simulation.py`: canonical full annual operating/financing waterfall,
+  closing sources and uses, and sponsor returns.
+- `src/lbo/lbo_model_analytic.py`: reduced-form screening and diagnostic utilities.
+- `src/lbo/lbo_model.py`: separate legacy LBO API, not used by the benchmark.
+- `src/lbo/covenants.py`, `data.py`, `analytic_bounds.py`: covenant views, loaders
+  and assumption-based diagnostic envelopes.
+- `analysis/run_benchmark.py`: current synthetic benchmark entry point.
+- `analysis/scripts/`, `analysis/calibration/`: case study and separate calibration.
+- `data/synthetic/`: current benchmark inputs; `data/case_study/`: separate case data.
+- `tests/`: acceptance, regression, integration and utility tests.
+- `docs/`: current model conventions and benchmark protocol.
+- `analysis/paper/main.tex`: current reproducibility note. Other paper directories,
+  `benchmark_dataset_v1.0/` and the bundled ZIP contain older snapshots.
+- `output/`, `analysis/figures/`: ignored generated artifacts.
+- `pyproject.toml`, `.github/workflows/ci.yml`: packaging and CI checks.
 
-This repository follows scientific software best practices for reproducibility and maintainability:
-
-### Core Package (`src/lbo/`)
-- **`lbo_model.py`** - Core LBO simulation classes
-- **`lbo_model_analytic.py`** - Closed-form approximations
-- **`data.py`** - Data loading utilities
-- **`covenants.py`** - Covenant calculation functions
-- **`optimization/`** - Optimization algorithms
-- **`workflows/`** - Pipeline orchestration
-
-### Analysis & Experiments (`analysis/`)
-- **`scripts/`** - Executable analysis scripts
-- **`calibration/`** - Bayesian parameter fitting
-- **`data/`** - Analysis-specific datasets
-- **`figures/`** - Generated plots and visualizations
-
-### Tests (`tests/`)
-- Comprehensive test suite for all modules
-- Integration tests and acceptance tests
-
-### Paper (`analysis/paper/`)
-- Single source of truth for LaTeX manuscript (moved into analysis/ for reproducibility)
-- All figures and bibliography
-
-### Data (`data/`, `benchmark_dataset_v1.0/`)
-- Input datasets and benchmarks
-- Properly versioned with metadata
-
-### Documentation (`docs/`)
-- Technical documentation
-- Research methodology
-
-## Benefits
-1. **Clear separation** of concerns (core vs analysis vs tests)
-2. **Proper Python packaging** with __init__.py files
-3. **Reproducible experiments** in dedicated analysis/ folder  
-4. **No tracked artifacts** (build files, __pycache__, outputs)
-5. **Single source of truth** for paper and dependencies
+Use `README.md` and `REPRODUCE.md` for the supported commands. No `optimization/`
+or `workflows/` package is present. Generated output and archive snapshots should
+not be interpreted as automatically synchronized with local source edits.

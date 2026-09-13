@@ -7,10 +7,10 @@ env:
 all: figures paper
 
 figures:
-	python -m analysis.run_all --config analysis/configs/default.yaml --seed 42
+	python analysis/scripts/case_study_accor.py
 
 paper:
-	latexmk -pdf -cd -interaction=nonstopmode paper/main.tex
+	latexmk -pdf -cd -interaction=nonstopmode analysis/paper/main.tex
 
 test:
 	pytest -q

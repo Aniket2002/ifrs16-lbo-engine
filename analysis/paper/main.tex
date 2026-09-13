@@ -29,7 +29,7 @@ The repository provides two model families:
 \item Analytic screening path producing leverage and ICR paths, compared against full simulation as a speed/approximation diagnostic.
 \end{itemize}
 
-The benchmark risk output is named \texttt{analytic\_risk\_score}. It is used as a ranking score and calibration target in generated plots/reports. It is not described as a calibrated probability in this manuscript.
+The benchmark risk output is named \texttt{analytic\_risk\_score}. It is used as a ranking score in the generated report; no calibration plot is emitted. It is not described as a calibrated probability in this manuscript.
 
 \section{Reproducible Commands}
 
@@ -49,7 +49,6 @@ python analysis/scripts/case_study_accor.py
 Artifact & Description \\
 \midrule
 \texttt{output/benchmark/benchmark\_report.json} & Benchmark metrics and metadata \\
-\texttt{output/benchmark/calibration\_curve.png} & Calibration plot for analytic\_risk\_score \\
 \texttt{output/accor\_case\_study\_results.csv} & Dual-convention Accor yearly ratios/states \\
 \texttt{analysis/figures/accor\_case\_study.png} & Accor ratio comparison figure \\
 \bottomrule
@@ -60,11 +59,11 @@ Artifact & Description \\
 
 The benchmark report includes, among others, the following generated fields:
 \begin{itemize}
-\item \texttt{auc}, \texttt{auc\_ci\_95}, \texttt{brier\_score}
+\item \texttt{auc}, \texttt{auc\_ci\_95}
 \item \texttt{false\_negative\_rate}, \texttt{false\_positive\_rate}
 \item \texttt{leverage\_mae}, \texttt{leverage\_rmse}, \texttt{icr\_mae}, \texttt{icr\_rmse}
 \item \texttt{minimum\_headroom\_mae}, \texttt{minimum\_headroom\_rmse}
-\item \texttt{failure\_type\_counts} with separate categories for insolvency, covenant breach, and negative EBITDA failure
+\item \texttt{failure\_type\_counts} with payment default, reserve funding deficit, covenant breach, and negative EBITDA categories
 \item \texttt{scenario\_records} preserving \texttt{operator\_id} and \texttt{scenario\_id} per observation
 \item \texttt{diagnostic\_envelopes} for leverage/ICR approximation diagnostics
 \end{itemize}
@@ -108,7 +107,11 @@ L_{t+1} &= L_t + \text{additions}_t - \text{principal}_t, \\
 \text{cash uses}_t &\supseteq \text{lease interest cash payment}_t + \text{lease principal cash payment}_t.
 \end{align}
 
-Entry capitalization includes explicit sources-and-uses fields (entry enterprise value, fees, debt source, cash source, sponsor equity). Equity cash-flow vectors, MOIC, and IRR are computed from sponsor equity contribution and simulated exit equity.
+Entry uses are the stipulated debt-free purchase price, fees, and retained opening operating cash. Acquisition debt and sponsor equity fund these uses. Opening cash is not simultaneously an acquisition funding source. The default uses of 1,070 are funded by 450 debt and 620 sponsor equity. Equity cash-flow vectors start with exactly the negative sponsor contribution; returns are undefined for zero sponsor equity.
+
+Revolver draws for mandatory amortisation are paid directly to the term lender. Only separate liquidity draws increase retained cash. Unpaid amortisation remains in debt and is flagged; negative cash records an unfunded operating deficit. Optional sweeps cannot exceed outstanding term debt. Simulation continues after default as a diagnostic without modeling recoveries or restructuring.
+
+The analytic model uses reduced-form cash conversion, capitalized financial interest, fixed minimum cash, and EBITDA-based lease additions. The full model uses explicit cash interest and revenue-based lease additions. Timing and input conventions also differ, as documented in the repository model specification; comparison errors are not pure numerical approximation errors under matched assumptions.
 
 \section{Removed Non-Regenerable Claims}
 

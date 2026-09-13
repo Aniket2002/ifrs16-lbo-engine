@@ -26,7 +26,7 @@ class FullSimulationAssumptions:
     scheduled_debt_amort: float = 30.0
     cash_sweep: float = 0.5
     revolver_limit: float = 200.0
-    initial_cash: float = 40.0
+    initial_cash: float = 40.0  # Funded closing use, retained as post-close operating cash.
     min_cash: float = 25.0
     sale_cost_pct: float = 0.015
     exit_multiple: float = 8.0
@@ -84,51 +84,30 @@ class FullSimulationModel:
                 opening_cash + operating_cash_generation - lease_principal_cash_payment
             )
 
-            # Separate scheduled vs actual paid amortisation
+            # Mandatory debt service has priority over the operating cash reserve.
             scheduled_amortisation = min(a.scheduled_debt_amort, max(0.0, opening_debt))
-            revolver_draw = 0.0
+            cash_funded_amortisation = min(scheduled_amortisation, max(0.0, cash_before_financing))
+            available_revolver = max(0.0, a.revolver_limit - opening_revolver)
+            revolver_draw_for_amortisation = min(
+                scheduled_amortisation - cash_funded_amortisation, available_revolver
+            )
+            actual_mandatory_amortisation = (
+                cash_funded_amortisation + revolver_draw_for_amortisation
+            )
+            unpaid_amortisation = scheduled_amortisation - actual_mandatory_amortisation
+            payment_default_flag = unpaid_amortisation > 0
+            # Refinancing draws go directly to the term lender, not to retained cash.
+            # Preserve negative cash as an unfunded operating deficit.
+            cash_after_mandatory = cash_before_financing - cash_funded_amortisation
+            revolver_draw_for_liquidity = min(
+                max(0.0, a.min_cash - cash_after_mandatory),
+                max(0.0, available_revolver - revolver_draw_for_amortisation),
+            )
+            revolver_draw = revolver_draw_for_amortisation + revolver_draw_for_liquidity
+            cash_after_draw = cash_after_mandatory + revolver_draw_for_liquidity
+            funding_deficit = max(0.0, a.min_cash - cash_after_draw)
+            insolvency_flag = funding_deficit > 0
             revolver_repayment = 0.0
-            funding_deficit = 0.0
-            insolvency_flag = False
-            unpaid_amortisation = 0.0
-            payment_default_flag = False
-
-            # Check if we can pay scheduled amortisation
-            cash_available_for_amort = max(0.0, cash_before_financing)
-            if cash_available_for_amort >= scheduled_amortisation:
-                # Can pay amortisation from operating cash
-                actual_mandatory_amortisation = scheduled_amortisation
-                cash_after_mandatory = cash_before_financing - actual_mandatory_amortisation
-            else:
-                # Need to assess if revolver can cover shortfall
-                amortisation_shortfall = scheduled_amortisation - cash_available_for_amort
-                available_revolver = max(0.0, a.revolver_limit - opening_revolver)
-
-                if available_revolver >= amortisation_shortfall:
-                    # Revolver can cover the gap
-                    actual_mandatory_amortisation = scheduled_amortisation
-                    revolver_draw += amortisation_shortfall
-                    cash_after_mandatory = 0.0
-                else:
-                    # Revolver insufficient; skip amortisation, track as unpaid
-                    actual_mandatory_amortisation = max(0.0, cash_before_financing)
-                    unpaid_amortisation = scheduled_amortisation - actual_mandatory_amortisation
-                    payment_default_flag = True
-                    cash_after_mandatory = 0.0
-                    revolver_draw = available_revolver
-
-            # Minimum cash check after amortisation attempt
-            if cash_after_mandatory < a.min_cash:
-                required_cash = a.min_cash - cash_after_mandatory
-                additional_revolver = min(
-                    max(0.0, a.revolver_limit - opening_revolver - revolver_draw), required_cash
-                )
-                revolver_draw += additional_revolver
-                cash_after_draw = cash_after_mandatory + revolver_draw
-                funding_deficit = max(0.0, a.min_cash - cash_after_draw)
-                insolvency_flag = funding_deficit > 0
-            else:
-                cash_after_draw = cash_after_mandatory
 
             if (
                 not insolvency_flag
@@ -142,7 +121,11 @@ class FullSimulationModel:
 
             optional_sweep_base = max(0.0, cash_after_draw - a.min_cash)
             proposed_sweep = max(0.0, cash_before_financing) * a.cash_sweep
-            cash_sweep = min(optional_sweep_base, proposed_sweep)
+            cash_sweep = min(
+                optional_sweep_base,
+                proposed_sweep,
+                max(0.0, opening_debt - actual_mandatory_amortisation),
+            )
 
             ending_cash = cash_after_draw - cash_sweep
             debt = max(0.0, opening_debt - actual_mandatory_amortisation - cash_sweep)
@@ -172,6 +155,8 @@ class FullSimulationModel:
                     "total_uses": sources_and_uses["total_uses"],
                     "debt_sources": sources_and_uses["debt_sources"],
                     "cash_sources": sources_and_uses["cash_sources"],
+                    "opening_cash_use": sources_and_uses["opening_cash_use"],
+                    "total_sources": sources_and_uses["total_sources"],
                     "sponsor_equity": sources_and_uses["sponsor_equity"],
                     "revenue": revenue,
                     "ebitda": ebitda,
@@ -194,6 +179,8 @@ class FullSimulationModel:
                     "unpaid_amortisation": unpaid_amortisation,
                     "payment_default_flag": payment_default_flag,
                     "cash_after_mandatory_amortisation": cash_after_mandatory,
+                    "revolver_draw_for_amortisation": revolver_draw_for_amortisation,
+                    "revolver_draw_for_liquidity": revolver_draw_for_liquidity,
                     "revolver_draw": revolver_draw,
                     "revolver_repayment": revolver_repayment,
                     "cash_sweep": cash_sweep,
@@ -214,12 +201,22 @@ class FullSimulationModel:
 
 
 def entry_sources_and_uses(assumptions: FullSimulationAssumptions) -> dict[str, float]:
+    """Fund the debt-free purchase price, fees and retained operating cash at close.
+
+    Entry EV is the stipulated acquisition use; no seller cash, existing-debt
+    refinancing or entry lease adjustment is inferred from it.
+    """
     purchase_price = float(assumptions.entry_enterprise_value)
     transaction_fees = purchase_price * float(assumptions.transaction_fees_pct)
     debt_sources = float(assumptions.debt_opening)
-    cash_sources = float(assumptions.initial_cash)
-    total_uses = purchase_price + transaction_fees
-    sponsor_equity = max(0.0, total_uses - debt_sources - cash_sources)
+    opening_cash_use = float(assumptions.initial_cash)
+    cash_sources = 0.0
+    total_uses = purchase_price + transaction_fees + opening_cash_use
+    if debt_sources > total_uses:
+        raise ValueError(
+            "Entry debt sources exceed total uses; no excess-debt distribution is modeled"
+        )
+    sponsor_equity = total_uses - debt_sources
 
     return {
         "entry_enterprise_value": purchase_price,
@@ -228,6 +225,8 @@ def entry_sources_and_uses(assumptions: FullSimulationAssumptions) -> dict[str, 
         "total_uses": total_uses,
         "debt_sources": debt_sources,
         "cash_sources": cash_sources,
+        "opening_cash_use": opening_cash_use,
+        "total_sources": debt_sources + sponsor_equity,
         "sponsor_equity": sponsor_equity,
     }
 
@@ -238,7 +237,7 @@ def equity_cash_flow_vector(
     if not rows:
         return []
 
-    initial_equity = max(1e-9, entry_sources_and_uses(assumptions)["sponsor_equity"])
+    initial_equity = entry_sources_and_uses(assumptions)["sponsor_equity"]
     return [-initial_equity] + [0.0] * (len(rows) - 1) + [float(rows[-1]["exit_equity"])]
 
 

@@ -4,6 +4,7 @@ from pathlib import Path
 import numpy as np
 import numpy_financial as npf
 import pandas as pd
+import pytest
 
 from analysis.run_benchmark import ensure_synthetic_data
 from lbo import (
@@ -193,3 +194,159 @@ def test_exit_bridge_and_equity_cash_flow_vector():
         - sale_costs
     )
     assert abs(final["exit_equity"] - expected_exit_equity) <= 1e-6
+
+
+def waterfall_assumptions(**overrides):
+    values = dict(
+        years=1,
+        revenue_0=100.0,
+        revenue_growth=0.0,
+        ebitda_margin=0.0,
+        da_pct_revenue=0.0,
+        tax_rate=0.0,
+        capex_pct_revenue=0.0,
+        wc_pct_revenue=0.0,
+        cash_interest_rate=0.0,
+        lease_opening=0.0,
+        lease_additions_pct_revenue=0.0,
+        debt_opening=100.0,
+        scheduled_debt_amort=30.0,
+        initial_cash=0.0,
+        min_cash=25.0,
+        cash_sweep=0.0,
+        revolver_limit=100.0,
+    )
+    values.update(overrides)
+    return FullSimulationAssumptions(**values)
+
+
+@pytest.mark.parametrize(
+    "opening,margin,limit,minimum,paid,draw,ending,unpaid",
+    [
+        (10, 0.8, 100, 25, 30, 0, 60, 0),  # sufficient operating cash
+        (10, 0.0, 100, 0, 30, 20, 0, 0),  # partial refinancing
+        (0, 0.0, 100, 0, 30, 30, 0, 0),  # full refinancing
+        (40, 0.0, 100, 25, 30, 15, 25, 0),  # liquidity only
+        (10, 0.0, 10, 25, 20, 10, 0, 10),  # partial payment/default
+        (10, 0.0, 100, 25, 30, 45, 25, 0),  # refinancing plus liquidity
+        (0, -0.2, 100, 25, 30, 75, 25, 0),  # preserve operating deficit
+        (0, -0.2, 10, 25, 10, 10, -20, 20),  # unfunded cash deficit
+        (0, 0.0, 30, 25, 30, 30, 0, 0),  # no liquidity capacity left
+    ],
+)
+def test_waterfall_cash_and_debt_conservation(
+    opening, margin, limit, minimum, paid, draw, ending, unpaid
+):
+    a = waterfall_assumptions(
+        initial_cash=opening, ebitda_margin=margin, revolver_limit=limit, min_cash=minimum
+    )
+    r = FullSimulationModel(a).simulate()[0]
+    assert r["actual_mandatory_amortisation"] == pytest.approx(paid)
+    assert r["revolver_draw"] == pytest.approx(draw)
+    assert r["ending_cash"] == pytest.approx(ending)
+    assert r["unpaid_amortisation"] == pytest.approx(unpaid)
+    assert r["payment_default_flag"] == (unpaid > 0)
+    assert r["funding_deficit"] == pytest.approx(max(0, minimum - ending))
+    assert r["insolvency_flag"] == (ending < minimum)
+    assert r["ending_cash"] == pytest.approx(
+        opening
+        + r["operating_cash_generation"]
+        - r["lease_principal_cash_payment"]
+        - paid
+        - r["cash_sweep"]
+        + draw
+        - r["revolver_repayment"]
+    )
+    assert r["debt_balance"] + r["revolver_balance"] == pytest.approx(
+        a.debt_opening - paid - r["cash_sweep"] + draw - r["revolver_repayment"]
+    )
+    assert 0 <= r["revolver_balance"] <= limit
+    assert paid + unpaid == pytest.approx(r["scheduled_debt_amortisation"])
+    assert r["revolver_draw_for_amortisation"] == pytest.approx(
+        paid - min(paid, max(0, r["cash_before_financing"]))
+    )
+    assert r["revolver_draw_for_amortisation"] + r["revolver_draw_for_liquidity"] == draw
+    assert r["cash_after_mandatory_amortisation"] == pytest.approx(
+        r["cash_before_financing"] - paid + r["revolver_draw_for_amortisation"]
+    )
+
+
+def test_cash_sweep_cannot_exceed_remaining_term_debt():
+    a = waterfall_assumptions(initial_cash=100, debt_opening=40, cash_sweep=1)
+    r = FullSimulationModel(a).simulate()[0]
+    assert r["cash_sweep"] == 10
+    assert r["ending_cash"] == 60
+    assert r["debt_balance"] == 0
+
+
+@pytest.mark.parametrize("opening_cash", [0.0, 40.0, 100.0])
+def test_opening_cash_is_funded_as_a_use(opening_cash):
+    a = FullSimulationAssumptions(initial_cash=opening_cash)
+    su = entry_sources_and_uses(a)
+    assert su["cash_sources"] == 0
+    assert su["total_uses"] == pytest.approx(1030 + opening_cash)
+    assert su["sponsor_equity"] == pytest.approx(580 + opening_cash)
+    assert su["opening_cash_use"] == opening_cash
+    assert su["total_sources"] == su["total_uses"]
+    assert su["debt_sources"] + su["cash_sources"] + su["sponsor_equity"] == su["total_uses"]
+    rows = FullSimulationModel(a).simulate()
+    assert rows[0]["opening_cash"] == opening_cash
+    assert equity_cash_flow_vector(rows, a)[0] == -su["sponsor_equity"]
+
+
+def test_zero_sponsor_equity_is_not_replaced_with_epsilon():
+    a = FullSimulationAssumptions(debt_opening=1070)
+    rows = FullSimulationModel(a).simulate()
+    assert entry_sources_and_uses(a)["sponsor_equity"] == 0
+    assert equity_cash_flow_vector(rows, a)[0] == 0
+    metrics = equity_return_metrics(rows, a)
+    assert metrics["initial_equity"] == 0
+    assert np.isnan(metrics["moic"])
+    assert np.isnan(metrics["irr"])
+
+
+def test_overfunded_entry_is_rejected_instead_of_unbalanced():
+    with pytest.raises(ValueError, match="debt.*uses"):
+        entry_sources_and_uses(FullSimulationAssumptions(debt_opening=1100))
+
+
+def test_revolver_is_repaid_before_sweeping_term_debt_across_years():
+    a = waterfall_assumptions(years=3, revenue_growth=1, ebitda_margin=0.2, cash_sweep=1)
+    rows = FullSimulationModel(a).simulate()
+    assert [r["revolver_balance"] for r in rows] == [35, 25, 0]
+    assert [r["cash_sweep"] for r in rows] == [0, 0, 10]
+    assert [r["ending_cash"] for r in rows] == [25, 25, 40]
+    for previous, current in zip(rows, rows[1:]):
+        assert current["opening_cash"] == previous["ending_cash"]
+        assert current["opening_financial_debt"] == previous["debt_balance"]
+        assert current["opening_revolver"] == previous["revolver_balance"]
+        assert current["ending_cash"] == pytest.approx(
+            current["cash_before_financing"]
+            - current["actual_mandatory_amortisation"]
+            + current["revolver_draw"]
+            - current["revolver_repayment"]
+            - current["cash_sweep"]
+        )
+
+
+def test_empty_simulation_has_no_invented_returns():
+    a = FullSimulationAssumptions(years=0)
+    rows = FullSimulationModel(a).simulate()
+    assert equity_cash_flow_vector(rows, a) == []
+    metrics = equity_return_metrics(rows, a)
+    assert metrics["entry_sources_and_uses"] == {}
+    assert np.isnan(metrics["irr"])
+    assert np.isnan(metrics["moic"])
+
+
+def test_unpaid_amortisation_remains_in_debt_after_default():
+    a = waterfall_assumptions(years=2, revolver_limit=10, min_cash=0)
+    first, second = FullSimulationModel(a).simulate()
+    assert first["actual_mandatory_amortisation"] == 10
+    assert first["unpaid_amortisation"] == 20
+    assert first["debt_balance"] == second["opening_financial_debt"] == 90
+    assert second["actual_mandatory_amortisation"] == 0
+    assert second["unpaid_amortisation"] == 30
+    assert second["debt_balance"] == 90
+    assert first["payment_default_flag"] and second["payment_default_flag"]
+    assert first["revolver_balance"] == second["revolver_balance"] == 10

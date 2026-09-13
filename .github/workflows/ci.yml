@@ -25,6 +25,8 @@ jobs:
       - name: Format check
         run: python -m ruff format --check .
       - name: Tests
+        # The financial regressions cover full_simulation.py; aggregate coverage
+        # remains about 52% due to legacy/analytic utilities. A 70% gate is not met.
         run: python -m pytest -q --cov=src/lbo --cov-report=term-missing --cov-fail-under=52
       - name: Benchmark smoke test
         run: python -m analysis.run_benchmark --smoke-test

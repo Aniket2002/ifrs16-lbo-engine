@@ -1,81 +1,42 @@
-# Experimental Design Specification
+# Current synthetic benchmark protocol
 
-## Monte Carlo Protocol
+The executable specification is `analysis/run_benchmark.py`. Run
+`python -m analysis.run_benchmark --seed 42` for 200 five-year scenarios or add
+`--smoke-test` for 20. Operators are sampled with replacement using NumPy's seeded
+generator. Base, downside and distressed regimes have probabilities 0.5, 0.3 and
+0.2. Growth, margin, sweep and lease flows are drawn and clipped in `_draw_scenario`;
+regime adjustments modify growth, margins, debt, leases and cash.
 
-### Random Inputs and Priors
+`data/synthetic/operators.csv` supplies operator parameters. The separate
+`scenario_parameters.csv` is checksummed metadata; it does not control the current
+sampler. No exit-multiple distribution, rate sampling, Sobol experiment, IRR hurdle
+or historical transaction success rate is part of this benchmark.
 
-| Parameter | Distribution | Parameters | Bounds | Rationale |
-|-----------|-------------|------------|--------|-----------|
-| Revenue CAGR | Normal | μ=4%, σ=2% | [0%, 8%] | Historical hospitality sector growth |
-| Exit Multiple | Triangular | (8.0x, 9.5x, 11.0x) | [7x, 12x] | LBO exit multiples 2010-2020 |
-| Terminal EBITDA Margin | Normal | μ=22%, σ=2% | [15%, 30%] | Operational efficiency bounds |
-| Rate Environment | Uniform | Base + [-100bps, +200bps] | - | Interest rate cycle variability |
+A simulated failure is any nonpositive EBITDA, payment default, reserve funding
+deficit, net leverage above 6.0, or interest coverage below 1.8 in any year.
+`failure_type` prioritizes negative EBITDA, then payment default, then combined
+reserve/covenant failure, then either alone. Separate payment-default, insolvency
+and covenant-breach booleans preserve overlapping conditions. `failed_scenario_count`
+counts execution exceptions, not financially distressed scenarios. Exceptions and
+single-class samples abort reporting rather than being silently dropped.
 
-### Independence Assumptions
-- Revenue growth and margin evolution are independent
-- Exit multiple independent of operational performance (market-driven)
-- Rate environment affects all debt tranches proportionally
+The analytic score is `1 / (1 + exp(2 * minimum_headroom))`, a ranking transform,
+not a calibrated probability. Classification uses 0.5. AUC receives a percentile
+95% interval from 500 scenario bootstrap attempts (single-class resamples skipped).
+Scenarios share synthetic operator assumptions; this interval does not establish
+out-of-sample performance on real borrowers.
 
-### Sampling Protocol
-- **N_requested = 400** scenarios using pseudo-random sampling with fixed seed
-- **N_effective** reported separately (successful model runs only)
-- **Rejection criteria**: Negative EBITDA, infeasible debt capacity, numerical errors
+The JSON report contains AUC, false-positive/negative rates, leverage/coverage
+MAE and RMSE averaged across scenarios, minimum-headroom errors, scenario records,
+failure counts, diagnostic envelopes, data checksums and git SHA. No calibration
+curve, Brier score, Sobol indices or equity-return results are emitted. Diagnostic
+envelopes are assumption-based heuristics, not proven bounds on all simulations.
 
-### Success Criterion (Mathematical Definition)
-A scenario is classified as "successful" if and only if:
-
-$$\text{Success} = \neg\text{CovenantBreach} \land \text{ExitEquity} > 0 \land \text{IRR} \geq 8\%$$
-
-Where:
-- CovenantBreach = (ICR_min < 1.8) ∨ (ND/EBITDA_max > 9.0)
-- ExitEquity = ExitEV - FinalNetDebt - SaleCosts
-- IRR computed from equity cash flow vector
-
-## Sensitivity Analysis (Sobol Indices)
-
-### Methodology
-- **Scheme**: Saltelli sampling for efficient Sobol index computation
-- **Base sample size**: n_base = 1,024 (total 2,048 × 4 parameters = 8,192 evaluations)
-- **Output**: Equity IRR (single scalar)
-- **Indices**: First-order (S₁) and total-effect (Sₜ) indices
-
-### Parameter Vector
-Four-dimensional input space:
-1. Exit multiple (continuous)
-2. Terminal EBITDA margin (continuous)  
-3. Revenue growth rate (continuous)
-4. Interest rate environment (continuous)
-
-## Deterministic Stress Testing
-
-### Stress Scenarios
-1. **Mild Stress**: Rev -4%, Margin -100bps, Exit -1.0x, Rates +150bps
-2. **Severe Stress**: Rev -8%, Margin -150bps, Exit -2.0x, Rates +300bps
-
-### Application Method
-- **Simultaneous**: All stress factors applied together (worst-case combination)
-- **Deterministic**: No randomness in stress scenarios
-- **Academic treatment**: Model failures recorded and reported transparently
-
-## Reproducibility Requirements
-
-### Seeds and Versioning
-- **Fixed seed**: 42 (all random number generation)
-- **Git commit hash**: Embedded in all outputs
-- **Software versions**: Python 3.11, NumPy, SciPy versions logged
-
-### Computational Environment
-- **Hardware**: Consumer laptop (sufficient for academic reproducibility)
-- **Runtime**: ~30 seconds for MC, ~2 minutes for Sobol
-- **Complexity**: O(scenarios × years) linear scaling
-
-## Statistical Rigor
-
-### Confidence Intervals
-- **Success Rate**: Wilson score interval (95% CI)
-- **IRR Percentiles**: Bootstrap CI with 1,000 resamples
-- **Reporting**: All point estimates accompanied by uncertainty bounds
-
-### Null Hypothesis Testing
-- H₀: IFRS-16 treatment has no effect on covenant metrics
-- Alternative specifications tested via ablation studies
+Timing warms both paths and reports median and IQR over five repetitions of the
+same scenarios. Speed ratios can be below one and vary by machine and load.
+Deterministic financial results are reproducible for the same code, inputs, seed
+and dependency versions; timings are not. The report SHA names HEAD and does not
+capture uncommitted edits: retain the patch and environment alongside local runs.
+Both modes overwrite `output/benchmark/benchmark_report.json`; archive it before
+running another mode. Older manuscripts and bundled archives are historical
+snapshots, not current benchmark output.
