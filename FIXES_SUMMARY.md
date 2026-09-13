@@ -3,7 +3,8 @@
 Branch: `agent/ifrs16-final-waterfall-consistency`.
 Baseline: `c349687` (`final fix`), initially clean working tree on
 `agent/ifrs16-financial-correctness-v2`. All implementation edits are in canonical
-files. No commit, push or remote merge was performed.
+files. The financial-correction work was committed as `88503d2` and pushed to the
+remote branch before the final pre-merge rebase.
 
 ## Reproduced bugs and corrections
 
@@ -115,8 +116,7 @@ arrears catch-up, negative cash/exit residuals as diagnostics, no complete input
 validation, and incomplete legacy/analytic test coverage. Older paper/archive
 snapshots are explicitly historical and were not regenerated. The benchmark is
 synthetic, not audited transaction data, and its score is not a calibrated default
-probability. HEAD metadata does not capture uncommitted edits; preserve the diff
-and environment with results.
+probability. Preserve the exact commit and environment with results.
 
 Recommended commit message:
 `Fix financing waterfall reconciliation and fund opening cash in entry uses`
