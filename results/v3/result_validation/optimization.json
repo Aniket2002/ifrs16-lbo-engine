@@ -1,0 +1,115 @@
+{
+  "result_name": "financing_optimization_validation",
+  "result_class": "B",
+  "status": "validated_methodological_only",
+  "final_admission_classification": "B",
+  "source_commit": "fdc949f4ff0c8ef4b3f318e31aff7a4a9cd6cccf",
+  "artifact_commit_placeholder": null,
+  "protocol_path": "docs/V3_OPTIMIZATION_VALIDATION_PROTOCOL.md",
+  "candidate_grid_path": "results/v3/optimization_validation/candidate_grid.csv",
+  "train_heldout_split_rule": "leave-one-template-out across five synthetic templates; training on four templates, held-out on the fifth",
+  "seed": [314159],
+  "objective": "maximize training median limited-liability annualized sponsor return subject to training broad-failure and payment-default rates not exceeding the reference policy on the same training paths",
+  "constraints": [
+    "candidate debt must be below total entry uses and leave positive sponsor equity",
+    "training broad failure rate <= same-path reference rate",
+    "training payment default rate <= same-path reference rate",
+    "tie-breakers: lower broad failure, lower payment default, lower debt multiple, lower cash sweep, higher amortisation"
+  ],
+  "toy_validation": {
+    "result": "passed",
+    "known_optimum": 60.0,
+    "independent_formula": "MOIC = (120 - D) / (100 - D)",
+    "derivative": "20 / (100 - D)^2 > 0 on [0, 60]"
+  },
+  "leakage_ex_ante_checks": {
+    "training_only_selection": true,
+    "heldout_template_excluded_from_selection": true,
+    "common_candidate_grid_ex_ante": true,
+    "same_paths_for_candidate_and_reference": true,
+    "candidate_grid_frozen_before_final_evaluation": true,
+    "financial_engine_unchanged": true,
+    "v2_benchmark_unchanged": true,
+    "bayes_excluded_from_optimization": true,
+    "historical_irr_uplift_not_recreated": true
+  },
+  "deterministic_reproduction_result": {
+    "status": "completed",
+    "source_commit": "fdc949f4ff0c8ef4b3f318e31aff7a4a9cd6cccf",
+    "second_run_artifacts_match_first_run": true,
+    "hash_verification": {
+      "admission_decision.json": "18a450e18f8112f4310720d117ce1413c72e42361e39423efd18f15717971cb7",
+      "candidate_grid.csv": "df40275f82a22e9bcc4cf0cf2e6e17ff4587c0660a837885021ce7373d150749",
+      "candidate_results.csv": "fa24163a4def39d4060f56f338e772f765a11758d8a5eb84490d0ec98ece86cb",
+      "economic_audit.json": "696f662883573a3b194e9ff6a547139f4000a766e7d6bfadf41256f6a7b2e8ac",
+      "fold_selection.csv": "ef4279669449d66759ae613bd24067b1708b02cb59d44657ea37702ac5c82d3e",
+      "frozen_protocol.json": "179f3e867dfb870854f0e3526c6fc6150b68321bea18c99987f384eb876b5b0c",
+      "heldout_results.csv": "030e854cf2265a44280d3a7a40836beb1f0ed0c553ef2a5c9ecac6d764e72b6b",
+      "rate_sensitivity.csv": "418d1467fdfa756286022c3096f0e5e155d35c0d6a7590f4094db2e95fd2287c",
+      "reference_policy.csv": "860d04276463e0da64026b8025275eac3d8af8c3b64239d2129fd846624cee67",
+      "run_metadata.json": "78c0b0d2935374fc453f54b5b8341c63893d9a0587e3ae6f6912fa2f98c3dd68",
+      "summary.json": "5d6ceff00eff8511d459d5b84285763a66ebecb5ffd869ef9a48dd5d5cd6ab0e",
+      "toy_validation.json": "7e2269f61d7aa7ddd815ec590e1a13d64a9381da579b9efbf1a5c988d17c6145"
+    }
+  },
+  "held_out_metrics": {
+    "optimized_median_annualized_return": 0.011006661155407493,
+    "reference_median_annualized_return": 0.006122463947596968,
+    "optimized_mean_annualized_return": -0.011114892439248281,
+    "reference_mean_annualized_return": -0.032606578860677374,
+    "optimized_broad_failure_rate": 0.014,
+    "reference_broad_failure_rate": 0.068,
+    "optimized_payment_default_rate": 0.006,
+    "reference_payment_default_rate": 0.05,
+    "optimized_total_equity_loss_rate": 0.002,
+    "reference_total_equity_loss_rate": 0.018
+  },
+  "weak_fold_findings": {
+    "template_004": {
+      "median_annualized_return": -0.03181,
+      "mean_annualized_return": -0.0686,
+      "p10_annualized_return": -0.2304,
+      "broad_failure_rate": 0.07,
+      "payment_default_rate": 0.03,
+      "summary": "template 004 remains materially weak and is not averaged away"
+    }
+  },
+  "rate_sensitivity": {
+    "higher_rate_optimized_median_annualized_return": 0.009379144500930359,
+    "higher_rate_reference_median_annualized_return": 0.00225904944823907,
+    "higher_rate_optimized_broad_failure_rate": 0.018,
+    "higher_rate_reference_broad_failure_rate": 0.088,
+    "higher_rate_optimized_payment_default_rate": 0.012,
+    "higher_rate_reference_payment_default_rate": 0.068,
+    "rate_sensitivity_changed_policy_folds": 2,
+    "aggregate_median_return_change_absolute": 0.0016275166544771347,
+    "material": true
+  },
+  "limitations": [
+    "all folds select minimum debt at the grid boundary; the vacuum of lower debt cannot be assessed",
+    "fixed-rate treatment has no endogenous credit spread or leverage-dependent pricing",
+    "the engine continues after default and has no recovery model",
+    "entry and exit valuation are consistent only in the synthetic experiment, not as a market claim",
+    "results remain methodological only and do not justify real-world optimality"
+  ],
+  "reproduction_command": "python -m analysis.run_v3_optimization",
+  "relevant_artifacts": [
+    "results/v3/optimization_validation/admission_decision.json",
+    "results/v3/optimization_validation/candidate_grid.csv",
+    "results/v3/optimization_validation/candidate_results.csv",
+    "results/v3/optimization_validation/economic_audit.json",
+    "results/v3/optimization_validation/fold_selection.csv",
+    "results/v3/optimization_validation/frozen_protocol.json",
+    "results/v3/optimization_validation/heldout_results.csv",
+    "results/v3/optimization_validation/rate_sensitivity.csv",
+    "results/v3/optimization_validation/reference_policy.csv",
+    "results/v3/optimization_validation/run_metadata.json",
+    "results/v3/optimization_validation/summary.json",
+    "results/v3/optimization_validation/toy_validation.json",
+    "results/v3/optimization_validation/verification.json",
+    "docs/V3_OPTIMIZATION_VALIDATION_PROTOCOL.md",
+    "docs/V3_OPTIMIZATION_VALIDATION.md"
+  ],
+  "manuscript_eligibility": false,
+  "notes": "A/B/C classification is B: retain only as a toy/methodological demonstration. The result captures a mechanically valid synthetic optimization but not a substantive financing-design claim."
+}

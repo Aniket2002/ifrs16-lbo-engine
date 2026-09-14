@@ -1,0 +1,11 @@
+term_rate,held_out_template,feasible,selected_policy_id,selected_debt_multiple,selected_amortisation_rate,selected_cash_sweep,heldout_median_annualized_return,heldout_broad_failure_rate,heldout_payment_default_rate
+0.06,SYN_HOTEL_001,True,debt_1.50x__amort_0.050__sweep_0.70,1.5,0.05,0.7,0.0011125175451175418,0.0,0.0
+0.06,SYN_HOTEL_002,True,debt_1.50x__amort_0.075__sweep_0.70,1.5,0.075,0.7,0.008612865603467967,0.0,0.0
+0.06,SYN_HOTEL_003,True,debt_1.50x__amort_0.050__sweep_0.60,1.5,0.05,0.6,0.018190091498279104,0.0,0.0
+0.06,SYN_HOTEL_004,True,debt_1.50x__amort_0.075__sweep_0.70,1.5,0.075,0.7,-0.031809747918627895,0.07,0.03
+0.06,SYN_HOTEL_005,True,debt_1.50x__amort_0.050__sweep_0.70,1.5,0.05,0.7,0.02744572347455898,0.0,0.0
+0.075,SYN_HOTEL_001,True,debt_1.50x__amort_0.050__sweep_0.70,1.5,0.05,0.7,-0.0008596809360203461,0.0,0.0
+0.075,SYN_HOTEL_002,True,debt_1.50x__amort_0.050__sweep_0.70,1.5,0.05,0.7,0.00682283239483239,0.0,0.0
+0.075,SYN_HOTEL_003,True,debt_1.50x__amort_0.050__sweep_0.70,1.5,0.05,0.7,0.016918692630191412,0.0,0.0
+0.075,SYN_HOTEL_004,True,debt_1.50x__amort_0.075__sweep_0.70,1.5,0.075,0.7,-0.034476137130238504,0.08,0.06
+0.075,SYN_HOTEL_005,True,debt_1.50x__amort_0.050__sweep_0.70,1.5,0.05,0.7,0.026104775734163366,0.01,0.0

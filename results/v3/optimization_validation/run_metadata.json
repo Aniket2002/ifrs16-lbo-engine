@@ -1,0 +1,8 @@
+{
+  "source_commit": "fdc949f4ff0c8ef4b3f318e31aff7a4a9cd6cccf",
+  "command": "python -m analysis.run_v3_optimization",
+  "input_sha256": "54261ec2efa13b908c426193eabcd71f33865c5d9a39bb6b3fdbd8d9e7cf70a5",
+  "protocol_sha256": "4820dbfa7ec87cf5591e8895e6468babbf03b0e40f7b592f5fa646462ca2fc9c",
+  "python": "3.14.0",
+  "platform": "Windows-11-10.0.26200-SP0"
+}

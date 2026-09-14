@@ -1,0 +1,12 @@
+{
+  "classification": "B",
+  "label": "RETAIN ONLY AS TOY / METHODOLOGICAL DEMONSTRATION",
+  "all_folds_feasible": true,
+  "folds_with_any_selected_grid_boundary": 5,
+  "heldout_risk_rate_deterioration_max": -0.044000000000000004,
+  "rate_sensitivity_changed_policy_folds": 2,
+  "rate_sensitivity_aggregate_median_return_absolute_change": 0.0016275166544771347,
+  "material_rate_sensitivity": true,
+  "reason": "Mechanics validate, but boundary behavior, fixed-rate sensitivity or held-out risk prevents a substantive synthetic financing claim.",
+  "real_world_optimality_claim": false
+}

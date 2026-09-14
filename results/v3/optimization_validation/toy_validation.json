@@ -1,0 +1,31 @@
+{
+  "selected_debt": 60.0,
+  "selected_moic": 1.5,
+  "analytic_derivative_numerator": 20.0,
+  "evaluations": [
+    {
+      "debt": 0.0,
+      "moic": 1.2
+    },
+    {
+      "debt": 15.0,
+      "moic": 1.2352941176470589
+    },
+    {
+      "debt": 30.0,
+      "moic": 1.2857142857142858
+    },
+    {
+      "debt": 45.0,
+      "moic": 1.3636363636363635
+    },
+    {
+      "debt": 60.0,
+      "moic": 1.5
+    }
+  ],
+  "independent_formula": "MOIC=(120-D)/(100-D)",
+  "independent_derivative": "20/(100-D)^2 > 0 on [0,60]",
+  "expected_debt": 60.0,
+  "passed": true
+}

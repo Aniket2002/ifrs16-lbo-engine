@@ -1,0 +1,696 @@
+{
+  "seed": 314159,
+  "scenarios_per_template": 100,
+  "entry_multiple_on_ebitda": 7.5,
+  "exit_multiple_on_ebitda": 8.0,
+  "years": 5,
+  "primary_term_rate": 0.06,
+  "higher_term_rate": 0.075,
+  "grid": [
+    {
+      "policy_id": "debt_1.50x__amort_0.050__sweep_0.40",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.050__sweep_0.50",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.050__sweep_0.60",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.050__sweep_0.70",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.075__sweep_0.40",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.075__sweep_0.50",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.075__sweep_0.60",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.075__sweep_0.70",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.100__sweep_0.40",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.100__sweep_0.50",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.100__sweep_0.60",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.100__sweep_0.70",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.125__sweep_0.40",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.125__sweep_0.50",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.125__sweep_0.60",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_1.50x__amort_0.125__sweep_0.70",
+      "debt_multiple": 1.5,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.050__sweep_0.40",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.050__sweep_0.50",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.050__sweep_0.60",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.050__sweep_0.70",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.075__sweep_0.40",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.075__sweep_0.50",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.075__sweep_0.60",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.075__sweep_0.70",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.100__sweep_0.40",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.100__sweep_0.50",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.100__sweep_0.60",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.100__sweep_0.70",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.125__sweep_0.40",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.125__sweep_0.50",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.125__sweep_0.60",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_1.75x__amort_0.125__sweep_0.70",
+      "debt_multiple": 1.75,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.050__sweep_0.40",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.050__sweep_0.50",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.050__sweep_0.60",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.050__sweep_0.70",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.075__sweep_0.40",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.075__sweep_0.50",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.075__sweep_0.60",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.075__sweep_0.70",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.100__sweep_0.40",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.100__sweep_0.50",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.100__sweep_0.60",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.100__sweep_0.70",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.125__sweep_0.40",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.125__sweep_0.50",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.125__sweep_0.60",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.00x__amort_0.125__sweep_0.70",
+      "debt_multiple": 2.0,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.050__sweep_0.40",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.050__sweep_0.50",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.050__sweep_0.60",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.050__sweep_0.70",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.075__sweep_0.40",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.075__sweep_0.50",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.075__sweep_0.60",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.075__sweep_0.70",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.100__sweep_0.40",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.100__sweep_0.50",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.100__sweep_0.60",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.100__sweep_0.70",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.125__sweep_0.40",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.125__sweep_0.50",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.125__sweep_0.60",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.25x__amort_0.125__sweep_0.70",
+      "debt_multiple": 2.25,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.050__sweep_0.40",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.050__sweep_0.50",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.050__sweep_0.60",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.050__sweep_0.70",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.075__sweep_0.40",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.075__sweep_0.50",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.075__sweep_0.60",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.075__sweep_0.70",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.100__sweep_0.40",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.100__sweep_0.50",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.100__sweep_0.60",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.100__sweep_0.70",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.125__sweep_0.40",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.125__sweep_0.50",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.125__sweep_0.60",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.50x__amort_0.125__sweep_0.70",
+      "debt_multiple": 2.5,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.050__sweep_0.40",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.050__sweep_0.50",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.050__sweep_0.60",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.050__sweep_0.70",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.075__sweep_0.40",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.075__sweep_0.50",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.075__sweep_0.60",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.075__sweep_0.70",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.100__sweep_0.40",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.100__sweep_0.50",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.100__sweep_0.60",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.100__sweep_0.70",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.125__sweep_0.40",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.125__sweep_0.50",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.125__sweep_0.60",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_2.75x__amort_0.125__sweep_0.70",
+      "debt_multiple": 2.75,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.050__sweep_0.40",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.050__sweep_0.50",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.050__sweep_0.60",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.050__sweep_0.70",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.05,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.075__sweep_0.40",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.075__sweep_0.50",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.075__sweep_0.60",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.075__sweep_0.70",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.075,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.100__sweep_0.40",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.100__sweep_0.50",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.100__sweep_0.60",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.100__sweep_0.70",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.1,
+      "cash_sweep": 0.7
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.125__sweep_0.40",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.4
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.125__sweep_0.50",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.5
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.125__sweep_0.60",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.6
+    },
+    {
+      "policy_id": "debt_3.00x__amort_0.125__sweep_0.70",
+      "debt_multiple": 3.0,
+      "amortisation_rate": 0.125,
+      "cash_sweep": 0.7
+    }
+  ],
+  "objective": "maximize training median limited-liability annualized sponsor return",
+  "constraints": [
+    "candidate training broad failure rate <= same-path reference rate",
+    "candidate training payment-default rate <= same-path reference rate"
+  ],
+  "tie_rule": [
+    "lower broad failure",
+    "lower payment default",
+    "lower debt multiple",
+    "lower cash sweep",
+    "higher amortisation"
+  ],
+  "limited_liability": "proceeds=max(0,raw_exit_equity); zero proceeds return=-100%"
+}

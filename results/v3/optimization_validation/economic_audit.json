@@ -1,0 +1,16 @@
+{
+  "source_commit": "fdc949f4ff0c8ef4b3f318e31aff7a4a9cd6cccf",
+  "existing_v2_return_optimization_suitable": false,
+  "finding": "EXISTING V2 BENCHMARK IS NOT A VALID RETURN-OPTIMIZATION DATASET.",
+  "v2_entry_basis": "7.5 * revenue_0",
+  "v2_exit_basis": "8.0 * final EBITDA",
+  "intentional_mismatch_documented": false,
+  "v2_effect": "none on ranking/covenant results; v2 disclaims return optimization",
+  "separate_experiment": "entry and exit EV both use EBITDA multiples",
+  "remaining_economic_limitations": [
+    "fixed borrowing rate has no leverage-dependent spread",
+    "engine continues mechanically after default and has no recovery model",
+    "entry sources/uses do not adjust purchase use for assumed lease while exit equity subtracts lease",
+    "synthetic operating paths and multiples have no market-practice claim"
+  ]
+}

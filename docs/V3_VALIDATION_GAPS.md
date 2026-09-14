@@ -79,12 +79,26 @@ should be reused, not recreated. See `results/v3/baseline/verification.json`,
   v3**. See `docs/V3_BAYESIAN_VALIDATION.md` and machine-readable results under
   `results/v3/bayesian_validation/`.
 
+## Financing optimization validation completed — methodological only
+
+- The v2 benchmark is not a valid return-optimization dataset: entry EV uses 7.5x
+  revenue while exit EV uses 8.0x EBITDA, and regime construction changes opening
+  financing after the regime draw. V2 remains unchanged and its ranking/covenant
+  results are unaffected.
+- A separate ex-ante synthetic experiment uses consistent EBITDA valuation bases,
+  a frozen 112-policy grid, reference-relative training risk constraints and
+  leave-one-template-out evaluation. All 113,000 fresh paths pass runtime checks.
+- Mechanics and the independent toy pass. Held-out policies reduce broad failure
+  from 6.8% to 1.4% and payment default from 5.0% to 0.6%, while median annualized
+  return rises from 0.612% to 1.101%. Every fold selects minimum debt and four
+  select maximum sweep; two policies change at a 7.5% fixed rate.
+- Decision **B: retain only as a toy/methodological demonstration**. Boundary
+  behavior, fixed-rate sensitivity, missing endogenous credit pricing and absent
+  default recovery preclude a substantive financing claim. See
+  `docs/V3_OPTIMIZATION_VALIDATION.md` and `results/v3/optimization_validation/`.
+
 ## Genuinely missing work
 
-- Independent sponsor-return validation and an economic admission decision for
-  financing optimization. Any retained search needs independently solved toy cases
-  and infeasible/tied/boundary/binding-constraint tests. Threshold tuning alone
-  is not an economic optimization.
 - V3 publication artifacts, only after numerical methods pass their gates.
 
 ## Proposed v3 implementation order
@@ -93,8 +107,8 @@ should be reused, not recreated. See `results/v3/baseline/verification.json`,
    frozen protocol and its documented threshold-transfer limitations.
 2. Bayesian audit/validation is complete and records exclusion. Do not integrate
    its posterior samples into v3 LBO results.
-3. Define and independently solve a small genuine financing problem before any
-   larger search. Retain optimization only with defensible economics and tests.
+3. Financing optimization validation is complete and retained only as a
+   methodological demonstration; do not promote it to a substantive optimum.
 4. Run the fixed v3 protocol, archive machine-readable outputs and provenance,
    then extend figure/table generation and update the manuscript and changelog.
 
@@ -106,13 +120,14 @@ should be reused, not recreated. See `results/v3/baseline/verification.json`,
   `analysis/run_v3_template_evaluation.py` are now also complete. Bayesian tests,
   corrected calibration code and its validation runner are complete; the admission
   decision excludes posterior integration. Optimization remains separate.
-- Any retained optimizer belongs in a separate tested module.
+- The retained methodological optimizer is isolated in a separate tested module.
 - Add versioned configuration and reports under `docs/` and `results/v3/`.
 - After numerical validation, add v3 figure/table generation and
   `paper/ifrs16_lbo_ssrn_v3.tex`/PDF, with reproduction instructions and changelog.
   Preserve the reviewed v2 source and artifacts.
 
 Branch consolidation, baseline reproduction, foundation financial validation,
-template-held-out threshold evaluation and Bayesian validation/admission are
-complete. Bayesian integration is excluded. No optimization, financial-model
-change or manuscript rewrite was undertaken in this stage.
+template-held-out threshold evaluation, Bayesian validation/admission and
+financing-optimization validation/admission are complete. Bayesian integration is
+excluded; optimization is methodological only. No financial-model change or
+manuscript rewrite was undertaken in this stage.

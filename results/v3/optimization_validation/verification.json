@@ -1,0 +1,25 @@
+{
+  "source_commit": "fdc949f4ff0c8ef4b3f318e31aff7a4a9cd6cccf",
+  "validated_simulation_paths": 113000,
+  "artifact_sanity_checks": true,
+  "heldout_rows": 1000,
+  "unique_scenarios_per_policy_kind": 500,
+  "candidate_fold_rows": 560,
+  "prior_v3_artifacts_unchanged": true,
+  "financial_engine_unchanged": true,
+  "reviewed_v2_benchmark_unchanged": true,
+  "artifact_sha256_before_verification_file": {
+    "admission_decision.json": "18a450e18f8112f4310720d117ce1413c72e42361e39423efd18f15717971cb7",
+    "candidate_grid.csv": "df40275f82a22e9bcc4cf0cf2e6e17ff4587c0660a837885021ce7373d150749",
+    "candidate_results.csv": "fa24163a4def39d4060f56f338e772f765a11758d8a5eb84490d0ec98ece86cb",
+    "economic_audit.json": "696f662883573a3b194e9ff6a547139f4000a766e7d6bfadf41256f6a7b2e8ac",
+    "fold_selection.csv": "ef4279669449d66759ae613bd24067b1708b02cb59d44657ea37702ac5c82d3e",
+    "frozen_protocol.json": "179f3e867dfb870854f0e3526c6fc6150b68321bea18c99987f384eb876b5b0c",
+    "heldout_results.csv": "030e854cf2265a44280d3a7a40836beb1f0ed0c553ef2a5c9ecac6d764e72b6b",
+    "rate_sensitivity.csv": "418d1467fdfa756286022c3096f0e5e155d35c0d6a7590f4094db2e95fd2287c",
+    "reference_policy.csv": "860d04276463e0da64026b8025275eac3d8af8c3b64239d2129fd846624cee67",
+    "run_metadata.json": "78c0b0d2935374fc453f54b5b8341c63893d9a0587e3ae6f6912fa2f98c3dd68",
+    "summary.json": "5d6ceff00eff8511d459d5b84285763a66ebecb5ffd869ef9a48dd5d5cd6ab0e",
+    "toy_validation.json": "7e2269f61d7aa7ddd815ec590e1a13d64a9381da579b9efbf1a5c988d17c6145"
+  }
+}
