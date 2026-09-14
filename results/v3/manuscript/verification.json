@@ -1,0 +1,17 @@
+{
+  "ruff_check": "passed",
+  "ruff_format_check": "passed (44 files)",
+  "tests": {
+    "command": "python -m pytest -q --no-cov tests/test_manuscript_freeze.py tests/test_manuscript_rendering.py",
+    "passed": 22,
+    "freeze_tests": 13,
+    "rendering_tests": 9
+  },
+  "freeze_validator": "passed: 100 claims; 66 frozen source hashes",
+  "final_manuscript_audit": "passed",
+  "protected_diff_from_freeze_head": "",
+  "experiments_run": false,
+  "frozen_results_changed": false,
+  "v2_preserved": true,
+  "release_or_tag_created": false
+}

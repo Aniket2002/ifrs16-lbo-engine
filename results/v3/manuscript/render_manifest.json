@@ -1,0 +1,5337 @@
+{
+  "claim_freeze_commit": "21d726606f3208bcee6e3e84ae4c357e3a33d79b",
+  "input_only": true,
+  "no_model_execution": true,
+  "tables": [
+    {
+      "table_id": "T1",
+      "title": "Stipulated synthetic archetype definitions",
+      "main_text_or_appendix": "main",
+      "source_artifact": [
+        "data/synthetic/operators.csv"
+      ],
+      "source_fields_or_rows": [
+        {
+          "artifact": "data/synthetic/operators.csv"
+        }
+      ],
+      "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+      "rounding": {
+        "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+        "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+        "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+        "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+        "multiples": "2 decimals",
+        "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+        "counts": "integers; zero denominator is undefined, never zero",
+        "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+        "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+      },
+      "notes_denominators": "Five archetypes; retain input units and distinguish stipulated policy fractions from observed rates. All CSV columns are input metadata; seed is provenance.",
+      "claim_ids": [
+        "SCR-016",
+        "HET-010"
+      ]
+    },
+    {
+      "table_id": "T2",
+      "title": "Financial-engine validation evidence",
+      "main_text_or_appendix": "main",
+      "source_artifact": [
+        "results/v3/foundation_validation.json"
+      ],
+      "source_fields_or_rows": [
+        {
+          "artifact": "results/v3/foundation_validation.json",
+          "keys": [
+            "independent_return_check"
+          ]
+        },
+        {
+          "artifact": "results/v3/foundation_validation.json",
+          "keys": [
+            "independent_debt_schedule",
+            "exact_match"
+          ]
+        },
+        {
+          "artifact": "results/v3/foundation_validation.json",
+          "keys": [
+            "runtime_validation"
+          ]
+        },
+        {
+          "artifact": "results/v3/foundation_validation.json",
+          "keys": [
+            "adversarial_corruptions_detected"
+          ]
+        }
+      ],
+      "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+      "rounding": {
+        "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+        "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+        "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+        "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+        "multiples": "2 decimals",
+        "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+        "counts": "integers; zero denominator is undefined, never zero",
+        "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+        "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+      },
+      "notes_denominators": "200 paths, 1,000 scenario-years; tested-scope statement mandatory. Counts and checks, not blanket validity.",
+      "claim_ids": [
+        "ENG-001",
+        "ENG-002",
+        "ENG-003"
+      ]
+    },
+    {
+      "table_id": "T3",
+      "title": "Aggregate threshold-transfer trade-off",
+      "main_text_or_appendix": "main",
+      "source_artifact": [
+        "results/v3/template_evaluation/summary.json"
+      ],
+      "source_fields_or_rows": [
+        {
+          "artifact": "results/v3/template_evaluation/summary.json",
+          "keys": [
+            "selected_threshold"
+          ]
+        },
+        {
+          "artifact": "results/v3/template_evaluation/summary.json",
+          "keys": [
+            "fixed_0_5"
+          ]
+        },
+        {
+          "artifact": "results/v3/template_evaluation/summary.json",
+          "keys": [
+            "ranking"
+          ]
+        }
+      ],
+      "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+      "rounding": {
+        "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+        "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+        "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+        "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+        "multiples": "2 decimals",
+        "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+        "counts": "integers; zero denominator is undefined, never zero",
+        "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+        "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+      },
+      "notes_denominators": "200 rows; 20 positive/180 negative; precision denominators 53 selected/3 fixed. AUC equality is mechanical. AP definition in note.",
+      "claim_ids": [
+        "SCR-004",
+        "SCR-005",
+        "SCR-006",
+        "SCR-007"
+      ]
+    },
+    {
+      "table_id": "T4",
+      "title": "Held-out template ranking and threshold heterogeneity",
+      "main_text_or_appendix": "main",
+      "source_artifact": [
+        "results/v3/template_evaluation/fold_results.csv"
+      ],
+      "source_fields_or_rows": [
+        {
+          "artifact": "results/v3/template_evaluation/fold_results.csv"
+        }
+      ],
+      "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+      "rounding": {
+        "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+        "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+        "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+        "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+        "multiples": "2 decimals",
+        "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+        "counts": "integers; zero denominator is undefined, never zero",
+        "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+        "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+      },
+      "notes_denominators": "All five rows; n_test/n_test_failures and nonfailures adjacent to every rate; training n and failures shown with train BA. Nulls displayed as undefined; no ranking claim for Template 005.",
+      "claim_ids": [
+        "SCR-009",
+        "SCR-010",
+        "SCR-011",
+        "SCR-012",
+        "SCR-013",
+        "SCR-014"
+      ]
+    },
+    {
+      "table_id": "T5",
+      "title": "Synthetic financing-design demonstration (classification B)",
+      "main_text_or_appendix": "appendix",
+      "source_artifact": [
+        "results/v3/optimization_validation/fold_selection.csv",
+        "results/v3/optimization_validation/summary.json"
+      ],
+      "source_fields_or_rows": [
+        {
+          "artifact": "results/v3/optimization_validation/summary.json",
+          "keys": [
+            "primary_aggregate_heldout"
+          ]
+        },
+        {
+          "artifact": "results/v3/optimization_validation/fold_selection.csv",
+          "fields": [
+            "held_out_template",
+            "selected_debt_multiple",
+            "selected_amortisation_rate",
+            "selected_cash_sweep",
+            "test_optimized_n_scenarios",
+            "test_optimized_median_annualized_return",
+            "test_reference_n_scenarios",
+            "test_reference_median_annualized_return",
+            "test_optimized_broad_failure_rate",
+            "test_reference_broad_failure_rate",
+            "test_optimized_payment_default_rate",
+            "test_reference_payment_default_rate"
+          ]
+        }
+      ],
+      "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+      "rounding": {
+        "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+        "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+        "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+        "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+        "multiples": "2 decimals",
+        "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+        "counts": "integers; zero denominator is undefined, never zero",
+        "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+        "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+      },
+      "notes_denominators": "500 unique paired scenarios, not 1,000 independent scenarios; 100 per held-out template; label B prominently. Methodological only.",
+      "claim_ids": [
+        "OPT-001",
+        "OPT-003",
+        "OPT-004",
+        "OPT-010"
+      ]
+    },
+    {
+      "table_id": "A1",
+      "title": "Bayesian exclusion diagnostics (classification C)",
+      "main_text_or_appendix": "appendix",
+      "source_artifact": [
+        "results/v3/bayesian_validation/admission_decision.json",
+        "results/v3/bayesian_validation/data_provenance.json",
+        "results/v3/bayesian_validation/prior_sensitivity.json",
+        "results/v3/bayesian_validation/recovery_summary.json"
+      ],
+      "source_fields_or_rows": [
+        {
+          "artifact": "results/v3/bayesian_validation/admission_decision.json"
+        },
+        {
+          "artifact": "results/v3/bayesian_validation/recovery_summary.json"
+        },
+        {
+          "artifact": "results/v3/bayesian_validation/prior_sensitivity.json",
+          "keys": [
+            "parameter_comparison"
+          ]
+        },
+        {
+          "artifact": "results/v3/bayesian_validation/prior_sensitivity.json",
+          "keys": [
+            "material_prior_sensitivity"
+          ]
+        },
+        {
+          "artifact": "results/v3/bayesian_validation/data_provenance.json",
+          "keys": [
+            "classification"
+          ]
+        }
+      ],
+      "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+      "rounding": {
+        "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+        "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+        "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+        "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+        "multiples": "2 decimals",
+        "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+        "counts": "integers; zero denominator is undefined, never zero",
+        "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+        "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+      },
+      "notes_denominators": "18 recovery runs/180 parameter evaluations, not 180 independent datasets; prior sensitivity on ten stipulated rows. Report failed gates beside recovery summaries; exclusion only.",
+      "claim_ids": [
+        "BAY-001",
+        "BAY-002",
+        "BAY-003"
+      ]
+    },
+    {
+      "table_id": "A2",
+      "title": "Template 004 regime-conditioned outcomes and within-regime comparison",
+      "main_text_or_appendix": "appendix",
+      "source_artifact": [
+        "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv"
+      ],
+      "source_fields_or_rows": [
+        {
+          "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv"
+        },
+        {
+          "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+          "where": {
+            "evaluation_policy": "optimized"
+          }
+        }
+      ],
+      "allowed_transformations": "Select existing summaries; rates to count plus percent only after verifying integers against heldout_results.csv. No new confidence intervals or statistical tests.",
+      "rounding": {
+        "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+        "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+        "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+        "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+        "multiples": "2 decimals",
+        "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+        "counts": "integers; zero denominator is undefined, never zero",
+        "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+        "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+      },
+      "notes_denominators": "Scenario counts in every row; Template 004 base/downside/distressed n=48/31/21. Counts recovered only by verified integer rate*n. Reference distressed 7/21 zero recovery explains P10=-100%; no confidence intervals.",
+      "claim_ids": [
+        "HET-002",
+        "HET-003",
+        "HET-004",
+        "HET-005",
+        "HET-006",
+        "HET-007",
+        "HET-008",
+        "HET-009",
+        "LIM-002"
+      ]
+    },
+    {
+      "table_id": "A3",
+      "title": "Focused optimization coverage and reproducibility scope",
+      "main_text_or_appendix": "appendix",
+      "source_artifact": [
+        "results/v3/post_optimization_diagnostics/coverage.json",
+        "results/v3/post_optimization_diagnostics/optimization_code_coverage.json"
+      ],
+      "source_fields_or_rows": [
+        {
+          "artifact": "results/v3/post_optimization_diagnostics/optimization_code_coverage.json",
+          "keys": [
+            "statement_coverage"
+          ]
+        },
+        {
+          "artifact": "results/v3/post_optimization_diagnostics/optimization_code_coverage.json",
+          "keys": [
+            "branch_coverage"
+          ]
+        },
+        {
+          "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+          "keys": [
+            "files",
+            "analysis\\optimization\\financing_policy.py",
+            "summary"
+          ]
+        },
+        {
+          "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+          "keys": [
+            "files",
+            "analysis\\run_v3_optimization.py",
+            "summary"
+          ]
+        }
+      ],
+      "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+      "rounding": {
+        "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+        "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+        "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+        "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+        "multiples": "2 decimals",
+        "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+        "counts": "integers; zero denominator is undefined, never zero",
+        "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+        "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+      },
+      "notes_denominators": "47/53 and 109/182 statements; 14/20 and 22/40 branches. Display statement and branch measures separately; no claim that coverage proves validity.",
+      "claim_ids": [
+        "OPT-009"
+      ]
+    }
+  ],
+  "figures": [
+    {
+      "figure_id": "F1",
+      "conceptual_purpose": "Three distinct validation layers",
+      "exact_data_source": [],
+      "variables": [],
+      "transformations": "Conceptual diagram: engine correctness, ranking performance, decision usefulness; label each non-implication.",
+      "main_text_or_appendix": "main",
+      "claim_ids": [
+        "SCR-001",
+        "SCR-002",
+        "ENG-001"
+      ],
+      "caption_restrictions": "No numerical axis; passing a layer does not establish the next. This is a conceptual synthesis, not causal identification."
+    },
+    {
+      "figure_id": "F2",
+      "conceptual_purpose": "Fixed-score ranking ROC and precision-recall",
+      "exact_data_source": [
+        {
+          "artifact": "results/v3/template_evaluation/heldout_predictions.csv",
+          "fields": [
+            "scenario_id",
+            "analytic_risk_score",
+            "true_failure"
+          ]
+        }
+      ],
+      "variables": [
+        [
+          "scenario_id",
+          "analytic_risk_score",
+          "true_failure"
+        ]
+      ],
+      "transformations": "Future rendering only: sort frozen scores, group ties, construct empirical ROC/PR; annotate frozen AUC and AP; no fitted curve, bootstrap or new interval.",
+      "main_text_or_appendix": "main",
+      "claim_ids": [
+        "SCR-003",
+        "SCR-004",
+        "SCR-005"
+      ],
+      "caption_restrictions": "200 rows, 20 failures; pooled AUC equality is not independent validation. PR annotation uses AP, not trapezoidal area."
+    },
+    {
+      "figure_id": "F3",
+      "conceptual_purpose": "Threshold-transfer performance and false-positive concentration",
+      "exact_data_source": [
+        {
+          "artifact": "results/v3/template_evaluation/fold_results.csv",
+          "fields": [
+            "held_out_template",
+            "n_test",
+            "n_test_failures",
+            "selected_threshold",
+            "test_tp",
+            "test_fp",
+            "test_tn",
+            "test_fn",
+            "test_balanced_accuracy",
+            "fixed_0_5_balanced_accuracy"
+          ]
+        }
+      ],
+      "variables": [
+        [
+          "held_out_template",
+          "n_test",
+          "n_test_failures",
+          "selected_threshold",
+          "test_tp",
+          "test_fp",
+          "test_tn",
+          "test_fn",
+          "test_balanced_accuracy",
+          "fixed_0_5_balanced_accuracy"
+        ]
+      ],
+      "transformations": "Panels for selected/fixed BA and confusion counts; annotate selected thresholds. False-positive panel highlights 37/38 from Template 004.",
+      "main_text_or_appendix": "main",
+      "claim_ids": [
+        "SCR-009",
+        "SCR-010",
+        "SCR-011",
+        "SCR-012",
+        "SCR-013"
+      ],
+      "caption_restrictions": "Display class counts and undefined Template 005 BA; no equal-weight/pooled confusion. Combine false-positive concentration here to avoid a redundant standalone figure."
+    },
+    {
+      "figure_id": "A-F1",
+      "conceptual_purpose": "Score distributions by template and failure status",
+      "exact_data_source": [
+        {
+          "artifact": "results/v3/template_evaluation/heldout_predictions.csv",
+          "fields": [
+            "operator_id",
+            "scenario_id",
+            "analytic_risk_score",
+            "true_failure",
+            "fold_selected_threshold"
+          ]
+        }
+      ],
+      "variables": [
+        [
+          "operator_id",
+          "scenario_id",
+          "analytic_risk_score",
+          "true_failure",
+          "fold_selected_threshold"
+        ]
+      ],
+      "transformations": "Plot raw points by template and binary label with transferred threshold; no density smoothing or inferred probability calibration.",
+      "main_text_or_appendix": "appendix",
+      "claim_ids": [
+        "SCR-004",
+        "SCR-009",
+        "SCR-010",
+        "SCR-011",
+        "SCR-012",
+        "SCR-013"
+      ],
+      "caption_restrictions": "Show per-template positive/negative counts; one positive can give perfect ranking without useful threshold transfer."
+    },
+    {
+      "figure_id": "A-F2",
+      "conceptual_purpose": "Feasible observed debt-objective boundary",
+      "exact_data_source": [
+        {
+          "artifact": "results/v3/post_optimization_diagnostics/debt_boundary_profile.csv",
+          "fields": [
+            "held_out_template",
+            "debt_multiple",
+            "feasible_candidate_exists",
+            "best_feasible_median_annualized_return"
+          ]
+        }
+      ],
+      "variables": [
+        [
+          "held_out_template",
+          "debt_multiple",
+          "feasible_candidate_exists",
+          "best_feasible_median_annualized_return"
+        ]
+      ],
+      "transformations": "Plot feasible observed levels only, return fractions to percent. Mark infeasible levels as missing; no extrapolation or interpolation through them.",
+      "main_text_or_appendix": "appendix",
+      "claim_ids": [
+        "OPT-004",
+        "OPT-005"
+      ],
+      "caption_restrictions": "Classification B/methodological; 400 training scenarios per fold; no curve below 1.50x and no economic optimum claim."
+    },
+    {
+      "figure_id": "A-F3",
+      "conceptual_purpose": "Within-regime Template 004 comparison",
+      "exact_data_source": [
+        {
+          "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+          "where": {
+            "evaluation_policy": "optimized"
+          },
+          "fields": [
+            "held_out_template",
+            "scenario_type",
+            "scenario_count",
+            "median_annualized_return",
+            "broad_failure_rate",
+            "payment_default_rate"
+          ]
+        }
+      ],
+      "variables": [
+        [
+          "held_out_template",
+          "scenario_type",
+          "scenario_count",
+          "median_annualized_return",
+          "broad_failure_rate",
+          "payment_default_rate"
+        ]
+      ],
+      "transformations": "Plot archived median annualized returns by template within regime; annotate n and optionally archived risk counts.",
+      "main_text_or_appendix": "appendix",
+      "claim_ids": [
+        "HET-001",
+        "HET-009"
+      ],
+      "caption_restrictions": "Same synthetic system, B/methodological, descriptive; not replication or causality; n mandatory, including distressed n=21; no precision bars."
+    }
+  ],
+  "numeric_cells": [
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "revenue_0"
+        ]
+      },
+      "raw_value": "1200",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "1200",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "ebitda_0"
+        ]
+      },
+      "raw_value": "260",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "260",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "financial_debt_0"
+        ]
+      },
+      "raw_value": "520",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "520",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "lease_liability_0"
+        ]
+      },
+      "raw_value": "390",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "390",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "cash_0"
+        ]
+      },
+      "raw_value": "45",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "45",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "revenue_growth_mean"
+        ]
+      },
+      "raw_value": "0.03",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "3.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "revenue_growth_std"
+        ]
+      },
+      "raw_value": "0.04",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "4.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "ebitda_margin_mean"
+        ]
+      },
+      "raw_value": "0.22",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "22.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "cash_sweep"
+        ]
+      },
+      "raw_value": "0.55",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "55.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "lease_principal_rate"
+        ]
+      },
+      "raw_value": "0.11",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "11.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "lease_additions_rate"
+        ]
+      },
+      "raw_value": "0.01",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "1.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "revenue_0"
+        ]
+      },
+      "raw_value": "980",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "980",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "ebitda_0"
+        ]
+      },
+      "raw_value": "205",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "205",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "financial_debt_0"
+        ]
+      },
+      "raw_value": "470",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "470",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "lease_liability_0"
+        ]
+      },
+      "raw_value": "360",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "360",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "cash_0"
+        ]
+      },
+      "raw_value": "35",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "35",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "revenue_growth_mean"
+        ]
+      },
+      "raw_value": "0.025",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "2.5\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "revenue_growth_std"
+        ]
+      },
+      "raw_value": "0.05",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "5.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "ebitda_margin_mean"
+        ]
+      },
+      "raw_value": "0.21",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "21.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "cash_sweep"
+        ]
+      },
+      "raw_value": "0.50",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "50.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "lease_principal_rate"
+        ]
+      },
+      "raw_value": "0.12",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "12.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "lease_additions_rate"
+        ]
+      },
+      "raw_value": "0.012",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "1.2\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "revenue_0"
+        ]
+      },
+      "raw_value": "1450",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "1450",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "ebitda_0"
+        ]
+      },
+      "raw_value": "330",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "330",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "financial_debt_0"
+        ]
+      },
+      "raw_value": "610",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "610",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "lease_liability_0"
+        ]
+      },
+      "raw_value": "470",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "470",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "cash_0"
+        ]
+      },
+      "raw_value": "55",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "55",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "revenue_growth_mean"
+        ]
+      },
+      "raw_value": "0.035",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "3.5\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "revenue_growth_std"
+        ]
+      },
+      "raw_value": "0.03",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "3.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "ebitda_margin_mean"
+        ]
+      },
+      "raw_value": "0.23",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "23.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "cash_sweep"
+        ]
+      },
+      "raw_value": "0.58",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "58.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "lease_principal_rate"
+        ]
+      },
+      "raw_value": "0.10",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "10.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "lease_additions_rate"
+        ]
+      },
+      "raw_value": "0.009",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "0.9\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "revenue_0"
+        ]
+      },
+      "raw_value": "760",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "760",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "ebitda_0"
+        ]
+      },
+      "raw_value": "150",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "150",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "financial_debt_0"
+        ]
+      },
+      "raw_value": "390",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "390",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "lease_liability_0"
+        ]
+      },
+      "raw_value": "300",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "300",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "cash_0"
+        ]
+      },
+      "raw_value": "30",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "30",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "revenue_growth_mean"
+        ]
+      },
+      "raw_value": "0.02",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "2.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "revenue_growth_std"
+        ]
+      },
+      "raw_value": "0.05",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "5.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "ebitda_margin_mean"
+        ]
+      },
+      "raw_value": "0.20",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "20.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "cash_sweep"
+        ]
+      },
+      "raw_value": "0.48",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "48.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "lease_principal_rate"
+        ]
+      },
+      "raw_value": "0.13",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "13.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "lease_additions_rate"
+        ]
+      },
+      "raw_value": "0.013",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "1.3\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "revenue_0"
+        ]
+      },
+      "raw_value": "1680",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "1680",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "ebitda_0"
+        ]
+      },
+      "raw_value": "390",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "390",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "financial_debt_0"
+        ]
+      },
+      "raw_value": "650",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "650",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "lease_liability_0"
+        ]
+      },
+      "raw_value": "500",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "500",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "cash_0"
+        ]
+      },
+      "raw_value": "60",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "60",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "revenue_growth_mean"
+        ]
+      },
+      "raw_value": "0.04",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "4.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "revenue_growth_std"
+        ]
+      },
+      "raw_value": "0.035",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "3.5\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "ebitda_margin_mean"
+        ]
+      },
+      "raw_value": "0.24",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "24.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "cash_sweep"
+        ]
+      },
+      "raw_value": "0.60",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "60.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "lease_principal_rate"
+        ]
+      },
+      "raw_value": "0.10",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "10.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T1",
+      "reference": {
+        "artifact": "data/synthetic/operators.csv",
+        "where": {
+          "operator_id": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "lease_additions_rate"
+        ]
+      },
+      "raw_value": "0.008",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "0.8\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T2",
+      "reference": {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "independent_return_check",
+          "actual_irr"
+        ]
+      },
+      "raw_value": 0.1486983549970351,
+      "style": "return",
+      "denominator": null,
+      "rendered": "14.87\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T2",
+      "reference": {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "independent_return_check",
+          "actual_moic"
+        ]
+      },
+      "raw_value": 2.0,
+      "style": "multiple",
+      "denominator": null,
+      "rendered": "2.00",
+      "macro": null
+    },
+    {
+      "exhibit": "T2",
+      "reference": {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "runtime_validation",
+          "scenarios_validated"
+        ]
+      },
+      "raw_value": 200,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "200",
+      "macro": null
+    },
+    {
+      "exhibit": "T2",
+      "reference": {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "runtime_validation",
+          "years_validated"
+        ]
+      },
+      "raw_value": 1000,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "1000",
+      "macro": null
+    },
+    {
+      "exhibit": "T2",
+      "reference": {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "runtime_validation",
+          "failures"
+        ]
+      },
+      "raw_value": 0,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "0",
+      "macro": null
+    },
+    {
+      "exhibit": "T2",
+      "reference": {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "adversarial_corruptions_detected"
+        ]
+      },
+      "raw_value": [
+        "ending_cash",
+        "closing_term_debt",
+        "revolver_draw_above_capacity",
+        "unpaid_amortisation",
+        "cash_sweep_above_remaining_term_debt",
+        "year_2_opening_cash_roll_forward"
+      ],
+      "transformation": "length",
+      "rendered": "6"
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "tp"
+        ]
+      },
+      "raw_value": 15,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "15",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "tp"
+        ]
+      },
+      "raw_value": 3,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "3",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "fp"
+        ]
+      },
+      "raw_value": 38,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "38",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "fp"
+        ]
+      },
+      "raw_value": 0,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "0",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "tn"
+        ]
+      },
+      "raw_value": 142,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "142",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "tn"
+        ]
+      },
+      "raw_value": 180,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "180",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "fn"
+        ]
+      },
+      "raw_value": 5,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "5",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "fn"
+        ]
+      },
+      "raw_value": 17,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "17",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "sensitivity"
+        ]
+      },
+      "raw_value": 0.75,
+      "style": "percent",
+      "denominator": 20,
+      "rendered": "15/20 (75.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "sensitivity"
+        ]
+      },
+      "raw_value": 0.15,
+      "style": "percent",
+      "denominator": 20,
+      "rendered": "3/20 (15.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "specificity"
+        ]
+      },
+      "raw_value": 0.7888888888888889,
+      "style": "percent",
+      "denominator": 180,
+      "rendered": "142/180 (78.9\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "specificity"
+        ]
+      },
+      "raw_value": 1.0,
+      "style": "percent",
+      "denominator": 180,
+      "rendered": "180/180 (100.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "balanced_accuracy"
+        ]
+      },
+      "raw_value": 0.7694444444444444,
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.769",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "balanced_accuracy"
+        ]
+      },
+      "raw_value": 0.575,
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.575",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "precision"
+        ]
+      },
+      "raw_value": 0.2830188679245283,
+      "style": "percent",
+      "denominator": 53,
+      "rendered": "15/53 (28.3\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "precision"
+        ]
+      },
+      "raw_value": 1.0,
+      "style": "percent",
+      "denominator": 3,
+      "rendered": "3/3 (100.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "ranking",
+          "roc_auc"
+        ]
+      },
+      "raw_value": 0.9472222222222222,
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.947",
+      "macro": null
+    },
+    {
+      "exhibit": "T3",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "ranking",
+          "pr_auc"
+        ]
+      },
+      "raw_value": 0.7805768293204627,
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.781",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "n_train"
+        ]
+      },
+      "raw_value": "162",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "162",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "n_train_failures"
+        ]
+      },
+      "raw_value": "15",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "15",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "selected_threshold"
+        ]
+      },
+      "raw_value": "0.04780082990379734",
+      "style": "threshold",
+      "denominator": null,
+      "rendered": "0.047801",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "train_balanced_accuracy"
+        ]
+      },
+      "raw_value": "0.9496598639455782",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.950",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "n_test"
+        ]
+      },
+      "raw_value": "38",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "38",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "n_test_failures"
+        ]
+      },
+      "raw_value": "5",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "5",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "test_roc_auc"
+        ]
+      },
+      "raw_value": "0.9696969696969697",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.970",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "test_pr_auc"
+        ]
+      },
+      "raw_value": "0.8711111111111112",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.871",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "test_tp"
+        ]
+      },
+      "raw_value": "1",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "1",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "test_fp"
+        ]
+      },
+      "raw_value": "0",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "0",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "test_tn"
+        ]
+      },
+      "raw_value": "33",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "33",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "test_fn"
+        ]
+      },
+      "raw_value": "4",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "4",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "test_balanced_accuracy"
+        ]
+      },
+      "raw_value": "0.6",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.600",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "fixed_0_5_balanced_accuracy"
+        ]
+      },
+      "raw_value": "0.5",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.500",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "n_train"
+        ]
+      },
+      "raw_value": "168",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "168",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "n_train_failures"
+        ]
+      },
+      "raw_value": "17",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "17",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "selected_threshold"
+        ]
+      },
+      "raw_value": "0.04735235093945553",
+      "style": "threshold",
+      "denominator": null,
+      "rendered": "0.047352",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "train_balanced_accuracy"
+        ]
+      },
+      "raw_value": "0.8691079080638877",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.869",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "n_test"
+        ]
+      },
+      "raw_value": "32",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "32",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "n_test_failures"
+        ]
+      },
+      "raw_value": "3",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "3",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "test_roc_auc"
+        ]
+      },
+      "raw_value": "0.9885057471264368",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.989",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "test_pr_auc"
+        ]
+      },
+      "raw_value": "0.9166666666666666",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.917",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "test_tp"
+        ]
+      },
+      "raw_value": "3",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "3",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "test_fp"
+        ]
+      },
+      "raw_value": "1",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "1",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "test_tn"
+        ]
+      },
+      "raw_value": "28",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "28",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "test_fn"
+        ]
+      },
+      "raw_value": "0",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "0",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "test_balanced_accuracy"
+        ]
+      },
+      "raw_value": "0.9827586206896552",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.983",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "fixed_0_5_balanced_accuracy"
+        ]
+      },
+      "raw_value": "0.5",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.500",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "n_train"
+        ]
+      },
+      "raw_value": "153",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "153",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "n_train_failures"
+        ]
+      },
+      "raw_value": "19",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "19",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "selected_threshold"
+        ]
+      },
+      "raw_value": "0.04735235093945553",
+      "style": "threshold",
+      "denominator": null,
+      "rendered": "0.047352",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "train_balanced_accuracy"
+        ]
+      },
+      "raw_value": "0.9023959151610369",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.902",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "n_test"
+        ]
+      },
+      "raw_value": "47",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "47",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "n_test_failures"
+        ]
+      },
+      "raw_value": "1",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "1",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "test_roc_auc"
+        ]
+      },
+      "raw_value": "1.0",
+      "style": "number",
+      "denominator": null,
+      "rendered": "1.000",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "test_pr_auc"
+        ]
+      },
+      "raw_value": "1.0",
+      "style": "number",
+      "denominator": null,
+      "rendered": "1.000",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "test_tp"
+        ]
+      },
+      "raw_value": "0",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "0",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "test_fp"
+        ]
+      },
+      "raw_value": "0",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "0",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "test_tn"
+        ]
+      },
+      "raw_value": "46",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "46",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "test_fn"
+        ]
+      },
+      "raw_value": "1",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "1",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "test_balanced_accuracy"
+        ]
+      },
+      "raw_value": "0.5",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.500",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "fixed_0_5_balanced_accuracy"
+        ]
+      },
+      "raw_value": "0.5",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.500",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "n_train"
+        ]
+      },
+      "raw_value": "151",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "151",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "n_train_failures"
+        ]
+      },
+      "raw_value": "9",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "9",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "selected_threshold"
+        ]
+      },
+      "raw_value": "0.00967805410948959",
+      "style": "threshold",
+      "denominator": null,
+      "rendered": "0.009678",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "train_balanced_accuracy"
+        ]
+      },
+      "raw_value": "0.954225352112676",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.954",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "n_test"
+        ]
+      },
+      "raw_value": "49",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "49",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "n_test_failures"
+        ]
+      },
+      "raw_value": "11",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "11",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "test_roc_auc"
+        ]
+      },
+      "raw_value": "0.9784688995215312",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.978",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "test_pr_auc"
+        ]
+      },
+      "raw_value": "0.9339761248852159",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.934",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "test_tp"
+        ]
+      },
+      "raw_value": "11",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "11",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "test_fp"
+        ]
+      },
+      "raw_value": "37",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "37",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "test_tn"
+        ]
+      },
+      "raw_value": "1",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "1",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "test_fn"
+        ]
+      },
+      "raw_value": "0",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "0",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "test_balanced_accuracy"
+        ]
+      },
+      "raw_value": "0.5131578947368421",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.513",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "fixed_0_5_balanced_accuracy"
+        ]
+      },
+      "raw_value": "0.6363636363636364",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.636",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "n_train"
+        ]
+      },
+      "raw_value": "166",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "166",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "n_train_failures"
+        ]
+      },
+      "raw_value": "20",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "20",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "selected_threshold"
+        ]
+      },
+      "raw_value": "0.04735235093945553",
+      "style": "threshold",
+      "denominator": null,
+      "rendered": "0.047352",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "train_balanced_accuracy"
+        ]
+      },
+      "raw_value": "0.8828767123287671",
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.883",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "n_test"
+        ]
+      },
+      "raw_value": "34",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "34",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "n_test_failures"
+        ]
+      },
+      "raw_value": "0",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "0",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "test_roc_auc"
+        ]
+      },
+      "raw_value": "",
+      "style": "number",
+      "denominator": null,
+      "rendered": "undef.",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "test_pr_auc"
+        ]
+      },
+      "raw_value": "",
+      "style": "number",
+      "denominator": null,
+      "rendered": "undef.",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "test_tp"
+        ]
+      },
+      "raw_value": "0",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "0",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "test_fp"
+        ]
+      },
+      "raw_value": "0",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "0",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "test_tn"
+        ]
+      },
+      "raw_value": "34",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "34",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "test_fn"
+        ]
+      },
+      "raw_value": "0",
+      "style": "integer",
+      "denominator": null,
+      "rendered": "0",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "test_balanced_accuracy"
+        ]
+      },
+      "raw_value": "",
+      "style": "number",
+      "denominator": null,
+      "rendered": "undef.",
+      "macro": null
+    },
+    {
+      "exhibit": "T4",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "fixed_0_5_balanced_accuracy"
+        ]
+      },
+      "raw_value": "",
+      "style": "number",
+      "denominator": null,
+      "rendered": "undef.",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout",
+          "optimized",
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": 0.011006661155407493,
+      "style": "return",
+      "denominator": null,
+      "rendered": "1.10\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout",
+          "reference",
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": 0.006122463947596968,
+      "style": "return",
+      "denominator": null,
+      "rendered": "0.61\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout",
+          "optimized",
+          "mean_annualized_return"
+        ]
+      },
+      "raw_value": -0.011114892439248281,
+      "style": "return",
+      "denominator": null,
+      "rendered": "-1.11\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout",
+          "reference",
+          "mean_annualized_return"
+        ]
+      },
+      "raw_value": -0.032606578860677374,
+      "style": "return",
+      "denominator": null,
+      "rendered": "-3.26\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout",
+          "optimized",
+          "median_moic"
+        ]
+      },
+      "raw_value": 1.0562586593009013,
+      "style": "multiple",
+      "denominator": null,
+      "rendered": "1.06",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout",
+          "reference",
+          "median_moic"
+        ]
+      },
+      "raw_value": 1.030989694667049,
+      "style": "multiple",
+      "denominator": null,
+      "rendered": "1.03",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout",
+          "optimized",
+          "broad_failure_rate"
+        ]
+      },
+      "raw_value": 0.014,
+      "style": "percent",
+      "denominator": 500,
+      "rendered": "7/500 (1.4\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout",
+          "reference",
+          "broad_failure_rate"
+        ]
+      },
+      "raw_value": 0.068,
+      "style": "percent",
+      "denominator": 500,
+      "rendered": "34/500 (6.8\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout",
+          "optimized",
+          "payment_default_rate"
+        ]
+      },
+      "raw_value": 0.006,
+      "style": "percent",
+      "denominator": 500,
+      "rendered": "3/500 (0.6\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout",
+          "reference",
+          "payment_default_rate"
+        ]
+      },
+      "raw_value": 0.05,
+      "style": "percent",
+      "denominator": 500,
+      "rendered": "25/500 (5.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout",
+          "optimized",
+          "total_equity_loss_rate"
+        ]
+      },
+      "raw_value": 0.002,
+      "style": "percent",
+      "denominator": 500,
+      "rendered": "1/500 (0.2\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout",
+          "reference",
+          "total_equity_loss_rate"
+        ]
+      },
+      "raw_value": 0.018,
+      "style": "percent",
+      "denominator": 500,
+      "rendered": "9/500 (1.8\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "selected_debt_multiple"
+        ]
+      },
+      "raw_value": "1.5",
+      "style": "multiple",
+      "denominator": null,
+      "rendered": "1.50",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "selected_amortisation_rate"
+        ]
+      },
+      "raw_value": "0.05",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "5.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "selected_cash_sweep"
+        ]
+      },
+      "raw_value": "0.7",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "70.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "test_optimized_median_annualized_return"
+        ]
+      },
+      "raw_value": "0.0011125175451175418",
+      "style": "return",
+      "denominator": null,
+      "rendered": "0.11\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        },
+        "fields": [
+          "test_reference_median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.0029825824922316557",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-0.30\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "selected_debt_multiple"
+        ]
+      },
+      "raw_value": "1.5",
+      "style": "multiple",
+      "denominator": null,
+      "rendered": "1.50",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "selected_amortisation_rate"
+        ]
+      },
+      "raw_value": "0.075",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "7.5\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "selected_cash_sweep"
+        ]
+      },
+      "raw_value": "0.7",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "70.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "test_optimized_median_annualized_return"
+        ]
+      },
+      "raw_value": "0.008612865603467967",
+      "style": "return",
+      "denominator": null,
+      "rendered": "0.86\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        },
+        "fields": [
+          "test_reference_median_annualized_return"
+        ]
+      },
+      "raw_value": "0.0030151267278456517",
+      "style": "return",
+      "denominator": null,
+      "rendered": "0.30\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "selected_debt_multiple"
+        ]
+      },
+      "raw_value": "1.5",
+      "style": "multiple",
+      "denominator": null,
+      "rendered": "1.50",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "selected_amortisation_rate"
+        ]
+      },
+      "raw_value": "0.05",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "5.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "selected_cash_sweep"
+        ]
+      },
+      "raw_value": "0.6",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "60.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "test_optimized_median_annualized_return"
+        ]
+      },
+      "raw_value": "0.018190091498279104",
+      "style": "return",
+      "denominator": null,
+      "rendered": "1.82\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        },
+        "fields": [
+          "test_reference_median_annualized_return"
+        ]
+      },
+      "raw_value": "0.016664861837090705",
+      "style": "return",
+      "denominator": null,
+      "rendered": "1.67\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "selected_debt_multiple"
+        ]
+      },
+      "raw_value": "1.5",
+      "style": "multiple",
+      "denominator": null,
+      "rendered": "1.50",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "selected_amortisation_rate"
+        ]
+      },
+      "raw_value": "0.075",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "7.5\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "selected_cash_sweep"
+        ]
+      },
+      "raw_value": "0.7",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "70.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "test_optimized_median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.031809747918627895",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-3.18\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        },
+        "fields": [
+          "test_reference_median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.05116023249154278",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-5.12\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "selected_debt_multiple"
+        ]
+      },
+      "raw_value": "1.5",
+      "style": "multiple",
+      "denominator": null,
+      "rendered": "1.50",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "selected_amortisation_rate"
+        ]
+      },
+      "raw_value": "0.05",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "5.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "selected_cash_sweep"
+        ]
+      },
+      "raw_value": "0.7",
+      "style": "percent",
+      "denominator": null,
+      "rendered": "70.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "test_optimized_median_annualized_return"
+        ]
+      },
+      "raw_value": "0.02744572347455898",
+      "style": "return",
+      "denominator": null,
+      "rendered": "2.74\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "T5",
+      "reference": {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        },
+        "fields": [
+          "test_reference_median_annualized_return"
+        ]
+      },
+      "raw_value": "0.026821062221977776",
+      "style": "return",
+      "denominator": null,
+      "rendered": "2.68\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A1",
+      "reference": {
+        "artifact": "results/v3/bayesian_validation/recovery_summary.json",
+        "keys": [
+          "n_runs"
+        ]
+      },
+      "raw_value": 18,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "18",
+      "macro": null
+    },
+    {
+      "exhibit": "A1",
+      "reference": {
+        "artifact": "results/v3/bayesian_validation/recovery_summary.json",
+        "keys": [
+          "n_parameter_evaluations"
+        ]
+      },
+      "raw_value": 180,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "180",
+      "macro": null
+    },
+    {
+      "exhibit": "A1",
+      "reference": {
+        "artifact": "results/v3/bayesian_validation/recovery_summary.json",
+        "keys": [
+          "diagnostic_extrema",
+          "max_r_hat"
+        ]
+      },
+      "raw_value": 1.0146085972518615,
+      "style": "number",
+      "denominator": null,
+      "rendered": "1.015",
+      "macro": null
+    },
+    {
+      "exhibit": "A1",
+      "reference": {
+        "artifact": "results/v3/bayesian_validation/recovery_summary.json",
+        "keys": [
+          "diagnostic_extrema",
+          "min_bulk_ess"
+        ]
+      },
+      "raw_value": 391.48627301744915,
+      "style": "number",
+      "denominator": null,
+      "rendered": "391.486",
+      "macro": null
+    },
+    {
+      "exhibit": "A1",
+      "reference": {
+        "artifact": "results/v3/bayesian_validation/recovery_summary.json",
+        "keys": [
+          "diagnostic_extrema",
+          "min_tail_ess"
+        ]
+      },
+      "raw_value": 176.2803688085891,
+      "style": "number",
+      "denominator": null,
+      "rendered": "176.280",
+      "macro": null
+    },
+    {
+      "exhibit": "A1",
+      "reference": {
+        "artifact": "results/v3/bayesian_validation/recovery_summary.json",
+        "keys": [
+          "diagnostic_extrema",
+          "total_divergences"
+        ]
+      },
+      "raw_value": 0,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "0",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "0.02578274158595855",
+      "style": "return",
+      "denominator": null,
+      "rendered": "2.58\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "p10_annualized_return"
+        ]
+      },
+      "raw_value": "-0.0371121068169848",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-3.71\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "broad_failure_rate"
+        ]
+      },
+      "raw_value": "0.0",
+      "style": "percent",
+      "denominator": 48,
+      "rendered": "0/48 (0.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "payment_default_rate"
+        ]
+      },
+      "raw_value": "0.0",
+      "style": "percent",
+      "denominator": 48,
+      "rendered": "0/48 (0.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "insolvency_rate"
+        ]
+      },
+      "raw_value": "0.0",
+      "style": "percent",
+      "denominator": 48,
+      "rendered": "0/48 (0.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "covenant_breach_rate"
+        ]
+      },
+      "raw_value": "0.0",
+      "style": "percent",
+      "denominator": 48,
+      "rendered": "0/48 (0.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "total_equity_loss_rate"
+        ]
+      },
+      "raw_value": "0.0",
+      "style": "percent",
+      "denominator": 48,
+      "rendered": "0/48 (0.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.078420276352107",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-7.84\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "p10_annualized_return"
+        ]
+      },
+      "raw_value": "-0.1658413755567044",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-16.58\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "broad_failure_rate"
+        ]
+      },
+      "raw_value": "0.0",
+      "style": "percent",
+      "denominator": 31,
+      "rendered": "0/31 (0.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "payment_default_rate"
+        ]
+      },
+      "raw_value": "0.0",
+      "style": "percent",
+      "denominator": 31,
+      "rendered": "0/31 (0.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "insolvency_rate"
+        ]
+      },
+      "raw_value": "0.0",
+      "style": "percent",
+      "denominator": 31,
+      "rendered": "0/31 (0.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "covenant_breach_rate"
+        ]
+      },
+      "raw_value": "0.0",
+      "style": "percent",
+      "denominator": 31,
+      "rendered": "0/31 (0.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "total_equity_loss_rate"
+        ]
+      },
+      "raw_value": "0.0",
+      "style": "percent",
+      "denominator": 31,
+      "rendered": "0/31 (0.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.188466940569059",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-18.85\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "p10_annualized_return"
+        ]
+      },
+      "raw_value": "-0.367976026095454",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-36.80\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "broad_failure_rate"
+        ]
+      },
+      "raw_value": "0.3333333333333333",
+      "style": "percent",
+      "denominator": 21,
+      "rendered": "7/21 (33.3\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "payment_default_rate"
+        ]
+      },
+      "raw_value": "0.14285714285714285",
+      "style": "percent",
+      "denominator": 21,
+      "rendered": "3/21 (14.3\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "insolvency_rate"
+        ]
+      },
+      "raw_value": "0.2857142857142857",
+      "style": "percent",
+      "denominator": 21,
+      "rendered": "6/21 (28.6\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "covenant_breach_rate"
+        ]
+      },
+      "raw_value": "0.3333333333333333",
+      "style": "percent",
+      "denominator": 21,
+      "rendered": "7/21 (33.3\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "total_equity_loss_rate"
+        ]
+      },
+      "raw_value": "0.047619047619047616",
+      "style": "percent",
+      "denominator": 21,
+      "rendered": "1/21 (4.8\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "0.0216248177891823",
+      "style": "return",
+      "denominator": null,
+      "rendered": "2.16\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "p10_annualized_return"
+        ]
+      },
+      "raw_value": "-0.05812913109605373",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-5.81\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "broad_failure_rate"
+        ]
+      },
+      "raw_value": "0.020833333333333332",
+      "style": "percent",
+      "denominator": 48,
+      "rendered": "1/48 (2.1\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "payment_default_rate"
+        ]
+      },
+      "raw_value": "0.020833333333333332",
+      "style": "percent",
+      "denominator": 48,
+      "rendered": "1/48 (2.1\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "insolvency_rate"
+        ]
+      },
+      "raw_value": "0.020833333333333332",
+      "style": "percent",
+      "denominator": 48,
+      "rendered": "1/48 (2.1\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "covenant_breach_rate"
+        ]
+      },
+      "raw_value": "0.020833333333333332",
+      "style": "percent",
+      "denominator": 48,
+      "rendered": "1/48 (2.1\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "total_equity_loss_rate"
+        ]
+      },
+      "raw_value": "0.0",
+      "style": "percent",
+      "denominator": 48,
+      "rendered": "0/48 (0.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.1144276392347374",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-11.44\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "p10_annualized_return"
+        ]
+      },
+      "raw_value": "-0.2547574614063957",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-25.48\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "broad_failure_rate"
+        ]
+      },
+      "raw_value": "0.2903225806451613",
+      "style": "percent",
+      "denominator": 31,
+      "rendered": "9/31 (29.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "payment_default_rate"
+        ]
+      },
+      "raw_value": "0.22580645161290322",
+      "style": "percent",
+      "denominator": 31,
+      "rendered": "7/31 (22.6\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "insolvency_rate"
+        ]
+      },
+      "raw_value": "0.2903225806451613",
+      "style": "percent",
+      "denominator": 31,
+      "rendered": "9/31 (29.0\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "covenant_breach_rate"
+        ]
+      },
+      "raw_value": "0.0967741935483871",
+      "style": "percent",
+      "denominator": 31,
+      "rendered": "3/31 (9.7\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "total_equity_loss_rate"
+        ]
+      },
+      "raw_value": "0.03225806451612903",
+      "style": "percent",
+      "denominator": 31,
+      "rendered": "1/31 (3.2\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.2999582683675197",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-30.00\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "p10_annualized_return"
+        ]
+      },
+      "raw_value": "-1.0",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-100.00\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "broad_failure_rate"
+        ]
+      },
+      "raw_value": "0.8571428571428571",
+      "style": "percent",
+      "denominator": 21,
+      "rendered": "18/21 (85.7\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "payment_default_rate"
+        ]
+      },
+      "raw_value": "0.7619047619047619",
+      "style": "percent",
+      "denominator": 21,
+      "rendered": "16/21 (76.2\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "insolvency_rate"
+        ]
+      },
+      "raw_value": "0.8571428571428571",
+      "style": "percent",
+      "denominator": 21,
+      "rendered": "18/21 (85.7\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "covenant_breach_rate"
+        ]
+      },
+      "raw_value": "0.6666666666666666",
+      "style": "percent",
+      "denominator": 21,
+      "rendered": "14/21 (66.7\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "total_equity_loss_rate"
+        ]
+      },
+      "raw_value": "0.3333333333333333",
+      "style": "percent",
+      "denominator": 21,
+      "rendered": "7/21 (33.3\\%)",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001",
+          "evaluation_policy": "optimized",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "0.0783767946327729",
+      "style": "return",
+      "denominator": null,
+      "rendered": "7.84\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001",
+          "evaluation_policy": "optimized",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.0423982206895269",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-4.24\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001",
+          "evaluation_policy": "optimized",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.1603398897020295",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-16.03\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002",
+          "evaluation_policy": "optimized",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "0.037594542632262",
+      "style": "return",
+      "denominator": null,
+      "rendered": "3.76\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002",
+          "evaluation_policy": "optimized",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.0508524154894475",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-5.09\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002",
+          "evaluation_policy": "optimized",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.1528624803392161",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-15.29\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003",
+          "evaluation_policy": "optimized",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "0.0768112438261343",
+      "style": "return",
+      "denominator": null,
+      "rendered": "7.68\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003",
+          "evaluation_policy": "optimized",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.0179051085138538",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-1.79\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003",
+          "evaluation_policy": "optimized",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.1400310455320775",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-14.00\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004",
+          "evaluation_policy": "optimized",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "0.02578274158595855",
+      "style": "return",
+      "denominator": null,
+      "rendered": "2.58\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004",
+          "evaluation_policy": "optimized",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.078420276352107",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-7.84\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004",
+          "evaluation_policy": "optimized",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.188466940569059",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-18.85\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005",
+          "evaluation_policy": "optimized",
+          "scenario_type": "base"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "0.08707777554787349",
+      "style": "return",
+      "denominator": null,
+      "rendered": "8.71\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005",
+          "evaluation_policy": "optimized",
+          "scenario_type": "downside"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "0.013391311059710548",
+      "style": "return",
+      "denominator": null,
+      "rendered": "1.34\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A2",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005",
+          "evaluation_policy": "optimized",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "median_annualized_return"
+        ]
+      },
+      "raw_value": "-0.10444610603543969",
+      "style": "return",
+      "denominator": null,
+      "rendered": "-10.44\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A3",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\optimization\\financing_policy.py",
+          "summary",
+          "percent_statements_covered"
+        ]
+      },
+      "raw_value": 88.67924528301887,
+      "style": "coverage",
+      "denominator": null,
+      "rendered": "88.68\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A3",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\optimization\\financing_policy.py",
+          "summary",
+          "covered_lines"
+        ]
+      },
+      "raw_value": 47,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "47",
+      "macro": null
+    },
+    {
+      "exhibit": "A3",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\optimization\\financing_policy.py",
+          "summary",
+          "num_statements"
+        ]
+      },
+      "raw_value": 53,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "53",
+      "macro": null
+    },
+    {
+      "exhibit": "A3",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\optimization\\financing_policy.py",
+          "summary",
+          "percent_branches_covered"
+        ]
+      },
+      "raw_value": 70.0,
+      "style": "branch",
+      "denominator": null,
+      "rendered": "70.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A3",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\optimization\\financing_policy.py",
+          "summary",
+          "covered_branches"
+        ]
+      },
+      "raw_value": 14,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "14",
+      "macro": null
+    },
+    {
+      "exhibit": "A3",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\optimization\\financing_policy.py",
+          "summary",
+          "num_branches"
+        ]
+      },
+      "raw_value": 20,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "20",
+      "macro": null
+    },
+    {
+      "exhibit": "A3",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\run_v3_optimization.py",
+          "summary",
+          "percent_statements_covered"
+        ]
+      },
+      "raw_value": 59.89010989010989,
+      "style": "coverage",
+      "denominator": null,
+      "rendered": "59.89\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A3",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\run_v3_optimization.py",
+          "summary",
+          "covered_lines"
+        ]
+      },
+      "raw_value": 109,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "109",
+      "macro": null
+    },
+    {
+      "exhibit": "A3",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\run_v3_optimization.py",
+          "summary",
+          "num_statements"
+        ]
+      },
+      "raw_value": 182,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "182",
+      "macro": null
+    },
+    {
+      "exhibit": "A3",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\run_v3_optimization.py",
+          "summary",
+          "percent_branches_covered"
+        ]
+      },
+      "raw_value": 55.0,
+      "style": "branch",
+      "denominator": null,
+      "rendered": "55.0\\%",
+      "macro": null
+    },
+    {
+      "exhibit": "A3",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\run_v3_optimization.py",
+          "summary",
+          "covered_branches"
+        ]
+      },
+      "raw_value": 22,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "22",
+      "macro": null
+    },
+    {
+      "exhibit": "A3",
+      "reference": {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\run_v3_optimization.py",
+          "summary",
+          "num_branches"
+        ]
+      },
+      "raw_value": 40,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "40",
+      "macro": null
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "ranking",
+          "roc_auc"
+        ]
+      },
+      "raw_value": 0.9472222222222222,
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.947",
+      "macro": "AUC"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "ranking",
+          "pr_auc"
+        ]
+      },
+      "raw_value": 0.7805768293204627,
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.781",
+      "macro": "AP"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "n_scenarios"
+        ]
+      },
+      "raw_value": 200,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "200",
+      "macro": "N"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "n_failures"
+        ]
+      },
+      "raw_value": 20,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "20",
+      "macro": "Failures"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "n_templates"
+        ]
+      },
+      "raw_value": 5,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "5",
+      "macro": "Templates"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "tp"
+        ]
+      },
+      "raw_value": 15,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "15",
+      "macro": "TransferTP"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "fp"
+        ]
+      },
+      "raw_value": 38,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "38",
+      "macro": "TransferFP"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "tn"
+        ]
+      },
+      "raw_value": 142,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "142",
+      "macro": "TransferTN"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "fn"
+        ]
+      },
+      "raw_value": 5,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "5",
+      "macro": "TransferFN"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "balanced_accuracy"
+        ]
+      },
+      "raw_value": 0.7694444444444444,
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.769",
+      "macro": "TransferBA"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "sensitivity"
+        ]
+      },
+      "raw_value": 0.75,
+      "style": "percent",
+      "denominator": 20,
+      "rendered": "15/20 (75.0\\%)",
+      "macro": "TransferRecall"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold",
+          "specificity"
+        ]
+      },
+      "raw_value": 0.7888888888888889,
+      "style": "percent",
+      "denominator": 180,
+      "rendered": "142/180 (78.9\\%)",
+      "macro": "TransferSpecificity"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "tp"
+        ]
+      },
+      "raw_value": 3,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "3",
+      "macro": "FixedTP"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "fp"
+        ]
+      },
+      "raw_value": 0,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "0",
+      "macro": "FixedFP"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "tn"
+        ]
+      },
+      "raw_value": 180,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "180",
+      "macro": "FixedTN"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "fn"
+        ]
+      },
+      "raw_value": 17,
+      "style": "integer",
+      "denominator": null,
+      "rendered": "17",
+      "macro": "FixedFN"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "balanced_accuracy"
+        ]
+      },
+      "raw_value": 0.575,
+      "style": "number",
+      "denominator": null,
+      "rendered": "0.575",
+      "macro": "FixedBA"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "sensitivity"
+        ]
+      },
+      "raw_value": 0.15,
+      "style": "percent",
+      "denominator": 20,
+      "rendered": "3/20 (15.0\\%)",
+      "macro": "FixedRecall"
+    },
+    {
+      "exhibit": "prose",
+      "reference": {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5",
+          "specificity"
+        ]
+      },
+      "raw_value": 1.0,
+      "style": "percent",
+      "denominator": 180,
+      "rendered": "180/180 (100.0\\%)",
+      "macro": "FixedSpecificity"
+    }
+  ],
+  "output_sha256": {
+    "paper/generated/v3/A1.tex": "eb55804c9e196c99d73329d14f6a1e7efddca81e95ee2174051c8809fb935a35",
+    "paper/generated/v3/A2.tex": "48dacc49b17845670d28b2742b94435e908916c808f2905e2319adcd934b2c24",
+    "paper/generated/v3/A3.tex": "507f531ad0758cbcbe8a862be8c7bd9851c3ae64c4e737896bb094420bd9d32e",
+    "paper/generated/v3/T1.tex": "5b67b99fafe92a8c140462a9db3090c28708c51331702c6123bea93f81cb9c9a",
+    "paper/generated/v3/T2.tex": "e6d99e9fbe2c0669d6eae708ef0e5d2dbd5355165d4faa44a40f4acae38c4fe2",
+    "paper/generated/v3/T3.tex": "3791bc1930feb43f789c4a2984b5403d58758d4dfa361596938c16c3ff69baac",
+    "paper/generated/v3/T4.tex": "99024d13fa9d5573842bfca111f6904399ba062c76fa873bade7cee09ad78788",
+    "paper/generated/v3/T5.tex": "6000f0dcf018696cb5f6084bf857807eccce48e9e0b7a11496da6138ca854a7b",
+    "paper/generated/v3/values.tex": "e83c27aea94e3564bdb84f016c37f373c9b6ec9d93eb3c8f55b0289a481783fa",
+    "paper/figures/v3/A-F1.pdf": "c5d776f9afb6e3fe7edff8ec2d9f4a43e358ab064560046e4429d81237b7fb04",
+    "paper/figures/v3/A-F1.png": "318c920703c06a349cb7b2ec22fd94d063fed7eece0559c514d766d97a60c5cb",
+    "paper/figures/v3/A-F2.pdf": "4a7eeb4cccead03cab4b14bb481bfd8c37a0e42e67edfa9c1beb9cb654fa8b3b",
+    "paper/figures/v3/A-F2.png": "b7fc17eaa6943216d3cbfd8c09518522e843f694134bce86064718e5dff5222b",
+    "paper/figures/v3/A-F3.pdf": "35e144a492a9d1ef46d83e4e3f24a88304255ee6aa58a1b296931c293a356364",
+    "paper/figures/v3/A-F3.png": "386a1f489bf8bf6b308d56ddf14873444c9289b2a39362f3e3e1b14f192c6dc5",
+    "paper/figures/v3/F1.pdf": "9c2e3c3063daa9f69163e1b99b5f0f1a41a07a1b61946abbe1c1bc0dd0739844",
+    "paper/figures/v3/F1.png": "10167b399eab83f233b1b449b9ea8fec4a2e6f16da4bbe027bee4fd15060e231",
+    "paper/figures/v3/F2.pdf": "9accb322524274d87e1506e91fe9a72c8be0257fdb6afc9dab3208c431a5d0b8",
+    "paper/figures/v3/F2.png": "5d7bbaf9678b438973de0738f4b7387e5653a346a4ac6122f6b62ea9605cd80a",
+    "paper/figures/v3/F3.pdf": "0bf98855385dd80b3afdff72f69844e7e9feaf04895bfec97fdd6ae2c7448000",
+    "paper/figures/v3/F3.png": "b029210528c7b457133fc1a37bfea0263f880d8be3d637e8377d4603549354e4"
+  },
+  "protected_hash_check": {
+    "passed": true,
+    "errors": [],
+    "claims_checked": 100,
+    "quantitative_claims_checked": 34,
+    "prohibited_claims_checked": 50,
+    "frozen_source_files_hash_checked": 66,
+    "checks": [
+      "required fields and classes",
+      "exact source selectors and snapshots",
+      "CSV/JSON equality",
+      "denominator metadata",
+      "B/C admission restrictions",
+      "prohibited and stale coverage restrictions",
+      "traceability coverage",
+      "section/abstract/visual claim links",
+      "frozen file SHA-256"
+    ]
+  },
+  "rounding": "Frozen manuscript policy, applied only at rendering; count/rate checks reject noninteger recovery."
+}

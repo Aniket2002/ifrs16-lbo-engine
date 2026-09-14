@@ -1,0 +1,6 @@
+note: Running TeX ...
+note: Running xdvipdfmx ...
+note: Writing `paper\ifrs16_lbo_ssrn_v3.aux` (10.7119140625 KiB)
+note: Writing `paper\ifrs16_lbo_ssrn_v3.log` (19.3203125 KiB)
+note: Writing `paper\ifrs16_lbo_ssrn_v3.pdf` (185.8916015625 KiB)
+note: Writing `paper\ifrs16_lbo_ssrn_v3.out` (3.9990234375 KiB)

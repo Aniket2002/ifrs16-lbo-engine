@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "pdf_sha256": "b1325ff7b774a9fa3fee42dbd5a9bcbf84861bcd71415d38a8b18c01f2f1ac93",
+  "pages_reviewed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "method": "All pages visually inspected in four contact sheets, with individual page images available; all figure/table-heavy pages included.",
+  "checks": [
+    "title, author and abstract",
+    "section and appendix order",
+    "all eight tables and six figures",
+    "legible labels and captions",
+    "no clipping or serious overfull boxes",
+    "no missing glyphs or visible claim IDs",
+    "no blank or duplicate pages",
+    "bibliography and commands rendered correctly"
+  ],
+  "unresolved_visual_warnings": [],
+  "page_image_sha256": {
+    "1": "e7650b9b5ffd1415d724799c55d26d54ab26951fb076c8a03d0fc865da3429e7",
+    "2": "3c6dcac0b93a18e5113ee43b2beb42ccd069619602c5394bbbcf4962892dbc7e",
+    "3": "407b31ef6a571bece897628b27419032d06532b8292e56bddeaa3332c2e42027",
+    "4": "a9a72320b096ea794f34ded9b8e3540dcb2a89d0e7a28b5e41ff3c1c686626cd",
+    "5": "13677f0fe8eeb7cc12d9bfc0bb54bd126165da165af1a3235a8d75a6a8ad60a3",
+    "6": "31af82cba7aa6ba1c555b0e862bb2044c36b8b34ae1662b74f69d429e6b8efb2",
+    "7": "9b6554943bf26970e0c9dc14af129fe3abe71a74ed0d43921f6c39e1aa95bd93",
+    "8": "a44e376e3f4b7d829231b12d7fd6d259e04616fe290938d53b3125a1b5341f59",
+    "9": "b99651dd395de3f60696db5c13be87cca7af2b9ac20c9e860e45a166ebe9ad40",
+    "10": "a113f5cff7b81cf213ae955fceba3b05b516298c171319c1b4b52c4017975c0e",
+    "11": "718f1c112f5a4db569e81b914402174b259471ee1f979484cb98b6aea53dc376",
+    "12": "e68d6a613ddda3c868aa45382c18ea5cea0f76661573bb8f8fa95a9bc4e371a9",
+    "13": "0ef8131473c4d3b369c82a59f1baf75264c74f0317eb31508a42ed3c0a564c81",
+    "14": "70eea2040bf72d531f773b6558f05800d47740e2887a1c56c86d395ebecf1cec"
+  }
+}
