@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "pdf_sha256": "f113a3ba6d057c02f51fd6347131230bbe802139cd25c8a09c7a277cc57a0bc9",
+  "pdf_sha256": "88d4a2f60880e676bcc2a8285167a10a3e1aa264c3fefda842e534d19c1ab294",
   "pages_reviewed": [
     1,
     2,
@@ -19,13 +19,15 @@
     15,
     16
   ],
-  "method": "All 16 pages visually inspected in four contact sheets generated from the final PDF; every figure- and table-heavy page was included.",
+  "method": "Pages 7-9 around Section 8.1, Figure 3 and Limitations were inspected at full-page resolution; page 15 was re-inspected for updated build provenance. Raster hashes confirm all other pages are visually identical to the prior full 16-page review.",
   "checks": [
     "title, date, author, revised abstract and keywords",
     "literature section placement, flow and citations",
     "section and appendix order",
     "all seven public tables and six figures",
     "Table 4 single-positive AUC note",
+    "Section 8.1 prose precedes Figure 3 without float interruption",
+    "Figure 3 remains readable and Limitations follows cleanly",
     "legible labels, notes and captions",
     "no clipping or serious overfull boxes",
     "no missing glyphs or visible claim IDs",
@@ -42,14 +44,14 @@
     "5": "710ed1d8d15424fe9e417d96ec96da39457d166fadac28c4c985a03c5d3ee35b",
     "6": "503823fdce867e4e377cd03b1b764a2ed20a0d08999ef102ca0d9204e08d73ce",
     "7": "ee75e7b62105fb3e994df93e93e089a24679cb57434df11754d7600097b8597a",
-    "8": "b167bc93131e86bf1188364c380851752b8ed189af5e59c0deb038216b67bd51",
-    "9": "2f5258162482c8c89943d3c3d9e1d7de03c9f3c5c715e7c09b54b4fcd1b867b6",
+    "8": "3990a2017884ed592a5fec028ac7f61a780dbd2f61f496756309893147c10c2e",
+    "9": "41cbe707f63abb759792fee835ae8e5afc5148d97349152954c049bbc9696f3b",
     "10": "8a32daa1893157be474fda4c36fc91a8e5ac1159f8e8dac51e16800607eea031",
     "11": "5cd96b9c3be18911882ca2b8f7b2f2a9410b43e8c651431e3b9549906416015b",
     "12": "0ce4926d67b1af462e502e4642972c711f99483aebcefb7a3467e90fb30dafae",
     "13": "835bb9838e396f69af01129cb23a3535d3a9b165cdbd7c8186485d2b4446297d",
     "14": "e35edc2690e2220acb4245878b86a9bd1770a975c4cfc2f46000310ac2f16425",
-    "15": "3a2ba2ecead9ee89873d69212df3255ca7cbca1cf7f52727e7ed8b8275b22cba",
+    "15": "b241ebfbb1af22e267895bb692c72d79148ecb3813b5b0a8e61944239f1070f5",
     "16": "59704976931bf28fd9574db2c3be0b9d82db17706cea3974a7d00905c15ab1a6"
   }
 }

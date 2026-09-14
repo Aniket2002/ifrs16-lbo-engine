@@ -163,19 +163,19 @@ Template 004 contributes 37 of the 38 aggregate false positives. Its transferred
 Template 005 contains no failures among 34 scenarios. Its within-template AUC, average precision and balanced accuracy are undefined under the frozen policy, rather than evidence of perfect ranking. More generally, fold dispersion is descriptive. Training sets overlap and positive counts are sparse in some templates. The aggregate is not an equal-weight average of template metrics and cannot replace the examination of these counts.
 \exhibit{T4}
 
-\begin{figure}[htbp]\centering
-\includegraphics[width=\linewidth]{F3.pdf}
-% Claims: SCR-009, SCR-010, SCR-011, SCR-012, SCR-013
-\caption{Threshold-transfer heterogeneity. Left: transferred and fixed-threshold balanced accuracy, with selected thresholds annotated above; Template 005 is undefined. Right: transferred-threshold confusion counts, including the concentration of 37/38 aggregate false positives in Template 004. Tick labels show total scenarios/failures; non-failure counts follow from their difference. Aggregated classification is not an equal-weight average across templates.}
-\label{fig:F3}
-\end{figure}
-
 \subsection{Cross-archetype heterogeneity}
 % Claims: HET-001, HET-002, HET-009
 The secondary evidence is convergent and descriptive. Template 004 shows weak threshold transfer and comparatively weak financing-policy outcomes, providing evidence within the same synthetic system consistent with structural heterogeneity affecting downstream transfer. Its financing regime mix is 48/100 base, 31/100 downside and 21/100 distressed, close to the stipulated probabilities of 50\%, 30\% and 20\%. Weakness persists after conditioning on regime, so the mixture alone does not explain it. Detailed cells appear in Appendix~\ref{sec:repro}.
 
 % Claims: HET-001, HET-009, HET-010
 This is not independent replication, external validation, causal evidence or empirical borrower evidence. The financing comparison remains a methodological demonstration, and regime-conditioned cells are small. The descriptive comparison does not show strict dominance on every risk metric: base and downside broad-failure rates under selected policies tie at zero. Template 004 has the lowest absolute opening cash and the highest debt/EBITDA among the stipulated archetypes, but not the lowest cash/EBITDA. That distinction prevents an unsupported interpretation of the cash ratios.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\linewidth]{F3.pdf}
+% Claims: SCR-009, SCR-010, SCR-011, SCR-012, SCR-013
+\caption{Threshold-transfer heterogeneity. Left: transferred and fixed-threshold balanced accuracy, with selected thresholds annotated above; Template 005 is undefined. Right: transferred-threshold confusion counts, including the concentration of 37/38 aggregate false positives in Template 004. Tick labels show total scenarios/failures; non-failure counts follow from their difference. Aggregated classification is not an equal-weight average across templates.}
+\label{fig:F3}
+\end{figure}
 
 % Architecture: S10
 \section{Limitations}

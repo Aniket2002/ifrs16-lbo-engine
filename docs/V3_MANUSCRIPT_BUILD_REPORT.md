@@ -3,7 +3,7 @@
 The publication-polished manuscript and frozen exhibits are complete. The final PDF builds without unresolved LaTeX warnings, and the manuscript audit passes. No numerical experiment, model change, threshold change, simulation, optimization, Bayesian result, admission change, release, tag, DOI or submission was performed.
 
 - Branch: `v3/validated-rebuild`.
-- Manuscript/source commit: `52401f00292a9feee762075dcfcc1f92b45be231`.
+- Manuscript/source commit: `d3501d9fd0c944d9fcd631216f48d4a511c5e821`.
 - Claim-freeze commit: `21d726606f3208bcee6e3e84ae4c357e3a33d79b`.
 - Title: **Ranking Is Not Threshold Portability: Validating IFRS 16 Covenant Screening in a Synthetic Benchmark**.
 - Author: Aniket Bhardwaj.
@@ -33,6 +33,8 @@ Former Table A4 was removed from the public PDF because focused code coverage is
 | Runner | 59.89% | 55.0% |
 
 All numerical conclusions are unchanged.
+
+The final float-placement pass moved the unchanged Figure 3 environment from immediately before Section 8.1 to immediately after its two prose paragraphs. Figure 3 remains on publication page 8, but it no longer interrupts the subsection: the prose continues normally at the top of page 8, followed by the complete figure and then Limitations. The manuscript remains 16 pages. Raster comparison against the prior reviewed PDF identified layout changes only on pages 8 and 9, plus the expected source-commit provenance update on page 15; all other pages are visually identical.
 
 ## Claims and scope
 
@@ -66,7 +68,7 @@ Frozen planning IDs map to publication numbering as follows:
 | A-F3 | Figure A2 | 14 |
 | A-F1 | Figure A3 | 14 |
 
-Every page was visually inspected in four contact sheets generated from the final PDF. The review included the title page, revised abstract, literature section, Table 4 note, all exhibit-heavy pages, appendix transitions, code statement and bibliography. No missing glyph, clipped exhibit, placeholder, visible claim ID, broken reference, duplicate page or blank page remains. The final PDF SHA-256 is `f113a3ba6d057c02f51fd6347131230bbe802139cd25c8a09c7a277cc57a0bc9`; per-page preview hashes are in `results/v3/manuscript/visual_review.json`.
+The revised pages around Section 8.1, Figure 3 and Limitations were inspected at full-page resolution, as was the updated source-provenance page. Raster hashes confirm that every other page is visually identical to the prior full review. No missing glyph, clipped exhibit, placeholder, visible claim ID, broken reference, duplicate page, new sparse page or blank page remains. The final PDF SHA-256 is `88d4a2f60880e676bcc2a8285167a10a3e1aa264c3fefda842e534d19c1ab294`; per-page preview hashes are in `results/v3/manuscript/visual_review.json`.
 
 ## Verification and provenance
 

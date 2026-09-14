@@ -551,4 +551,4 @@ File: figures/v3//A-F1.pdf Graphic file (type pdf)
 Package rerunfilecheck Info: File `ifrs16_lbo_ssrn_v3.out' has not changed.
 (rerunfilecheck)             Checksum: A98422CEAEDEB93A5C5711AA483D661E;4507.
  )
-Output written on ifrs16_lbo_ssrn_v3.xdv (16 pages, 78168 bytes).
+Output written on ifrs16_lbo_ssrn_v3.xdv (16 pages, 78184 bytes).

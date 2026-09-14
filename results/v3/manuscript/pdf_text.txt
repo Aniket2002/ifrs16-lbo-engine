@@ -542,6 +542,8 @@ risk metric: base and downside broad-failure rates under selected policies tie a
 004 has the lowest absolute opening cash and the highest debt/EBITDA among the stipulated
 7
 
+archetypes, but not the lowest cash/EBITDA. That distinction prevents an unsupported interpre-
+tation of the cash ratios.
 001
 38/5
 002
@@ -598,10 +600,6 @@ racy, with selected thresholds annotated above; Template 005 is undefined. Right
 threshold confusion counts, including the concentration of 37/38 aggregate false positives in Tem-
 plate 004. Tick labels show total scenarios/failures; non-failure counts follow from their difference.
 Aggregated classification is not an equal-weight average across templates.
-archetypes, but not the lowest cash/EBITDA. That distinction prevents an unsupported interpre-
-tation of the cash ratios.
-8
-
 9
 Limitations
 The benchmark is a synthetic system with few archetypes and sparse failures in some folds. The
@@ -631,6 +629,8 @@ features preclude treating the selected policies as a substantive financing reco
 The Bayesian calibration experiment is excluded from the substantive results. Unverified cali-
 bration inputs and failed frozen technical and prior-sensitivity gates preclude posterior integration.
 This exclusion concerns the examined experiment and its evidence; it is not a general judgment that
+8
+
 Bayesian methods are invalid. Neither appendix changes the central screening result or supplies
 external borrower validation.
 10
@@ -1046,7 +1046,7 @@ timing and source-commit metadata. Repository reproducibility does not establish
 The present manuscript uses frozen numerical outputs and adds only rendering, exposition and
 build verification.
 The claim-freeze commit is 21d726606f3208bcee6e3e84ae4c357e3a33d79b; the manuscript
-source commit is 52401f00292a9feee762075dcfcc1f92b45be231. The corrected pre-freeze source
+source commit is d3501d9fd0c944d9fcd631216f48d4a511c5e821. The corrected pre-freeze source
 is 0f521a28150fe56f98cdabb3d1cb3664286df124. Input and artifact hashes are preserved in the
 freeze source manifest, with protocol lineage in the freeze summary. Synthetic input definitions
 reside in data/synthetic/operators.csv. The screening benchmark uses seed 42; the separate
