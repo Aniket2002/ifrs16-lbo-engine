@@ -1,0 +1,25 @@
+{
+  "source_commit": "75f1b56d7613389012f7cc7e25ae95bcb4ddd004",
+  "byte_identical_repeat_run": true,
+  "source_records_equal_archived_json": true,
+  "scenario_count_matches_archive": true,
+  "artifact_sha256": {
+    "fold_results.csv": "fe11ff197f7e5b1c37856a08bf5690bb5fa7467957e10234100ebdb7087cfea3",
+    "heldout_predictions.csv": "9ab6cb45c928a92314e03168ba1aca28323e742903d36aff7b0ffcccc30c5445",
+    "summary.json": "5945f4aa553d4ef02033e05bb23e773a1e202dd4fe4e2ee7ee02238a028dc474",
+    "threshold_curve_train_SYN_HOTEL_001.csv": "55c58d0f1e0a9ccf0bd4a44dbc4e7c00e3befc7e94a88b85d5cc346aa9ca7e78",
+    "threshold_curve_train_SYN_HOTEL_002.csv": "b566676356f0a864ecb2d798342cbb8fc80293e10f388e01ebd8968d2dab7718",
+    "threshold_curve_train_SYN_HOTEL_003.csv": "27072c183b6f5dc114fd4b6c77829759f5b5cdf1c52b9ad3d4749cf03743344d",
+    "threshold_curve_train_SYN_HOTEL_004.csv": "1d2d2103e4f29343ce03b24775145f37379765bb162c01adcd59b994abb297bb",
+    "threshold_curve_train_SYN_HOTEL_005.csv": "1f58d39d5b0d42659e6291d6bd7299425aa856d04ec6e99bbbd36e341bf2a3f7"
+  },
+  "tests": {
+    "template_tests": 34,
+    "foundation_tests": 14,
+    "full_suite_tests": 124,
+    "coverage_percent": 57.95,
+    "full_simulation_coverage_percent": 100,
+    "ruff_check": "passed",
+    "ruff_format_check": "passed"
+  }
+}

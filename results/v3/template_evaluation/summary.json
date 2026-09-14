@@ -1,0 +1,227 @@
+{
+  "n_scenarios": 200,
+  "n_templates": 5,
+  "n_failures": 20,
+  "ranking": {
+    "roc_auc": 0.9472222222222222,
+    "pr_auc": 0.7805768293204627
+  },
+  "pooled_recomputed_ranking": {
+    "roc_auc": 0.9472222222222222,
+    "pr_auc": 0.7805768293204627
+  },
+  "selected_threshold": {
+    "tp": 15,
+    "fp": 38,
+    "tn": 142,
+    "fn": 5,
+    "sensitivity": 0.75,
+    "specificity": 0.7888888888888889,
+    "fnr": 0.25,
+    "fpr": 0.2111111111111111,
+    "balanced_accuracy": 0.7694444444444444,
+    "precision": 0.2830188679245283,
+    "f1": 0.410958904109589
+  },
+  "fixed_0_5": {
+    "tp": 3,
+    "fp": 0,
+    "tn": 180,
+    "fn": 17,
+    "sensitivity": 0.15,
+    "specificity": 1.0,
+    "fnr": 0.85,
+    "fpr": 0.0,
+    "balanced_accuracy": 0.575,
+    "precision": 1.0,
+    "f1": 0.2608695652173913
+  },
+  "threshold_dispersion": {
+    "n_defined": 5,
+    "min": 0.00967805410948959,
+    "median": 0.04735235093945553,
+    "max": 0.04780082990379734
+  },
+  "fold_metric_dispersion": {
+    "test_tp": {
+      "n_defined": 5,
+      "min": 0.0,
+      "median": 1.0,
+      "max": 11.0
+    },
+    "test_fp": {
+      "n_defined": 5,
+      "min": 0.0,
+      "median": 0.0,
+      "max": 37.0
+    },
+    "test_tn": {
+      "n_defined": 5,
+      "min": 1.0,
+      "median": 33.0,
+      "max": 46.0
+    },
+    "test_fn": {
+      "n_defined": 5,
+      "min": 0.0,
+      "median": 0.0,
+      "max": 4.0
+    },
+    "test_sensitivity": {
+      "n_defined": 4,
+      "min": 0.0,
+      "median": 0.6,
+      "max": 1.0
+    },
+    "test_specificity": {
+      "n_defined": 5,
+      "min": 0.02631578947368421,
+      "median": 1.0,
+      "max": 1.0
+    },
+    "test_fnr": {
+      "n_defined": 4,
+      "min": 0.0,
+      "median": 0.4,
+      "max": 1.0
+    },
+    "test_fpr": {
+      "n_defined": 5,
+      "min": 0.0,
+      "median": 0.0,
+      "max": 0.9736842105263158
+    },
+    "test_balanced_accuracy": {
+      "n_defined": 4,
+      "min": 0.5,
+      "median": 0.5565789473684211,
+      "max": 0.9827586206896552
+    },
+    "test_precision": {
+      "n_defined": 3,
+      "min": 0.22916666666666666,
+      "median": 0.75,
+      "max": 1.0
+    },
+    "test_f1": {
+      "n_defined": 4,
+      "min": 0.0,
+      "median": 0.3531073446327684,
+      "max": 0.8571428571428571
+    },
+    "test_roc_auc": {
+      "n_defined": 4,
+      "min": 0.9696969696969697,
+      "median": 0.983487323323984,
+      "max": 1.0
+    },
+    "test_pr_auc": {
+      "n_defined": 4,
+      "min": 0.8711111111111112,
+      "median": 0.9253213957759412,
+      "max": 1.0
+    },
+    "fixed_0_5_tp": {
+      "n_defined": 5,
+      "min": 0.0,
+      "median": 0.0,
+      "max": 3.0
+    },
+    "fixed_0_5_fp": {
+      "n_defined": 5,
+      "min": 0.0,
+      "median": 0.0,
+      "max": 0.0
+    },
+    "fixed_0_5_tn": {
+      "n_defined": 5,
+      "min": 29.0,
+      "median": 34.0,
+      "max": 46.0
+    },
+    "fixed_0_5_fn": {
+      "n_defined": 5,
+      "min": 0.0,
+      "median": 3.0,
+      "max": 8.0
+    },
+    "fixed_0_5_sensitivity": {
+      "n_defined": 4,
+      "min": 0.0,
+      "median": 0.0,
+      "max": 0.2727272727272727
+    },
+    "fixed_0_5_specificity": {
+      "n_defined": 5,
+      "min": 1.0,
+      "median": 1.0,
+      "max": 1.0
+    },
+    "fixed_0_5_fnr": {
+      "n_defined": 4,
+      "min": 0.7272727272727273,
+      "median": 1.0,
+      "max": 1.0
+    },
+    "fixed_0_5_fpr": {
+      "n_defined": 5,
+      "min": 0.0,
+      "median": 0.0,
+      "max": 0.0
+    },
+    "fixed_0_5_balanced_accuracy": {
+      "n_defined": 4,
+      "min": 0.5,
+      "median": 0.5,
+      "max": 0.6363636363636364
+    },
+    "fixed_0_5_precision": {
+      "n_defined": 1,
+      "min": 1.0,
+      "median": 1.0,
+      "max": 1.0
+    },
+    "fixed_0_5_f1": {
+      "n_defined": 4,
+      "min": 0.0,
+      "median": 0.0,
+      "max": 0.42857142857142855
+    }
+  },
+  "protocol": {
+    "objective": "maximize training balanced accuracy",
+    "tie_rule": "lowest threshold within absolute tolerance of maximum",
+    "tie_tolerance": 1e-12,
+    "candidates": "unique training scores plus 0 and nextafter(1, +infinity)",
+    "prediction_rule": "score >= threshold",
+    "pr_auc_definition": "average precision; not trapezoidal PR area",
+    "undefined_policy": "null for missing denominators and single-class ranking/BA",
+    "uncertainty": "fold min/median/max; no confidence interval with five templates",
+    "auc_interpretation": "fixed untrained scores imply identical pooled and held-out AUC"
+  },
+  "sanity_checks": {
+    "exhaustive_unique_heldout_coverage": true,
+    "unchanged_source_records": true,
+    "disjoint_train_test": true,
+    "deterministic_training_selection": true,
+    "exact_prediction_formulas": true,
+    "fresh_simulations": 0
+  },
+  "historical_v2_pooled_roc_auc": 0.9472222222222222,
+  "provenance": {
+    "source_commit": "75f1b56d7613389012f7cc7e25ae95bcb4ddd004",
+    "inputs_sha256": {
+      "results/paper_v2/scenario_records.csv": "518069f02d76a7cd183a7bad775c7b7777101073b28aea1f02e2b22a13233225",
+      "results/paper_v2/benchmark_seed42.json": "2430cd2816ea2fc403c1a9e7409212874f21247823ee31c7f77aaa1c5973cb31",
+      "docs/V3_TEMPLATE_EVALUATION_PROTOCOL.md": "28279c2b54187e9d4114ecfe8ca9b27a60cd2c12730aa2ec56b4f7e5fde8d09c"
+    },
+    "python": "3.14.0",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "scikit-learn": "1.9.0"
+    },
+    "command": "python -m analysis.run_v3_template_evaluation"
+  }
+}

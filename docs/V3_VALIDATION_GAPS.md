@@ -48,10 +48,23 @@ should be reused, not recreated. See `results/v3/baseline/verification.json`,
   the comparison baseline; the complete reproduction check is recorded in the
   foundation report.
 
+## Template-held-out evaluation completed
+
+- Frozen training-only balanced-accuracy selection and lowest-threshold tie rule
+  now have adversarial leakage and aggregation tests. All 200 archived scenarios
+  appear exactly once in five held-out folds; no engine or generator change.
+- Aggregate recall improves from 0.15 to 0.75 and balanced accuracy from 0.575 to
+  0.769444, with 38 false positives. Thresholds range from 0.009678 to 0.047801;
+  poor transfer in templates 001, 003 and 004 materially qualifies pooled results.
+- Fixed-score aggregate ROC-AUC necessarily equals pooled v2 AUC (0.947222);
+  this identity is not independent evidence of ranking generalization. Fold
+  dispersion is reported without a precise confidence interval from five groups.
+- All 34 new tests and 14 foundation tests pass; the full suite passes 124 tests
+  with 57.95% coverage and full simulation coverage of 100%. See
+  `docs/V3_TEMPLATE_EVALUATION.md` and `results/v3/template_evaluation/`.
+
 ## Genuinely missing work
 
-- Leave-one-template-out threshold selection with training-only decisions,
-  held-out aggregate classification metrics, and adversarial leakage checks.
 - A validation gate for the existing Bayesian module: data/provenance,
   likelihood/identifiability, prior predictions, independent recovery,
   posterior predictions, diagnostics and additional value. No current test module
@@ -67,8 +80,8 @@ should be reused, not recreated. See `results/v3/baseline/verification.json`,
 
 ## Proposed v3 implementation order
 
-1. Record the threshold selection objective, tie rule and uncertainty protocol
-   before evaluating; implement template-held-out selection and adversarial tests.
+1. Template-held-out selection and adversarial tests are complete; preserve the
+   frozen protocol and its documented threshold-transfer limitations.
 2. Audit/test the existing Bayesian module against the stated admission gate.
    Retain posterior simulation only if the gate passes; otherwise record exclusion.
 3. Define and independently solve a small genuine financing problem before any
@@ -80,7 +93,8 @@ should be reused, not recreated. See `results/v3/baseline/verification.json`,
 
 - Foundation files now added: `tests/test_returns_independent.py`,
   `tests/test_runtime_invariants.py`, `src/lbo/validation.py`, and
-  `analysis/run_v3_foundation.py`. Add `tests/test_template_evaluation.py` next;
+  `analysis/run_v3_foundation.py`. `tests/test_template_evaluation.py` and
+  `analysis/run_v3_template_evaluation.py` are now also complete;
   Bayesian/optimization tests depend on their validation and admission decisions.
 - Audit `analysis/calibration/bayes_calibrate.py`; amend it only if justified by
   independent failures. Any retained optimizer belongs in a separate tested module.
@@ -89,6 +103,6 @@ should be reused, not recreated. See `results/v3/baseline/verification.json`,
   `paper/ifrs16_lbo_ssrn_v3.tex`/PDF, with reproduction instructions and changelog.
   Preserve the reviewed v2 source and artifacts.
 
-Branch consolidation, baseline reproduction and foundation financial validation
-are complete. No threshold selection, Bayesian analysis, optimization, financial
-model change or manuscript rewrite has been undertaken.
+Branch consolidation, baseline reproduction, foundation financial validation and
+template-held-out threshold evaluation are complete. No Bayesian analysis,
+optimization, financial model change or manuscript rewrite was undertaken in this stage.
