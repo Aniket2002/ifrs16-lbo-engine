@@ -1,9 +1,10 @@
 """Read-only validation of claim metadata and frozen source snapshots; no models run."""
 
 import csv
-import hashlib
 import json
 from pathlib import Path
+
+from analysis.source_integrity import validate_current_integrity
 
 CLASSES = {
     "VERIFIED_MECHANICAL",
@@ -137,9 +138,8 @@ def validate(root):
     claims = read("claim_ledger.json")
     errors = validate_claims(root, claims)
     indexed = {c["claim_id"]: c for c in claims}
-    for path, expected in read("source_manifest.json")["sha256"].items():
-        if hashlib.sha256((root / path).read_bytes()).hexdigest() != expected:
-            errors.append(f"frozen source changed: {path}")
+    integrity = validate_current_integrity(root)
+    errors.extend(integrity["errors"])
     traces = read("claim_traceability.json")
     if len(traces) != len(claims) or {t["claim_id"] for t in traces} != set(indexed):
         errors.append("traceability coverage mismatch")
@@ -191,6 +191,8 @@ def validate(root):
         "quantitative_claims_checked": sum(c["quantitative"] for c in claims),
         "prohibited_claims_checked": len(prohibited),
         "frozen_source_files_hash_checked": len(read("source_manifest.json")["sha256"]),
+        "current_integrity": integrity,
+        "historical_manifest_status": integrity["historical_manifest_status"],
         "checks": [
             "required fields and classes",
             "exact source selectors and snapshots",
@@ -200,7 +202,7 @@ def validate(root):
             "prohibited and stale coverage restrictions",
             "traceability coverage",
             "section/abstract/visual claim links",
-            "frozen file SHA-256",
+            "canonical Git blob source integrity",
         ],
     }
 
