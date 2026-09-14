@@ -1,30 +1,13 @@
-"""Bayesian Hierarchical Calibration for LBO Parameters
-
-This module implements hierarchical Bayesian estimation of LBO model parameters
-from cross-firm disclosure data, replacing ad-hoc priors with data-informed
-posterior predictive distributions.
-
-Key Features:
-- Hierarchical model with partial pooling across firms
-- Support for firm-level covariates (region, rating, brand)
-- Posterior predictive sampling for new deals
-- Export to JSON/Parquet for downstream consumption
-
-References:
-- Gelman et al. (2013) Bayesian Data Analysis
-- Betancourt (2017) A Conceptual Introduction to Hamiltonian Monte Carlo
-"""
+"""Audited population calibration for five independent LBO input dimensions."""
 
 import json
-import warnings
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Any
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy import stats
+from scipy.stats import truncnorm
 
 try:
     import arviz as az  # type: ignore
@@ -32,489 +15,354 @@ try:
 
     HAS_PYMC = True
 except ImportError:
-    HAS_PYMC = False
-    pm = None
     az = None
-    warnings.warn("PyMC not available. Using MAP estimation with Laplace approximation.")
+    pm = None
+    HAS_PYMC = False
 
 
-@dataclass
+@dataclass(frozen=True)
 class FirmData:
-    """Individual firm calibration data"""
-
     name: str
-    revenue_growth: float  # Historical/projected revenue growth rate
-    terminal_margin: float  # EBITDA margin at exit
-    lease_multiple: float  # Lease liability / EBITDA multiple
-    senior_rate: float  # Senior debt interest rate
-    mezz_rate: float  # Mezzanine/subordinated debt rate
-    # Optional covariates
-    region: Optional[str] = None
-    rating: Optional[str] = None
-    brand_tier: Optional[str] = None
+    revenue_growth: float
+    terminal_margin: float
+    lease_multiple: float
+    senior_rate: float
+    mezz_rate: float
+    region: str | None = None
+    rating: str | None = None
+    brand_tier: str | None = None
 
 
-@dataclass
+@dataclass(frozen=True)
 class PriorSpecification:
-    """Hierarchical prior specifications"""
+    mu_g_prior: tuple[float, float] = (0.04, 0.02)
+    sigma_g_prior: tuple[float, float] = (0.0, 0.015)
+    g_bounds: tuple[float, float] = (0.0, 0.15)
+    mu_m_prior: tuple[float, float] = (0.25, 0.05)
+    sigma_m_prior: tuple[float, float] = (0.0, 0.03)
+    m_bounds: tuple[float, float] = (0.1, 0.4)
+    mu_L_prior: tuple[float, float] = (1.2, 0.3)
+    sigma_L_prior: tuple[float, float] = (0.0, 0.2)
+    mu_r_prior: tuple[float, float] = (0.06, 0.01)
+    sigma_r_prior: tuple[float, float] = (0.0, 0.008)
+    r_bounds: tuple[float, float] = (0.02, 0.12)
 
-    # Growth rate priors (mean, std)
-    mu_g_prior: Tuple[float, float] = (0.04, 0.02)
-    sigma_g_prior: Tuple[float, float] = (0.0, 0.015)
-    g_bounds: Tuple[float, float] = (0.0, 0.15)
 
-    # Terminal margin priors
-    mu_m_prior: Tuple[float, float] = (0.25, 0.05)
-    sigma_m_prior: Tuple[float, float] = (0.0, 0.03)
-    m_bounds: Tuple[float, float] = (0.1, 0.4)
+PARAMETERS = (
+    "mu_g",
+    "sigma_g",
+    "mu_m",
+    "sigma_m",
+    "mu_L",
+    "sigma_L",
+    "mu_r_sen",
+    "sigma_r_sen",
+    "mu_r_mezz",
+    "sigma_r_mezz",
+)
 
-    # Lease multiple priors (log scale)
-    mu_L_prior: Tuple[float, float] = (1.2, 0.3)  # log(3.3) ≈ 1.2
-    sigma_L_prior: Tuple[float, float] = (0.0, 0.2)
 
-    # Rate priors
-    mu_r_prior: Tuple[float, float] = (0.06, 0.01)
-    sigma_r_prior: Tuple[float, float] = (0.0, 0.008)
-    r_bounds: Tuple[float, float] = (0.02, 0.12)
+def _finite_number(value: Any, name: str) -> float:
+    try:
+        number = float(value)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{name} must be numeric") from exc
+    if not np.isfinite(number):
+        raise ValueError(f"{name} must be finite")
+    return number
 
 
 class BayesianCalibrator:
-    """
-    Hierarchical Bayesian calibration of LBO parameters
+    """Independent Bayesian population models; covariates are metadata only."""
 
-    This class fits a hierarchical model to cross-firm data and provides
-    posterior predictive samples for use in Monte Carlo analysis.
-    """
-
-    def __init__(self, seed: int = 42):
+    def __init__(self, seed: int = 42, priors: PriorSpecification | None = None):
         self.seed = seed
-        self.firms: List[FirmData] = []
-        self.priors = PriorSpecification()
-        self.hyperparameters: Optional[Dict] = None
-        self.posterior_samples: Optional[pd.DataFrame] = None
+        self.priors = priors or PriorSpecification()
+        self.firms: list[FirmData] = []
+        self.hyperparameters: dict[str, float] | None = None
+        self.population_samples: pd.DataFrame | None = None
         self.trace = None
+        self.actual_fit_method: str | None = None
+        self.actual_sampler: str | None = None
 
-        np.random.seed(seed)
-
-    def add_firm(self, firm: FirmData):
-        """Add firm data for calibration"""
+    def add_firm(self, firm: FirmData) -> None:
+        if not isinstance(firm.name, str) or not firm.name.strip():
+            raise ValueError("name must be a nonempty string")
+        fields = (
+            "revenue_growth",
+            "terminal_margin",
+            "lease_multiple",
+            "senior_rate",
+            "mezz_rate",
+        )
+        values = {field: _finite_number(getattr(firm, field), field) for field in fields}
+        if values["lease_multiple"] <= 0:
+            raise ValueError("lease_multiple must be positive before log transformation")
+        for field, bounds in (
+            ("revenue_growth", self.priors.g_bounds),
+            ("terminal_margin", self.priors.m_bounds),
+            ("senior_rate", self.priors.r_bounds),
+            ("mezz_rate", self.priors.r_bounds),
+        ):
+            if not bounds[0] <= values[field] <= bounds[1]:
+                raise ValueError(f"{field} must be within {bounds}")
         self.firms.append(firm)
 
-    def load_from_csv(self, csv_path: Union[str, Path]):
-        """Load firm data from CSV file"""
-        df = pd.read_csv(csv_path)
-
-        required_cols = [
+    def load_from_csv(self, csv_path: str | Path) -> None:
+        data = pd.read_csv(csv_path)
+        required = {
             "name",
             "revenue_growth",
             "terminal_margin",
             "lease_multiple",
             "senior_rate",
             "mezz_rate",
-        ]
+        }
+        missing = sorted(required - set(data.columns))
+        if missing:
+            raise ValueError(f"Missing required columns: {', '.join(missing)}")
+        if data.empty:
+            raise ValueError("Calibration data must contain at least two firms")
+        dataclass_fields = FirmData.__dataclass_fields__
+        for row in data.to_dict("records"):
+            self.add_firm(FirmData(**{key: row.get(key) for key in dataclass_fields}))
 
-        for col in required_cols:
-            if col not in df.columns:
-                raise ValueError(f"Missing required column: {col}")
+    def _arrays(self) -> dict[str, np.ndarray]:
+        return {
+            "g": np.asarray([f.revenue_growth for f in self.firms]),
+            "m": np.asarray([f.terminal_margin for f in self.firms]),
+            "L_log": np.log([f.lease_multiple for f in self.firms]),
+            "r_sen": np.asarray([f.senior_rate for f in self.firms]),
+            "r_mezz": np.asarray([f.mezz_rate for f in self.firms]),
+        }
 
-        for _, row in df.iterrows():
-            firm = FirmData(
-                name=row["name"],
-                revenue_growth=row["revenue_growth"],
-                terminal_margin=row["terminal_margin"],
-                lease_multiple=row["lease_multiple"],
-                senior_rate=row["senior_rate"],
-                mezz_rate=row["mezz_rate"],
-                region=row.get("region"),
-                rating=row.get("rating"),
-                brand_tier=row.get("brand_tier"),
-            )
-            self.add_firm(firm)
-
-    def fit_hierarchical_model(self, method: str = "map") -> Dict:
-        """
-        Fit hierarchical Bayesian model
-
-        Args:
-            method: 'mcmc' (full Bayesian) or 'map' (MAP + Laplace)
-        """
+    def fit_hierarchical_model(
+        self,
+        method: str = "empirical_moments",
+        *,
+        draws: int = 2000,
+        tune: int = 1000,
+        chains: int = 4,
+        target_accept: float = 0.95,
+        nuts_sampler: str = "pymc",
+    ) -> dict[str, float]:
         if len(self.firms) < 2:
-            raise ValueError("Need at least 2 firms for hierarchical modeling")
+            raise ValueError("Need at least 2 firms for population modeling")
+        if method == "mcmc":
+            if not HAS_PYMC:
+                raise ImportError("method='mcmc' requires PyMC; no fallback was run")
+            return self._fit_mcmc(draws, tune, chains, target_accept, nuts_sampler)
+        if method == "empirical_moments":
+            return self._fit_empirical_moments()
+        raise ValueError(
+            "method must be 'mcmc' or 'empirical_moments'; 'map' was never MAP/Laplace"
+        )
 
-        if method == "mcmc" and HAS_PYMC:
-            return self._fit_mcmc()
-        else:
-            return self._fit_map_laplace()
-
-    def _fit_mcmc(self) -> Dict:
-        """Full Bayesian inference with PyMC"""
-        if not HAS_PYMC or pm is None:
-            raise ImportError("PyMC not available for MCMC fitting")
-
-        # Extract firm-level data
-        n_firms = len(self.firms)
-        growth_data = np.array([f.revenue_growth for f in self.firms])
-        margin_data = np.array([f.terminal_margin for f in self.firms])
-        lease_data = np.log(np.array([f.lease_multiple for f in self.firms]))
-        senior_rate_data = np.array([f.senior_rate for f in self.firms])
-        mezz_rate_data = np.array([f.mezz_rate for f in self.firms])
-
+    def _fit_mcmc(
+        self, draws: int, tune: int, chains: int, target_accept: float, nuts_sampler: str
+    ) -> dict[str, float]:
+        data, prior = self._arrays(), self.priors
         with pm.Model():
-            # Hyperpriors
-            mu_g = pm.Normal("mu_g", *self.priors.mu_g_prior)
-            sigma_g = pm.HalfNormal("sigma_g", self.priors.sigma_g_prior[1])
-
-            mu_m = pm.Normal("mu_m", *self.priors.mu_m_prior)
-            sigma_m = pm.HalfNormal("sigma_m", self.priors.sigma_m_prior[1])
-
-            mu_L = pm.Normal("mu_L", *self.priors.mu_L_prior)
-            sigma_L = pm.HalfNormal("sigma_L", self.priors.sigma_L_prior[1])
-
-            mu_r_sen = pm.Normal("mu_r_sen", *self.priors.mu_r_prior)
-            sigma_r_sen = pm.HalfNormal("sigma_r_sen", self.priors.sigma_r_prior[1])
-
-            mu_r_mezz = pm.Normal("mu_r_mezz", *self.priors.mu_r_prior)
-            sigma_r_mezz = pm.HalfNormal("sigma_r_mezz", self.priors.sigma_r_prior[1])
-
-            # Firm-level parameters
-            g_raw = pm.Normal("g_raw", mu_g, sigma_g, shape=n_firms)
-            g = pm.Deterministic("g", pm.math.clip(g_raw, *self.priors.g_bounds))
-
-            m_raw = pm.Normal("m_raw", mu_m, sigma_m, shape=n_firms)
-            m = pm.Deterministic("m", pm.math.clip(m_raw, *self.priors.m_bounds))
-
-            L_log = pm.Normal("L_log", mu_L, sigma_L, shape=n_firms)
-            pm.Deterministic("L", pm.math.exp(L_log))
-
-            r_sen_raw = pm.Normal("r_sen_raw", mu_r_sen, sigma_r_sen, shape=n_firms)
-            r_sen = pm.Deterministic("r_sen", pm.math.clip(r_sen_raw, *self.priors.r_bounds))
-
-            r_mezz_raw = pm.Normal("r_mezz_raw", mu_r_mezz, sigma_r_mezz, shape=n_firms)
-            r_mezz = pm.Deterministic("r_mezz", pm.math.clip(r_mezz_raw, *self.priors.r_bounds))
-
-            # Likelihood (assuming small observation noise)
-            obs_noise = 0.01
-            pm.Normal("growth_obs", g, obs_noise, observed=growth_data)
-            pm.Normal("margin_obs", m, obs_noise, observed=margin_data)
-            pm.Normal("lease_obs", L_log, obs_noise, observed=lease_data)
-            pm.Normal("senior_rate_obs", r_sen, obs_noise, observed=senior_rate_data)
-            pm.Normal("mezz_rate_obs", r_mezz, obs_noise, observed=mezz_rate_data)
-
-            # Sample
-            trace = pm.sample(
-                2000, tune=1000, random_seed=self.seed, target_accept=0.9, return_inferencedata=True
+            mu_g = pm.Normal("mu_g", *prior.mu_g_prior)
+            sigma_g = pm.HalfNormal("sigma_g", prior.sigma_g_prior[1])
+            mu_m = pm.Normal("mu_m", *prior.mu_m_prior)
+            sigma_m = pm.HalfNormal("sigma_m", prior.sigma_m_prior[1])
+            mu_L = pm.Normal("mu_L", *prior.mu_L_prior)
+            sigma_L = pm.HalfNormal("sigma_L", prior.sigma_L_prior[1])
+            mu_r_sen = pm.Normal("mu_r_sen", *prior.mu_r_prior)
+            sigma_r_sen = pm.HalfNormal("sigma_r_sen", prior.sigma_r_prior[1])
+            mu_r_mezz = pm.Normal("mu_r_mezz", *prior.mu_r_prior)
+            sigma_r_mezz = pm.HalfNormal("sigma_r_mezz", prior.sigma_r_prior[1])
+            pm.TruncatedNormal(
+                "growth_obs",
+                mu=mu_g,
+                sigma=sigma_g,
+                lower=prior.g_bounds[0],
+                upper=prior.g_bounds[1],
+                observed=data["g"],
             )
-
-        # Extract hyperparameters
+            pm.TruncatedNormal(
+                "margin_obs",
+                mu=mu_m,
+                sigma=sigma_m,
+                lower=prior.m_bounds[0],
+                upper=prior.m_bounds[1],
+                observed=data["m"],
+            )
+            pm.Normal("lease_obs", mu_L, sigma_L, observed=data["L_log"])
+            pm.TruncatedNormal(
+                "senior_rate_obs",
+                mu=mu_r_sen,
+                sigma=sigma_r_sen,
+                lower=prior.r_bounds[0],
+                upper=prior.r_bounds[1],
+                observed=data["r_sen"],
+            )
+            pm.TruncatedNormal(
+                "mezz_rate_obs",
+                mu=mu_r_mezz,
+                sigma=sigma_r_mezz,
+                lower=prior.r_bounds[0],
+                upper=prior.r_bounds[1],
+                observed=data["r_mezz"],
+            )
+            self.trace = pm.sample(
+                draws=draws,
+                tune=tune,
+                chains=chains,
+                cores=min(chains, 2),
+                random_seed=self.seed,
+                target_accept=target_accept,
+                return_inferencedata=True,
+                progressbar=False,
+                nuts_sampler=nuts_sampler,
+            )
         self.hyperparameters = {
-            "mu_g": float(trace.posterior["mu_g"].mean()),
-            "sigma_g": float(trace.posterior["sigma_g"].mean()),
-            "mu_m": float(trace.posterior["mu_m"].mean()),
-            "sigma_m": float(trace.posterior["sigma_m"].mean()),
-            "mu_L": float(trace.posterior["mu_L"].mean()),
-            "sigma_L": float(trace.posterior["sigma_L"].mean()),
-            "mu_r_sen": float(trace.posterior["mu_r_sen"].mean()),
-            "sigma_r_sen": float(trace.posterior["sigma_r_sen"].mean()),
-            "mu_r_mezz": float(trace.posterior["mu_r_mezz"].mean()),
-            "sigma_r_mezz": float(trace.posterior["sigma_r_mezz"].mean()),
+            name: float(self.trace.posterior[name].mean()) for name in PARAMETERS
         }
-
-        self.trace = trace
+        self.actual_fit_method = "mcmc"
+        self.actual_sampler = nuts_sampler
         return self.hyperparameters
 
-    def _fit_map_laplace(self) -> Dict:
-        """MAP estimation with Laplace approximation (fallback when PyMC unavailable)"""
-        # Extract firm-level data
-        growth_data = np.array([f.revenue_growth for f in self.firms])
-        margin_data = np.array([f.terminal_margin for f in self.firms])
-        lease_data = np.log(np.array([f.lease_multiple for f in self.firms]))
-        senior_rate_data = np.array([f.senior_rate for f in self.firms])
-        mezz_rate_data = np.array([f.mezz_rate for f in self.firms])
-
-        # Simple empirical Bayes estimates
+    def _fit_empirical_moments(self) -> dict[str, float]:
+        data = self._arrays()
         self.hyperparameters = {
-            "mu_g": float(np.mean(growth_data)),
-            "sigma_g": float(np.std(growth_data)),
-            "mu_m": float(np.mean(margin_data)),
-            "sigma_m": float(np.std(margin_data)),
-            "mu_L": float(np.mean(lease_data)),
-            "sigma_L": float(np.std(lease_data)),
-            "mu_r_sen": float(np.mean(senior_rate_data)),
-            "sigma_r_sen": float(np.std(senior_rate_data)),
-            "mu_r_mezz": float(np.mean(mezz_rate_data)),
-            "sigma_r_mezz": float(np.std(mezz_rate_data)),
+            "mu_g": float(data["g"].mean()),
+            "sigma_g": float(data["g"].std()),
+            "mu_m": float(data["m"].mean()),
+            "sigma_m": float(data["m"].std()),
+            "mu_L": float(data["L_log"].mean()),
+            "sigma_L": float(data["L_log"].std()),
+            "mu_r_sen": float(data["r_sen"].mean()),
+            "sigma_r_sen": float(data["r_sen"].std()),
+            "mu_r_mezz": float(data["r_mezz"].mean()),
+            "sigma_r_mezz": float(data["r_mezz"].std()),
         }
-
+        self.actual_fit_method = "empirical_moments"
         return self.hyperparameters
+
+    @staticmethod
+    def _truncated(rng, mu, sigma, bounds):
+        sigma = max(float(sigma), np.finfo(float).eps)
+        return truncnorm.rvs(
+            (bounds[0] - mu) / sigma,
+            (bounds[1] - mu) / sigma,
+            loc=mu,
+            scale=sigma,
+            random_state=rng,
+        )
+
+    def generate_population_predictive_from_trace(
+        self, n_samples: int = 1000, *, seed: int | None = None
+    ) -> pd.DataFrame:
+        if self.actual_fit_method != "mcmc" or self.trace is None:
+            raise ValueError("An actual MCMC trace is required")
+        if n_samples <= 0:
+            raise ValueError("n_samples must be positive")
+        rng = np.random.default_rng(self.seed if seed is None else seed)
+        posterior = self.trace.posterior.stack(sample=("chain", "draw"))
+        indices = rng.integers(0, posterior.sizes["sample"], n_samples)
+        rows = []
+        for sample_id, index in enumerate(indices):
+            hp = {name: float(posterior[name].isel(sample=index)) for name in PARAMETERS}
+            rows.append(self._draw_population_row(rng, hp, sample_id))
+        self.population_samples = pd.DataFrame(rows)
+        return self.population_samples
+
+    def generate_empirical_parameter_draws(
+        self, n_samples: int = 1000, *, seed: int | None = None
+    ) -> pd.DataFrame:
+        if self.actual_fit_method != "empirical_moments" or self.hyperparameters is None:
+            raise ValueError("An empirical-moments fit is required")
+        if n_samples <= 0:
+            raise ValueError("n_samples must be positive")
+        rng = np.random.default_rng(self.seed if seed is None else seed)
+        rows = [self._draw_population_row(rng, self.hyperparameters, i) for i in range(n_samples)]
+        self.population_samples = pd.DataFrame(rows)
+        return self.population_samples
+
+    def _draw_population_row(self, rng, hp, sample_id):
+        return {
+            "revenue_growth": self._truncated(rng, hp["mu_g"], hp["sigma_g"], self.priors.g_bounds),
+            "terminal_margin": self._truncated(
+                rng, hp["mu_m"], hp["sigma_m"], self.priors.m_bounds
+            ),
+            "lease_multiple": float(np.exp(rng.normal(hp["mu_L"], hp["sigma_L"]))),
+            "senior_rate": self._truncated(
+                rng, hp["mu_r_sen"], hp["sigma_r_sen"], self.priors.r_bounds
+            ),
+            "mezz_rate": self._truncated(
+                rng, hp["mu_r_mezz"], hp["sigma_r_mezz"], self.priors.r_bounds
+            ),
+            "sample_id": sample_id,
+        }
 
     def generate_posterior_predictive(self, n_samples: int = 1000) -> pd.DataFrame:
-        """
-        Generate posterior predictive samples for new deals
+        """Compatibility dispatcher based on the method actually fitted."""
+        if self.actual_fit_method == "mcmc":
+            return self.generate_population_predictive_from_trace(n_samples)
+        if self.actual_fit_method == "empirical_moments":
+            return self.generate_empirical_parameter_draws(n_samples)
+        raise ValueError("Must fit a model before generating samples")
 
-        Args:
-            n_samples: Number of posterior predictive samples
+    def diagnostic_summary(self) -> pd.DataFrame:
+        if self.actual_fit_method != "mcmc" or self.trace is None or az is None:
+            raise ValueError("An actual MCMC trace is required")
+        result = az.summary(self.trace, var_names=list(PARAMETERS), kind="diagnostics")
+        return result.reset_index(names="parameter").rename(
+            columns={"ess_bulk": "bulk_ess", "ess_tail": "tail_ess"}
+        )
 
-        Returns:
-            DataFrame with posterior predictive samples
-        """
-        if self.hyperparameters is None:
-            raise ValueError("Must fit model before generating samples")
-
-        np.random.seed(self.seed)
-
-        samples = []
-        for i in range(n_samples):
-            # Sample from posterior predictive
-            g = np.clip(
-                np.random.normal(self.hyperparameters["mu_g"], self.hyperparameters["sigma_g"]),
-                *self.priors.g_bounds,
-            )
-
-            m = np.clip(
-                np.random.normal(self.hyperparameters["mu_m"], self.hyperparameters["sigma_m"]),
-                *self.priors.m_bounds,
-            )
-
-            L = np.exp(
-                np.random.normal(self.hyperparameters["mu_L"], self.hyperparameters["sigma_L"])
-            )
-
-            r_sen = np.clip(
-                np.random.normal(
-                    self.hyperparameters["mu_r_sen"], self.hyperparameters["sigma_r_sen"]
-                ),
-                *self.priors.r_bounds,
-            )
-
-            r_mezz = np.clip(
-                np.random.normal(
-                    self.hyperparameters["mu_r_mezz"], self.hyperparameters["sigma_r_mezz"]
-                ),
-                *self.priors.r_bounds,
-            )
-
-            samples.append(
-                {
-                    "revenue_growth": g,
-                    "terminal_margin": m,
-                    "lease_multiple": L,
-                    "senior_rate": r_sen,
-                    "mezz_rate": r_mezz,
-                    "sample_id": i,
-                }
-            )
-
-        self.posterior_samples = pd.DataFrame(samples)
-        return self.posterior_samples
-
-    def export_priors(self, output_path: Union[str, Path]):
-        """Export fitted hyperparameters to JSON"""
-        if self.hyperparameters is None:
+    def export_priors(self, output_path: str | Path, *, data_classification: str) -> None:
+        if self.hyperparameters is None or self.actual_fit_method is None:
             raise ValueError("Must fit model before exporting")
-
-        export_data = {
+        output = {
             "hyperparameters": self.hyperparameters,
             "model_info": {
                 "n_firms": len(self.firms),
                 "firm_names": [f.name for f in self.firms],
                 "seed": self.seed,
-                "fit_method": "mcmc" if HAS_PYMC else "map",
+                "actual_fit_method": self.actual_fit_method,
+                "actual_sampler": self.actual_sampler,
+                "data_classification": data_classification,
+                "covariates_used_in_model": [],
             },
-            "priors": {
-                "mu_g_prior": self.priors.mu_g_prior,
-                "sigma_g_prior": self.priors.sigma_g_prior,
-                "g_bounds": self.priors.g_bounds,
-                "mu_m_prior": self.priors.mu_m_prior,
-                "sigma_m_prior": self.priors.sigma_m_prior,
-                "m_bounds": self.priors.m_bounds,
-                "mu_L_prior": self.priors.mu_L_prior,
-                "sigma_L_prior": self.priors.sigma_L_prior,
-                "mu_r_prior": self.priors.mu_r_prior,
-                "sigma_r_prior": self.priors.sigma_r_prior,
-                "r_bounds": self.priors.r_bounds,
-            },
+            "priors": asdict(self.priors),
         }
+        Path(output_path).write_text(json.dumps(output, indent=2) + "\n", encoding="utf-8")
 
-        with open(output_path, "w") as f:
-            json.dump(export_data, f, indent=2)
-
-    def export_samples(self, output_path: Union[str, Path]):
-        """Export posterior predictive samples to Parquet"""
-        if self.posterior_samples is None:
+    def export_samples(self, output_path: str | Path) -> None:
+        if self.population_samples is None:
             raise ValueError("Must generate samples before exporting")
-
-        self.posterior_samples.to_parquet(output_path, index=False)
-
-    def plot_posterior_comparison(self, save_path: Optional[str] = None):
-        """Plot prior vs posterior densities (F7 figure)"""
-        if self.hyperparameters is None:
-            raise ValueError("Must fit model before plotting")
-
-        fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-        axes = axes.flatten()
-
-        # Parameters to plot
-        params = [
-            (
-                "Revenue Growth",
-                "mu_g",
-                "sigma_g",
-                self.priors.mu_g_prior,
-                self.priors.sigma_g_prior[1],
-            ),
-            (
-                "Terminal Margin",
-                "mu_m",
-                "sigma_m",
-                self.priors.mu_m_prior,
-                self.priors.sigma_m_prior[1],
-            ),
-            (
-                "Log Lease Multiple",
-                "mu_L",
-                "sigma_L",
-                self.priors.mu_L_prior,
-                self.priors.sigma_L_prior[1],
-            ),
-            (
-                "Senior Rate",
-                "mu_r_sen",
-                "sigma_r_sen",
-                self.priors.mu_r_prior,
-                self.priors.sigma_r_prior[1],
-            ),
-            (
-                "Mezzanine Rate",
-                "mu_r_mezz",
-                "sigma_r_mezz",
-                self.priors.mu_r_prior,
-                self.priors.sigma_r_prior[1],
-            ),
-        ]
-
-        for i, (name, mu_key, sigma_key, prior_mu, prior_sigma) in enumerate(params):
-            if i >= len(axes):
-                break
-
-            ax = axes[i]
-
-            # Prior
-            x_range = np.linspace(prior_mu[0] - 3 * prior_sigma, prior_mu[0] + 3 * prior_sigma, 100)
-            prior_density = stats.norm.pdf(x_range, prior_mu[0], prior_sigma)
-            ax.plot(x_range, prior_density, "--", label="Prior", alpha=0.7)
-
-            # Posterior
-            post_mu = self.hyperparameters[mu_key]
-            post_sigma = self.hyperparameters[sigma_key]
-            post_density = stats.norm.pdf(x_range, post_mu, post_sigma)
-            ax.plot(x_range, post_density, "-", label="Posterior", linewidth=2)
-
-            # Firm data points
-            if name == "Revenue Growth":
-                data = [f.revenue_growth for f in self.firms]
-            elif name == "Terminal Margin":
-                data = [f.terminal_margin for f in self.firms]
-            elif name == "Log Lease Multiple":
-                data = [np.log(f.lease_multiple) for f in self.firms]
-            elif name == "Senior Rate":
-                data = [f.senior_rate for f in self.firms]
-            else:  # Mezzanine Rate
-                data = [f.mezz_rate for f in self.firms]
-
-            ax.scatter(
-                data, [0] * len(data), alpha=0.6, s=50, color="red", label="Firm Data", zorder=10
-            )
-
-            ax.set_title(f"{name}\nShrinkage: {abs(post_sigma - prior_sigma):.4f}")
-            ax.set_xlabel("Value")
-            ax.set_ylabel("Density")
-            ax.legend()
-            ax.grid(True, alpha=0.3)
-
-        # Remove unused subplot
-        if len(params) < len(axes):
-            fig.delaxes(axes[-1])
-
-        plt.tight_layout()
-
-        if save_path:
-            plt.savefig(save_path, dpi=300, bbox_inches="tight")
-
-        return fig
+        self.population_samples.to_parquet(output_path, index=False)
 
     def get_firm_summary(self) -> pd.DataFrame:
-        """Get summary statistics by firm"""
-        data = []
-        for firm in self.firms:
-            data.append(
-                {
-                    "name": firm.name,
-                    "revenue_growth": firm.revenue_growth,
-                    "terminal_margin": firm.terminal_margin,
-                    "lease_multiple": firm.lease_multiple,
-                    "senior_rate": firm.senior_rate,
-                    "mezz_rate": firm.mezz_rate,
-                    "region": firm.region,
-                    "rating": firm.rating,
-                    "brand_tier": firm.brand_tier,
-                }
-            )
-
-        return pd.DataFrame(data)
+        return pd.DataFrame(asdict(firm) for firm in self.firms)
 
 
-def main():
-    """CLI interface for Bayesian calibration"""
+def main() -> None:
     import argparse
 
-    parser = argparse.ArgumentParser(description="Bayesian LBO Parameter Calibration")
-    parser.add_argument("--input", type=str, required=True, help="CSV file with firm data")
+    parser = argparse.ArgumentParser(description="Audited LBO population calibration")
+    parser.add_argument("--input", required=True)
+    parser.add_argument("--output-dir", default="analysis/calibration/output")
     parser.add_argument(
-        "--output-dir", type=str, default="analysis/calibration/output", help="Output directory"
+        "--method",
+        choices=["mcmc", "empirical_moments"],
+        default="empirical_moments",
     )
-    parser.add_argument(
-        "--method", type=str, choices=["mcmc", "map"], default="map", help="Fitting method"
-    )
-    parser.add_argument(
-        "--n-samples", type=int, default=1000, help="Number of posterior predictive samples"
-    )
-    parser.add_argument("--seed", type=int, default=42, help="Random seed")
-
+    parser.add_argument("--n-samples", type=int, default=1000)
+    parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
-
-    # Setup
-    output_dir = Path(args.output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
-
-    # Load and fit
+    output = Path(args.output_dir)
+    output.mkdir(parents=True, exist_ok=True)
     calibrator = BayesianCalibrator(seed=args.seed)
     calibrator.load_from_csv(args.input)
-
-    print(f"Loaded {len(calibrator.firms)} firms")
-    print(f"Fitting hierarchical model using {args.method}...")
-
-    hyperparams = calibrator.fit_hierarchical_model(method=args.method)
-
-    print("Fitted hyperparameters:")
-    for key, value in hyperparams.items():
-        print(f"  {key}: {value:.4f}")
-
-    # Generate samples
-    print(f"Generating {args.n_samples} posterior predictive samples...")
-    calibrator.generate_posterior_predictive(n_samples=args.n_samples)
-
-    # Export
-    calibrator.export_priors(output_dir / "priors.json")
-    calibrator.export_samples(output_dir / "posterior_samples.parquet")
-
-    # Plot
-    calibrator.plot_posterior_comparison(save_path=str(output_dir / "F7_posteriors.pdf"))
-
-    # Summary
-    summary = calibrator.get_firm_summary()
-    summary.to_csv(output_dir / "firm_summary.csv", index=False)
-
-    print(f"Results saved to {output_dir}")
+    calibrator.fit_hierarchical_model(method=args.method)
+    calibrator.generate_posterior_predictive(args.n_samples)
+    calibrator.export_priors(output / "priors.json", data_classification="user_supplied")
+    calibrator.export_samples(output / "population_samples.parquet")
+    calibrator.get_firm_summary().to_csv(output / "firm_summary.csv", index=False)
 
 
 if __name__ == "__main__":
