@@ -1,0 +1,16 @@
+{
+  "initial_branch": "paper/ssrn-v2-reconciliation",
+  "initial_head": "a990dd2166f47917781112a7e12bbc16f33605fd",
+  "canonical_branch": "v3/validated-rebuild",
+  "starting_commit": "a990dd2166f47917781112a7e12bbc16f33605fd",
+  "parent_reviewed_v2_sha": "a990dd2166f47917781112a7e12bbc16f33605fd",
+  "reviewed_source_sha": "f07796efc537468122804e6eae25b1a4f284efbb",
+  "financial_baseline_sha": "3903eccbf4650e84691aac9834caacdda0c7f5e5",
+  "initial_working_tree_clean": true,
+  "local_main_commits_behind": 16,
+  "remote_main_commits_behind": 4,
+  "outside_reviewed_material_commits": [],
+  "branch_discrepancies": "main is behind, not divergent; all reachable work is contained in reviewed v2; no merges or cherry-picks needed",
+  "v2_unmerged_into_main": true,
+  "reviewed_v2_files_restored_byte_for_byte": true
+}

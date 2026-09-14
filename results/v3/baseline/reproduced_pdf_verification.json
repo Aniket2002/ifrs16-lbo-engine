@@ -1,0 +1,137 @@
+{
+  "source_commit": "a990dd2166f47917781112a7e12bbc16f33605fd",
+  "source_files_dirty": false,
+  "baseline_financial_results_identical": true,
+  "artifact_checksums_match": true,
+  "pdf_sha256": "fe0c7adbd645d19eb8d56c343750430c47efa6caeeb1cfd6d901ed32331f990f",
+  "latex_log_sha256": "7d89b4b75d994dcee871f5e9408fd308d4321974670aee29d6be22363a60a798",
+  "latex_errors_or_overfull_boxes": false,
+  "figure_count": 6,
+  "page_count": 16,
+  "pages": [
+    {
+      "page": 1,
+      "text_characters": 2861,
+      "vector_drawings": 0,
+      "figure_captions": [],
+      "render_sha256": "6ee330f95892cde49d066361f2f359521008400afe91751f43e8913d595c3de2"
+    },
+    {
+      "page": 2,
+      "text_characters": 3152,
+      "vector_drawings": 3,
+      "figure_captions": [],
+      "render_sha256": "9b971a660ff0457a917015c2c0c58dbde40f3d7802bab407aad1db0d3c34bbe4"
+    },
+    {
+      "page": 3,
+      "text_characters": 2489,
+      "vector_drawings": 4,
+      "figure_captions": [],
+      "render_sha256": "b3b663f4559fffbaf6b875eae6a43d5b4456ec84af77c9c6da01983962767308"
+    },
+    {
+      "page": 4,
+      "text_characters": 2306,
+      "vector_drawings": 0,
+      "figure_captions": [],
+      "render_sha256": "474c8a00296b5817b5cde1014483be91c06f007b70b299731832b249781fb63d"
+    },
+    {
+      "page": 5,
+      "text_characters": 2850,
+      "vector_drawings": 8,
+      "figure_captions": [],
+      "render_sha256": "3551f4334db1b69ecf7c47e01b638ddd1be6d9faeeddf20b6ea686f7bff03497"
+    },
+    {
+      "page": 6,
+      "text_characters": 3144,
+      "vector_drawings": 3,
+      "figure_captions": [],
+      "render_sha256": "e6a64a459215d353b3e92e3e9947a5702d41a940777e2d0a39e11159a6c94af1"
+    },
+    {
+      "page": 7,
+      "text_characters": 2166,
+      "vector_drawings": 98,
+      "figure_captions": [
+        "Figure 1:"
+      ],
+      "render_sha256": "7f15a4253e7fef33221133b88788c8b23217d719990cf68619c579515eb0309b"
+    },
+    {
+      "page": 8,
+      "text_characters": 1799,
+      "vector_drawings": 41,
+      "figure_captions": [
+        "Figure 2:"
+      ],
+      "render_sha256": "c1aa7d89f25590273a38e7bee1483ced413608212a5ef63483c39a6b545602f7"
+    },
+    {
+      "page": 9,
+      "text_characters": 1656,
+      "vector_drawings": 36,
+      "figure_captions": [
+        "Figure 3:"
+      ],
+      "render_sha256": "0caf7e7e9ebdd78b66481ddf77621fef8203a025ae9b423757ebed4fe7e801c2"
+    },
+    {
+      "page": 10,
+      "text_characters": 1823,
+      "vector_drawings": 99,
+      "figure_captions": [
+        "Figure 4:",
+        "Figure 5:"
+      ],
+      "render_sha256": "ec8ef3d7894e0ed9aee7c0f4bf31c8c1794effd6100f56818e3d3c3c76173b8b"
+    },
+    {
+      "page": 11,
+      "text_characters": 2414,
+      "vector_drawings": 6,
+      "figure_captions": [],
+      "render_sha256": "84e3d7237c2cfee381810df146ffdcb4d960230943ed00c1d068056dd77f9bf1"
+    },
+    {
+      "page": 12,
+      "text_characters": 3041,
+      "vector_drawings": 67,
+      "figure_captions": [
+        "Figure 6:"
+      ],
+      "render_sha256": "15aeafdd53ea651381372186af52dd4ed28266e476c90e000d0ce3cfdbabd8c4"
+    },
+    {
+      "page": 13,
+      "text_characters": 1417,
+      "vector_drawings": 0,
+      "figure_captions": [],
+      "render_sha256": "77b19458472f0a059a9e6bb210280a0f76dbb00cd5a391519e04674e98839a7d"
+    },
+    {
+      "page": 14,
+      "text_characters": 2451,
+      "vector_drawings": 16,
+      "figure_captions": [],
+      "render_sha256": "ae1730b416a98fc491aa2dd542cb15c2b2fdbde8eef18100e337de3b85c01b15"
+    },
+    {
+      "page": 15,
+      "text_characters": 2300,
+      "vector_drawings": 5,
+      "figure_captions": [],
+      "render_sha256": "8d4d8da4470ec3fad2ea0807f967466406b0be4eddc5001f49e81e4f6ab89e72"
+    },
+    {
+      "page": 16,
+      "text_characters": 1688,
+      "vector_drawings": 0,
+      "figure_captions": [],
+      "render_sha256": "f95fc55b05d694d92b2e7f3ac35b0243239ea4c2f7ee38d832963883e4bf58a5"
+    }
+  ],
+  "visual_review": "Every page rendered; manual inspection recorded in validation.json"
+}

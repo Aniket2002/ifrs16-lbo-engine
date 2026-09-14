@@ -1,0 +1,5 @@
+{
+  "pages": 16,
+  "figures": 6,
+  "review_directory": "C:\\Users\\Aniket Bhardwaj\\Desktop\\Github\\ifrs16-lbo-engine\\output\\paper_v2_review"
+}

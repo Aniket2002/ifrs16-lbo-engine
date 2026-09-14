@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "command": [
+        "C:\\Users\\Aniket Bhardwaj\\Desktop\\Github\\ifrs16-lbo-engine\\.venv\\Scripts\\python.exe",
+        "-m",
+        "analysis.scripts.generate_paper_v2_figures",
+        "--run-benchmark"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "C:\\Users\\ANIKET~1\\AppData\\Local\\Temp\\ifrs16-paper-tools\\tectonic.exe",
+        "--keep-logs",
+        "paper/ifrs16_lbo_ssrn_v2.tex"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "C:\\Users\\Aniket Bhardwaj\\Desktop\\Github\\ifrs16-lbo-engine\\.venv\\Scripts\\python.exe",
+        "-m",
+        "analysis.scripts.verify_paper_v2"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "financial_and_statistical_differences": {},
+  "ignored_nonfinancial_fields": [
+    "git_sha",
+    "speed_benchmark"
+  ],
+  "reviewed_benchmark_sha": "f07796efc537468122804e6eae25b1a4f284efbb",
+  "reproduced_benchmark_sha": "a990dd2166f47917781112a7e12bbc16f33605fd",
+  "tests_passed": 76,
+  "aggregate_statement_coverage_pct": 52.13,
+  "full_simulation_statement_coverage_pct": 100,
+  "ruff_check": "passed",
+  "ruff_format": "passed",
+  "figures": 6,
+  "pdf_pages": 16,
+  "original_v2_artifacts_restored": true
+}

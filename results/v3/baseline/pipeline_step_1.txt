@@ -1,0 +1,28 @@
+=== ACCOR SA IFRS-16 CASE STUDY ===
+Analysis period: 2019-2023
+Revenue range: €1621M - €5056M
+Lease liability: €2980M average
+
+=== DUAL-CONVENTION RATIO COMPARISON ===
+ICR IFRS-16:     2.46 ± 0.98
+ICR Frozen GAAP: 4.76 ± 1.57
+Average ICR impact: -2.301
+
+Leverage IFRS-16:     9.32x ± 5.21x
+Leverage Frozen GAAP: 4.56x ± 2.72x
+Average Leverage impact: 4.763x
+
+=== COVENANT BREACH ANALYSIS ===
+Hypothetical covenants: ICR >= 4.0, Leverage <= 3.5x
+IFRS-16 breaches: 5/5 years
+Frozen GAAP breaches: 3/5 years
+IFRS-16 makes covenants TIGHTER
+
+Figure saved: C:\Users\Aniket Bhardwaj\Desktop\Github\ifrs16-lbo-engine\analysis\figures\accor_case_study.png
+Detailed results exported: C:\Users\Aniket Bhardwaj\Desktop\Github\ifrs16-lbo-engine\output\accor_case_study_results.csv
+{
+  "source_commit": "a990dd2166f47917781112a7e12bbc16f33605fd",
+  "dirty_sources": false,
+  "figures": 6,
+  "manifest": "C:\\Users\\Aniket Bhardwaj\\Desktop\\Github\\ifrs16-lbo-engine\\results\\paper_v2\\manifest.json"
+}
