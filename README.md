@@ -61,6 +61,12 @@ pytest -q
 
 ## Reproducibility
 
+The revised SSRN manuscript is [available as a PDF](paper/ifrs16_lbo_ssrn_v2.pdf),
+with [LaTeX source](paper/ifrs16_lbo_ssrn_v2.tex), a
+[claim-by-claim revision audit](paper/REVISION_AUDIT.md), and
+[paper reproduction instructions](paper/REPRODUCE_V2.md).
+Its six figures use archived current outputs in `results/paper_v2/`.
+
 - Core assumptions are explicitly parameterized in the workflow code.
 - Benchmark reporting is scripted in `analysis/run_benchmark.py`.
 - Outputs include AUC with a bootstrap interval, approximation errors, scenario/failure counts, timing measurements, data checksums, and git SHA in `output/benchmark/benchmark_report.json`.
