@@ -1,0 +1,1749 @@
+[
+  {
+    "claim_id": "ENG-001",
+    "claim_class": "VERIFIED_MECHANICAL",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "independent_return_check"
+        ]
+      },
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "independent_debt_schedule",
+          "exact_match"
+        ]
+      },
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "runtime_validation"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S4",
+      "S11"
+    ],
+    "denominator_metadata": {
+      "scenarios": 200,
+      "scenario_years": 1000
+    }
+  },
+  {
+    "claim_id": "ENG-002",
+    "claim_class": "VERIFIED_MECHANICAL",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "runtime_validation"
+        ]
+      },
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "adversarial_corruptions_detected"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S4"
+    ],
+    "denominator_metadata": {
+      "scenarios": 200,
+      "scenario_years": 1000
+    }
+  },
+  {
+    "claim_id": "ENG-003",
+    "claim_class": "VERIFIED_MECHANICAL",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "independent_return_check"
+        ]
+      },
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "independent_debt_schedule"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S4"
+    ],
+    "denominator_metadata": {
+      "debt_schedule_years": 5
+    }
+  },
+  {
+    "claim_id": "REP-001",
+    "claim_class": "VERIFIED_MECHANICAL",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "results/v3/baseline/verification.json",
+        "keys": [
+          "financial_and_statistical_differences"
+        ]
+      },
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "reviewed_v2_reproduction"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S12"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "SCR-001",
+    "claim_class": "INTERPRETIVE_SYNTHESIS",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "runtime_validation"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "ranking"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/fold_results.csv"
+      }
+    ],
+    "manuscript_section": [
+      "S1",
+      "S2",
+      "S11"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "SCR-002",
+    "claim_class": "INTERPRETIVE_SYNTHESIS",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "runtime_validation"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "ranking"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S1",
+      "S2",
+      "S11"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "SCR-003",
+    "claim_class": "SYNTHETIC_RESULT",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "n_scenarios"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "n_templates"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "n_failures"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S5"
+    ],
+    "denominator_metadata": {
+      "scenarios": 200,
+      "templates": 5,
+      "failures": 20,
+      "nonfailures": 180
+    }
+  },
+  {
+    "claim_id": "SCR-004",
+    "claim_class": "SYNTHETIC_RESULT",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "ranking"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S6",
+      "S11"
+    ],
+    "denominator_metadata": {
+      "scenarios": 200,
+      "failures": 20,
+      "nonfailures": 180
+    }
+  },
+  {
+    "claim_id": "SCR-005",
+    "claim_class": "VERIFIED_MECHANICAL",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "ranking"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "pooled_recomputed_ranking"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/verification.json",
+        "keys": [
+          "source_records_equal_archived_json"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S6",
+      "S11"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "SCR-006",
+    "claim_class": "CONDITIONAL_SYNTHETIC_RESULT",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S6",
+      "S11"
+    ],
+    "denominator_metadata": {
+      "scenarios": 200,
+      "positive": 20,
+      "negative": 180,
+      "predicted_positive": 53
+    }
+  },
+  {
+    "claim_id": "SCR-007",
+    "claim_class": "CONDITIONAL_SYNTHETIC_RESULT",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S6",
+      "S11"
+    ],
+    "denominator_metadata": {
+      "scenarios": 200,
+      "positive": 20,
+      "negative": 180,
+      "predicted_positive": 3
+    }
+  },
+  {
+    "claim_id": "SCR-008",
+    "claim_class": "VERIFIED_MECHANICAL",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "protocol"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "sanity_checks"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S5"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "SCR-009",
+    "claim_class": "CONDITIONAL_SYNTHETIC_RESULT",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_001"
+        }
+      }
+    ],
+    "manuscript_section": [
+      "S7"
+    ],
+    "denominator_metadata": {
+      "scenarios": 38,
+      "positive": 5,
+      "negative": 33,
+      "aggregate_false_positives": 38
+    }
+  },
+  {
+    "claim_id": "SCR-010",
+    "claim_class": "CONDITIONAL_SYNTHETIC_RESULT",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_002"
+        }
+      }
+    ],
+    "manuscript_section": [
+      "S7"
+    ],
+    "denominator_metadata": {
+      "scenarios": 32,
+      "positive": 3,
+      "negative": 29,
+      "aggregate_false_positives": 38
+    }
+  },
+  {
+    "claim_id": "SCR-011",
+    "claim_class": "CONDITIONAL_SYNTHETIC_RESULT",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_003"
+        }
+      }
+    ],
+    "manuscript_section": [
+      "S7"
+    ],
+    "denominator_metadata": {
+      "scenarios": 47,
+      "positive": 1,
+      "negative": 46,
+      "aggregate_false_positives": 38
+    }
+  },
+  {
+    "claim_id": "SCR-012",
+    "claim_class": "CONDITIONAL_SYNTHETIC_RESULT",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004"
+        }
+      }
+    ],
+    "manuscript_section": [
+      "S7",
+      "S11"
+    ],
+    "denominator_metadata": {
+      "scenarios": 49,
+      "positive": 11,
+      "negative": 38,
+      "aggregate_false_positives": 38
+    }
+  },
+  {
+    "claim_id": "SCR-013",
+    "claim_class": "CONDITIONAL_SYNTHETIC_RESULT",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_005"
+        }
+      }
+    ],
+    "manuscript_section": [
+      "S7"
+    ],
+    "denominator_metadata": {
+      "scenarios": 34,
+      "positive": 0,
+      "negative": 34,
+      "aggregate_false_positives": 38
+    }
+  },
+  {
+    "claim_id": "SCR-014",
+    "claim_class": "LIMITATION",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fold_metric_dispersion"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "fields": [
+          "held_out_template",
+          "n_test",
+          "n_test_failures"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S7",
+      "S10",
+      "S11"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "SCR-015",
+    "claim_class": "LIMITATION",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "protocol"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S1",
+      "S3",
+      "S10",
+      "S11"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "SCR-016",
+    "claim_class": "LIMITATION",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "data/synthetic/operators.csv"
+      }
+    ],
+    "manuscript_section": [
+      "S3",
+      "S5"
+    ],
+    "denominator_metadata": {
+      "templates": 5
+    }
+  },
+  {
+    "claim_id": "SCR-017",
+    "claim_class": "LIMITATION",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "protocol"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S6",
+      "S10",
+      "S11"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "BAY-001",
+    "claim_class": "EXCLUDED_METHOD",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "results/v3/bayesian_validation/admission_decision.json"
+      }
+    ],
+    "manuscript_section": [
+      "S9",
+      "S10"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "BAY-002",
+    "claim_class": "EXCLUDED_METHOD",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/bayesian_validation/data_provenance.json"
+      }
+    ],
+    "manuscript_section": [
+      "S9"
+    ],
+    "denominator_metadata": {
+      "stipulated_rows": 10
+    }
+  },
+  {
+    "claim_id": "BAY-003",
+    "claim_class": "EXCLUDED_METHOD",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/bayesian_validation/recovery_summary.json"
+      },
+      {
+        "artifact": "results/v3/bayesian_validation/prior_sensitivity.json",
+        "keys": [
+          "parameter_comparison"
+        ]
+      },
+      {
+        "artifact": "results/v3/bayesian_validation/prior_sensitivity.json",
+        "keys": [
+          "material_prior_sensitivity"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S9"
+    ],
+    "denominator_metadata": {
+      "recovery_runs": 18,
+      "parameter_evaluations": 180,
+      "prior_fits": 2
+    }
+  },
+  {
+    "claim_id": "OPT-001",
+    "claim_class": "EXCLUDED_METHOD",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "results/v3/optimization_validation/admission_decision.json"
+      },
+      {
+        "artifact": "results/v3/result_validation/optimization.json",
+        "keys": [
+          "notes"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S8",
+      "S10"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "OPT-002",
+    "claim_class": "LIMITATION",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "results/v3/optimization_validation/economic_audit.json"
+      }
+    ],
+    "manuscript_section": [
+      "S8"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "OPT-003",
+    "claim_class": "CONDITIONAL_SYNTHETIC_RESULT",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S8"
+    ],
+    "denominator_metadata": {
+      "scenarios_per_policy": 500,
+      "unique_scenarios": 500
+    }
+  },
+  {
+    "claim_id": "OPT-004",
+    "claim_class": "DESCRIPTIVE_DIAGNOSTIC",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "fields": [
+          "held_out_template",
+          "selected_debt_multiple",
+          "selected_amortisation_rate",
+          "selected_cash_sweep",
+          "train_objective",
+          "train_reference_n_scenarios",
+          "test_optimized_n_scenarios"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S8"
+    ],
+    "denominator_metadata": {
+      "folds": 5,
+      "training_scenarios_per_fold": 400,
+      "heldout_scenarios_per_fold": 100
+    }
+  },
+  {
+    "claim_id": "OPT-005",
+    "claim_class": "DESCRIPTIVE_DIAGNOSTIC",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/debt_boundary_summary.json"
+      },
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/debt_boundary_profile.csv",
+        "fields": [
+          "held_out_template",
+          "debt_multiple",
+          "feasible_candidate_exists",
+          "best_feasible_median_annualized_return"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S8"
+    ],
+    "denominator_metadata": {
+      "folds": 5
+    }
+  },
+  {
+    "claim_id": "OPT-006",
+    "claim_class": "DESCRIPTIVE_DIAGNOSTIC",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/optimization_validation/admission_decision.json",
+        "keys": [
+          "rate_sensitivity_changed_policy_folds"
+        ]
+      },
+      {
+        "artifact": "results/v3/optimization_validation/admission_decision.json",
+        "keys": [
+          "material_rate_sensitivity"
+        ]
+      },
+      {
+        "artifact": "results/v3/optimization_validation/rate_sensitivity.csv"
+      }
+    ],
+    "manuscript_section": [
+      "S8"
+    ],
+    "denominator_metadata": {
+      "folds": 5,
+      "heldout_scenarios_per_fold": 100,
+      "training_scenarios_per_fold": 400
+    }
+  },
+  {
+    "claim_id": "OPT-007",
+    "claim_class": "LIMITATION",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "results/v3/optimization_validation/economic_audit.json",
+        "keys": [
+          "remaining_economic_limitations"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S8",
+      "S10"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "OPT-008",
+    "claim_class": "VERIFIED_MECHANICAL",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/optimization_validation/toy_validation.json"
+      },
+      {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "sanity_checks"
+        ]
+      },
+      {
+        "artifact": "results/v3/optimization_validation/verification.json",
+        "keys": [
+          "validated_simulation_paths"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S8"
+    ],
+    "denominator_metadata": {
+      "validated_paths": 113000
+    }
+  },
+  {
+    "claim_id": "OPT-009",
+    "claim_class": "DESCRIPTIVE_DIAGNOSTIC",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/optimization_code_coverage.json",
+        "keys": [
+          "statement_coverage"
+        ]
+      },
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/optimization_code_coverage.json",
+        "keys": [
+          "branch_coverage"
+        ]
+      },
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\optimization\\financing_policy.py",
+          "summary"
+        ]
+      },
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\run_v3_optimization.py",
+          "summary"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S12"
+    ],
+    "denominator_metadata": {
+      "kernel_statements": 53,
+      "kernel_branches": 20,
+      "runner_statements": 182,
+      "runner_branches": 40
+    }
+  },
+  {
+    "claim_id": "HET-001",
+    "claim_class": "INTERPRETIVE_SYNTHESIS",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/cross_stage_template004.json"
+      },
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv"
+      }
+    ],
+    "manuscript_section": [
+      "S7",
+      "S11"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "HET-002",
+    "claim_class": "DESCRIPTIVE_DIAGNOSTIC",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/diagnostic_summary.json",
+        "keys": [
+          "template004_regime_breakdown",
+          "unique_regime_counts"
+        ]
+      },
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/diagnostic_summary.json",
+        "keys": [
+          "template004_regime_breakdown",
+          "intended_probabilities"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S7"
+    ],
+    "denominator_metadata": {
+      "unique_scenarios": 100
+    }
+  },
+  {
+    "claim_id": "HET-003",
+    "claim_class": "DESCRIPTIVE_DIAGNOSTIC",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "base"
+        }
+      }
+    ],
+    "manuscript_section": [
+      "S12"
+    ],
+    "denominator_metadata": {
+      "n": 48,
+      "counts": {
+        "broad_failure": 0,
+        "payment_default": 0,
+        "insolvency": 0,
+        "covenant_breach": 0,
+        "total_equity_loss": 0
+      }
+    }
+  },
+  {
+    "claim_id": "HET-004",
+    "claim_class": "DESCRIPTIVE_DIAGNOSTIC",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "downside"
+        }
+      }
+    ],
+    "manuscript_section": [
+      "S12"
+    ],
+    "denominator_metadata": {
+      "n": 31,
+      "counts": {
+        "broad_failure": 0,
+        "payment_default": 0,
+        "insolvency": 0,
+        "covenant_breach": 0,
+        "total_equity_loss": 0
+      }
+    }
+  },
+  {
+    "claim_id": "HET-005",
+    "claim_class": "DESCRIPTIVE_DIAGNOSTIC",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "optimized",
+          "scenario_type": "distressed"
+        }
+      }
+    ],
+    "manuscript_section": [
+      "S12"
+    ],
+    "denominator_metadata": {
+      "n": 21,
+      "counts": {
+        "broad_failure": 7,
+        "payment_default": 3,
+        "insolvency": 6,
+        "covenant_breach": 7,
+        "total_equity_loss": 1
+      }
+    }
+  },
+  {
+    "claim_id": "HET-006",
+    "claim_class": "DESCRIPTIVE_DIAGNOSTIC",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "base"
+        }
+      }
+    ],
+    "manuscript_section": [
+      "S12"
+    ],
+    "denominator_metadata": {
+      "n": 48,
+      "counts": {
+        "broad_failure": 1,
+        "payment_default": 1,
+        "insolvency": 1,
+        "covenant_breach": 1,
+        "total_equity_loss": 0
+      }
+    }
+  },
+  {
+    "claim_id": "HET-007",
+    "claim_class": "DESCRIPTIVE_DIAGNOSTIC",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "downside"
+        }
+      }
+    ],
+    "manuscript_section": [
+      "S12"
+    ],
+    "denominator_metadata": {
+      "n": 31,
+      "counts": {
+        "broad_failure": 9,
+        "payment_default": 7,
+        "insolvency": 9,
+        "covenant_breach": 3,
+        "total_equity_loss": 1
+      }
+    }
+  },
+  {
+    "claim_id": "HET-008",
+    "claim_class": "DESCRIPTIVE_DIAGNOSTIC",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "distressed"
+        }
+      }
+    ],
+    "manuscript_section": [
+      "S12"
+    ],
+    "denominator_metadata": {
+      "n": 21,
+      "counts": {
+        "broad_failure": 18,
+        "payment_default": 16,
+        "insolvency": 18,
+        "covenant_breach": 14,
+        "total_equity_loss": 7
+      }
+    }
+  },
+  {
+    "claim_id": "HET-009",
+    "claim_class": "DESCRIPTIVE_DIAGNOSTIC",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "evaluation_policy": "optimized"
+        }
+      }
+    ],
+    "manuscript_section": [
+      "S7",
+      "S12"
+    ],
+    "denominator_metadata": {
+      "by_template_base_downside_distressed": {
+        "001": [
+          41,
+          41,
+          18
+        ],
+        "002": [
+          62,
+          24,
+          14
+        ],
+        "003": [
+          55,
+          29,
+          16
+        ],
+        "004": [
+          48,
+          31,
+          21
+        ],
+        "005": [
+          42,
+          42,
+          16
+        ]
+      }
+    }
+  },
+  {
+    "claim_id": "HET-010",
+    "claim_class": "DESCRIPTIVE_DIAGNOSTIC",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_structural_profile.json",
+        "keys": [
+          "all_templates"
+        ]
+      },
+      {
+        "artifact": "data/synthetic/operators.csv",
+        "fields": [
+          "operator_id",
+          "cash_0",
+          "ebitda_0",
+          "financial_debt_0"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S7"
+    ],
+    "denominator_metadata": {
+      "templates": 5
+    }
+  },
+  {
+    "claim_id": "LIM-001",
+    "claim_class": "VERIFIED_MECHANICAL",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/optimization_validation/frozen_protocol.json",
+        "keys": [
+          "limited_liability"
+        ]
+      },
+      {
+        "artifact": "results/v3/optimization_validation/frozen_protocol.json",
+        "keys": [
+          "years"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S8"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "LIM-002",
+    "claim_class": "VERIFIED_MECHANICAL",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv",
+        "where": {
+          "evaluation_policy": "reference",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "scenario_count",
+          "p10_annualized_return",
+          "total_equity_loss_rate"
+        ]
+      },
+      {
+        "artifact": "results/v3/optimization_validation/heldout_results.csv",
+        "where": {
+          "held_out_template": "SYN_HOTEL_004",
+          "evaluation_policy": "reference",
+          "scenario_type": "distressed"
+        },
+        "fields": [
+          "scenario_id",
+          "raw_exit_equity",
+          "sponsor_exit_proceeds",
+          "sponsor_moic",
+          "sponsor_annualized_return",
+          "total_equity_loss"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S12"
+    ],
+    "denominator_metadata": {
+      "n": 21,
+      "zero_recovery": 7
+    }
+  },
+  {
+    "claim_id": "REP-002",
+    "claim_class": "LIMITATION",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [
+      "S10"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "NEG-001",
+    "claim_class": "LIMITATION",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [
+      "S10"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "OPT-010",
+    "claim_class": "CONDITIONAL_SYNTHETIC_RESULT",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "results/v3/optimization_validation/frozen_protocol.json"
+      },
+      {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv"
+      }
+    ],
+    "manuscript_section": [
+      "S8"
+    ],
+    "denominator_metadata": {
+      "templates": 5,
+      "heldout_scenarios_per_policy_per_fold": 100,
+      "training_scenarios_per_fold": 400
+    }
+  },
+  {
+    "claim_id": "SCR-018",
+    "claim_class": "VERIFIED_MECHANICAL",
+    "manuscript_eligible": true,
+    "quantitative": true,
+    "evidence": [
+      {
+        "artifact": "analysis/run_benchmark.py",
+        "lines": [
+          340,
+          368
+        ]
+      },
+      {
+        "artifact": "results/v3/baseline/reproduced_manifest.json",
+        "keys": [
+          "horizon_years"
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S3"
+    ],
+    "denominator_metadata": {
+      "observations_per_scenario": 5
+    }
+  },
+  {
+    "claim_id": "SCR-019",
+    "claim_class": "LIMITATION",
+    "manuscript_eligible": true,
+    "quantitative": false,
+    "evidence": [
+      {
+        "artifact": "analysis/run_benchmark.py",
+        "lines": [
+          220,
+          310
+        ]
+      }
+    ],
+    "manuscript_section": [
+      "S3"
+    ],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-001",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-002",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-003",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-004",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-005",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-006",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-007",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-008",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-009",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-010",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-011",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-012",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-013",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-014",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-015",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-016",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-017",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-018",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-019",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-020",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-021",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-022",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-023",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-024",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-025",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-026",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-027",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-028",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-029",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-030",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-031",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-032",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-033",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-034",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-035",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-036",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-037",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-038",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-039",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-040",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-041",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-042",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-043",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-044",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-045",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-046",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-047",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-048",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-049",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  },
+  {
+    "claim_id": "PROH-050",
+    "claim_class": "PROHIBITED_CLAIM",
+    "manuscript_eligible": false,
+    "quantitative": false,
+    "evidence": [],
+    "manuscript_section": [],
+    "denominator_metadata": null
+  }
+]

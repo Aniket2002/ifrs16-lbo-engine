@@ -1,0 +1,58 @@
+{
+  "source_commit": "0f521a28150fe56f98cdabb3d1cb3664286df124",
+  "status": "completed; prior coverage contradiction repaired in Task A; no further material numerical contradiction found in audited claims",
+  "repaired_contradiction": {
+    "commit": "0f521a28150fe56f98cdabb3d1cb3664286df124",
+    "document": "docs/V3_POST_OPTIMIZATION_DIAGNOSTICS.md",
+    "kernel_statements": "47/53 = 88.67924528301887%",
+    "runner_statements": "109/182 = 59.89010989010989%",
+    "runner_branches": "22/40 = 55%"
+  },
+  "documentation_reviewed": [
+    "docs/V3_TEMPLATE_EVALUATION.md",
+    "docs/V3_BAYESIAN_VALIDATION.md",
+    "docs/V3_OPTIMIZATION_VALIDATION.md",
+    "docs/V3_OPTIMIZATION_VALIDATION_PROTOCOL.md",
+    "docs/V3_POST_OPTIMIZATION_DIAGNOSTICS.md",
+    "docs/V3_VALIDATION_GAPS.md",
+    "paper/ifrs16_lbo_ssrn_v2.tex",
+    "paper/REVISION_AUDIT.md"
+  ],
+  "audit_checks": [
+    "Screening raw confusion counts agree with selected/fixed summaries.",
+    "All requested Template 004 distressed subtype counts verified against frozen heldout_results.csv.",
+    "Reference distressed sorted annualized return at zero-based index 2 is -1, confirming n=21 linear P10 on seven zero-recovery observations.",
+    "Each Template 004 regime rate matches raw subtype count divided by cell n.",
+    "Reviewed baseline reports exact financial/statistical reproduction, excluding recorded provenance/timing fields.",
+    "Bayes recovery and prior-sensitivity diagnostics agree with classification C.",
+    "Optimization aggregate, selections, boundary and registry evidence retain classification B.",
+    "Coverage count-derived statement/branch percentages agree with corrected prose."
+  ],
+  "interpretive_resolutions": [
+    "Historical stage-end instructions to run later protocols are superseded by this no-experiments freeze request.",
+    "The result registry manuscript_eligibility=false is retained: methodological appendix discussion is not substantive result admission.",
+    "Lower cash cushion wording is limited to absolute cash; Template 004 does not have the lowest cash/EBITDA.",
+    "The Bayesian prose minimum bulk ESS is rounded to 391.5; ledger retains 391.48627301744915 and does not repeat the literal exceeded-391.5 wording.",
+    "Early stage coverage/test counts are stage-specific archived verification, not newly executed checks."
+  ],
+  "v2_disposition": {
+    "retained": [
+      "synthetic benchmark inputs",
+      "fixed screening score",
+      "reviewed engine mechanics",
+      "pooled ranking point estimate"
+    ],
+    "qualified": [
+      "fixed threshold result replaced by selected/fixed comparison",
+      "conditional synthetic performance, not borrower generalization"
+    ],
+    "omitted_from_v3_results": [
+      "scenario-bootstrap AUC interval",
+      "cross-model RMSE and timing results",
+      "Accor accounting illustration",
+      "conditional theoretical bounds without validated benchmark budgets"
+    ],
+    "prohibited": "All historical unsupported families in prohibited_claims.json"
+  },
+  "new_experiments": false
+}

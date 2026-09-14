@@ -1,0 +1,352 @@
+[
+  {
+    "claim_id": "PROH-001",
+    "prohibited_wording": "AUC 0.76 [0.71, 0.81]",
+    "replacement_wording": "Use SCR-004; no protocol-equivalence claim.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-002",
+    "prohibited_wording": "RMSE 0.28 versus 0.52",
+    "replacement_wording": "No admitted comparator improvement.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-003",
+    "prohibited_wording": "46% RMSE reduction",
+    "replacement_wording": "No current paired comparator.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-004",
+    "prohibited_wording": "+3.4 percentage-point IRR uplift",
+    "replacement_wording": "OPT-003 only as B/methodological.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-005",
+    "prohibited_wording": "Bayesian inputs are empirically validated",
+    "replacement_wording": "BAY-001 through BAY-003.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-006",
+    "prohibited_wording": "Posterior-driven LBO results",
+    "replacement_wording": "No posterior integration was performed.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-007",
+    "prohibited_wording": "Screening score is calibrated PD",
+    "replacement_wording": "SCR-015.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-008",
+    "prohibited_wording": "Pooled/held-out AUC equality independently validates generalization",
+    "replacement_wording": "SCR-005.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-009",
+    "prohibited_wording": "Synthetic scenarios establish real hotel covenant breaches",
+    "replacement_wording": "Synthetic broad failure only.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-010",
+    "prohibited_wording": "Accor reconstruction is audited transaction evidence",
+    "replacement_wording": "Accor reconstruction is omitted; no such provenance.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-011",
+    "prohibited_wording": "1.50x debt is economically optimal",
+    "replacement_wording": "OPT-004 and OPT-005.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-012",
+    "prohibited_wording": "Financing experiment is empirically calibrated",
+    "replacement_wording": "OPT-001 and OPT-007.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-013",
+    "prohibited_wording": "Template 004 provides external validation or independent replication",
+    "replacement_wording": "HET-001 within-system convergence only.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-014",
+    "prohibited_wording": "Structural heterogeneity is causally identified",
+    "replacement_wording": "HET-001 descriptive consistency only.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-015",
+    "prohibited_wording": "Threshold instability is established for real borrowers",
+    "replacement_wording": "SCR-001 conditional synthetic thesis.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-016",
+    "prohibited_wording": "Subgroup/regime/fold percentages without n",
+    "replacement_wording": "REP-002.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-017",
+    "prohibited_wording": "-100% sponsor return is a bound on raw equity, unconstrained IRR, or solver failure",
+    "replacement_wording": "LIM-001 and LIM-002.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-018",
+    "prohibited_wording": "84% statement coverage for financing_policy",
+    "replacement_wording": "88.68% = 47/53; OPT-009.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-019",
+    "prohibited_wording": "59% statement coverage for runner",
+    "replacement_wording": "59.89% = 109/182; OPT-009.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-020",
+    "prohibited_wording": "85% branch coverage for runner",
+    "replacement_wording": "55.0% = 22/40; OPT-009.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-021",
+    "prohibited_wording": "Exclusion proves Bayes intrinsically invalid",
+    "replacement_wording": "Only this experiment fails admission.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-022",
+    "prohibited_wording": "Theoretical model or deterministic error bounds validated by current benchmark",
+    "replacement_wording": "No benchmark error-budget certification admitted; conditional mathematical discussion is omitted.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-023",
+    "prohibited_wording": "+0.18 AUC and [0.12,0.24] interval",
+    "replacement_wording": "No current comparator.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-024",
+    "prohibited_wording": "Delta RMSE -0.24 and [-0.31,-0.17] interval",
+    "replacement_wording": "No current paired comparator.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-025",
+    "prohibited_wording": "19.6% expected IRR and [18.2,21.1] interval",
+    "replacement_wording": "No historical return estimate admitted.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-026",
+    "prohibited_wording": "Traditional AUC .58, RMSE .52, IRR 16.2% or intervals",
+    "replacement_wording": "No executed current comparator.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-027",
+    "prohibited_wording": "Naive AUC .64, RMSE .45, IRR 17.1% or intervals",
+    "replacement_wording": "No executed current comparator.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-028",
+    "prohibited_wording": "Bayesian AUC .72, RMSE .34, IRR 18.4% or intervals",
+    "replacement_wording": "Bayesian experiment excluded.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-029",
+    "prohibited_wording": "Ten operators with fifty scenarios each for screening",
+    "replacement_wording": "SCR-003; separate financing sample must not be conflated.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-030",
+    "prohibited_wording": "Twenty quarterly observations in current benchmark",
+    "replacement_wording": "Five annual observations per screening scenario.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-031",
+    "prohibited_wording": "Historical geographic borrower sample and $1.2-4.8B scale",
+    "replacement_wording": "Stipulated synthetic archetypes only.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-032",
+    "prohibited_wording": "2,000 stratified operator-clustered bootstrap samples",
+    "replacement_wording": "SCR-014 descriptive fold dispersion.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-033",
+    "prohibited_wording": "BCa checks agree within 0.01 AUC",
+    "replacement_wording": "No such current verification.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-034",
+    "prohibited_wording": "Clustered RMSE confidence intervals",
+    "replacement_wording": "No admitted current intervals.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-035",
+    "prohibited_wording": "70/30 split or held-out quarterly evaluation",
+    "replacement_wording": "Training-only leave-one-template-out thresholds.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-036",
+    "prohibited_wording": "Five-fold within-operator cross-validation",
+    "replacement_wording": "Leave-one-template-out evaluation, not historical CV.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-037",
+    "prohibited_wording": "Aggregate screening metrics equally weight templates",
+    "replacement_wording": "Rows weighted equally; template counts differ.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-038",
+    "prohibited_wording": "p < 0.001 clustered permutation result",
+    "replacement_wording": "No significance claim.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-039",
+    "prohibited_wording": "Historical time-point/scenario certification, false non-certification, bound utilization or excess-conservatism percentages",
+    "replacement_wording": "No current certification experiment.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-040",
+    "prohibited_wording": "Historical ICR .089/.120 or leverage .112/.143 as proved benchmark bounds",
+    "replacement_wording": "No validated matched-model error budget.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-041",
+    "prohibited_wording": "Median less than 3% relative error",
+    "replacement_wording": "No retained result.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-042",
+    "prohibited_wording": "Posterior frontiers or 80%/95% credible financing bands",
+    "replacement_wording": "No posterior integration.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-043",
+    "prohibited_wording": "Quarterly/annual, cure, hedge or floor sensitivity return/breach/RMSE tables",
+    "replacement_wording": "Not current experiments; OPT-006 is fixed-term-rate sensitivity only.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-044",
+    "prohibited_wording": "V2 breach composition measures optimized versus baseline financing",
+    "replacement_wording": "V2 flags describe synthetic failure composition.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-045",
+    "prohibited_wording": "Failure caused above historical volatility/leverage/lease thresholds",
+    "replacement_wording": "No causal threshold experiment.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-046",
+    "prohibited_wording": "Bayesian data-informed priors generated screening benchmark",
+    "replacement_wording": "Fixed synthetic generator; no Bayesian integration.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-047",
+    "prohibited_wording": "Cross-model differences measure only analytic approximation error",
+    "replacement_wording": "Structural, timing and input/convention differences also contribute; omitted from v3 results.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-048",
+    "prohibited_wording": "V2 scenario-bootstrap interval is v3 template-transfer uncertainty",
+    "replacement_wording": "Descriptive fold dispersion; no manufactured interval.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-049",
+    "prohibited_wording": "Debt objective decreases below 1.50x or across infeasible levels",
+    "replacement_wording": "Feasible observed levels only; OPT-005.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  },
+  {
+    "claim_id": "PROH-050",
+    "prohibited_wording": "Coverage alone validates the optimizer",
+    "replacement_wording": "Independent toy, targeted checks and runtime evidence; OPT-008/009.",
+    "manuscript_eligible": false,
+    "source": "paper/REVISION_AUDIT.md; paper/ifrs16_lbo_ssrn_v2.tex; frozen v3 admission/protocol record; user freeze rules"
+  }
+]

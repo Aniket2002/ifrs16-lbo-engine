@@ -1,0 +1,199 @@
+# V3 figure specifications
+
+No figures generated. Only later rendering of frozen evidence is permitted; no new estimation, smoothing, confidence intervals or experiments.
+
+```json
+[
+  {
+    "figure_id": "F1",
+    "conceptual_purpose": "Three distinct validation layers",
+    "exact_data_source": [],
+    "variables": [],
+    "transformations": "Conceptual diagram: engine correctness, ranking performance, decision usefulness; label each non-implication.",
+    "main_text_or_appendix": "main",
+    "claim_ids": [
+      "SCR-001",
+      "SCR-002",
+      "ENG-001"
+    ],
+    "caption_restrictions": "No numerical axis; passing a layer does not establish the next. This is a conceptual synthesis, not causal identification."
+  },
+  {
+    "figure_id": "F2",
+    "conceptual_purpose": "Fixed-score ranking ROC and precision-recall",
+    "exact_data_source": [
+      {
+        "artifact": "results/v3/template_evaluation/heldout_predictions.csv",
+        "fields": [
+          "scenario_id",
+          "analytic_risk_score",
+          "true_failure"
+        ]
+      }
+    ],
+    "variables": [
+      [
+        "scenario_id",
+        "analytic_risk_score",
+        "true_failure"
+      ]
+    ],
+    "transformations": "Future rendering only: sort frozen scores, group ties, construct empirical ROC/PR; annotate frozen AUC and AP; no fitted curve, bootstrap or new interval.",
+    "main_text_or_appendix": "main",
+    "claim_ids": [
+      "SCR-003",
+      "SCR-004",
+      "SCR-005"
+    ],
+    "caption_restrictions": "200 rows, 20 failures; pooled AUC equality is not independent validation. PR annotation uses AP, not trapezoidal area."
+  },
+  {
+    "figure_id": "F3",
+    "conceptual_purpose": "Threshold-transfer performance and false-positive concentration",
+    "exact_data_source": [
+      {
+        "artifact": "results/v3/template_evaluation/fold_results.csv",
+        "fields": [
+          "held_out_template",
+          "n_test",
+          "n_test_failures",
+          "selected_threshold",
+          "test_tp",
+          "test_fp",
+          "test_tn",
+          "test_fn",
+          "test_balanced_accuracy",
+          "fixed_0_5_balanced_accuracy"
+        ]
+      }
+    ],
+    "variables": [
+      [
+        "held_out_template",
+        "n_test",
+        "n_test_failures",
+        "selected_threshold",
+        "test_tp",
+        "test_fp",
+        "test_tn",
+        "test_fn",
+        "test_balanced_accuracy",
+        "fixed_0_5_balanced_accuracy"
+      ]
+    ],
+    "transformations": "Panels for selected/fixed BA and confusion counts; annotate selected thresholds. False-positive panel highlights 37/38 from Template 004.",
+    "main_text_or_appendix": "main",
+    "claim_ids": [
+      "SCR-009",
+      "SCR-010",
+      "SCR-011",
+      "SCR-012",
+      "SCR-013"
+    ],
+    "caption_restrictions": "Display class counts and undefined Template 005 BA; no equal-weight/pooled confusion. Combine false-positive concentration here to avoid a redundant standalone figure."
+  },
+  {
+    "figure_id": "A-F1",
+    "conceptual_purpose": "Score distributions by template and failure status",
+    "exact_data_source": [
+      {
+        "artifact": "results/v3/template_evaluation/heldout_predictions.csv",
+        "fields": [
+          "operator_id",
+          "scenario_id",
+          "analytic_risk_score",
+          "true_failure",
+          "fold_selected_threshold"
+        ]
+      }
+    ],
+    "variables": [
+      [
+        "operator_id",
+        "scenario_id",
+        "analytic_risk_score",
+        "true_failure",
+        "fold_selected_threshold"
+      ]
+    ],
+    "transformations": "Plot raw points by template and binary label with transferred threshold; no density smoothing or inferred probability calibration.",
+    "main_text_or_appendix": "appendix",
+    "claim_ids": [
+      "SCR-004",
+      "SCR-009",
+      "SCR-010",
+      "SCR-011",
+      "SCR-012",
+      "SCR-013"
+    ],
+    "caption_restrictions": "Show per-template positive/negative counts; one positive can give perfect ranking without useful threshold transfer."
+  },
+  {
+    "figure_id": "A-F2",
+    "conceptual_purpose": "Feasible observed debt-objective boundary",
+    "exact_data_source": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/debt_boundary_profile.csv",
+        "fields": [
+          "held_out_template",
+          "debt_multiple",
+          "feasible_candidate_exists",
+          "best_feasible_median_annualized_return"
+        ]
+      }
+    ],
+    "variables": [
+      [
+        "held_out_template",
+        "debt_multiple",
+        "feasible_candidate_exists",
+        "best_feasible_median_annualized_return"
+      ]
+    ],
+    "transformations": "Plot feasible observed levels only, return fractions to percent. Mark infeasible levels as missing; no extrapolation or interpolation through them.",
+    "main_text_or_appendix": "appendix",
+    "claim_ids": [
+      "OPT-004",
+      "OPT-005"
+    ],
+    "caption_restrictions": "Classification B/methodological; 400 training scenarios per fold; no curve below 1.50x and no economic optimum claim."
+  },
+  {
+    "figure_id": "A-F3",
+    "conceptual_purpose": "Within-regime Template 004 comparison",
+    "exact_data_source": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "evaluation_policy": "optimized"
+        },
+        "fields": [
+          "held_out_template",
+          "scenario_type",
+          "scenario_count",
+          "median_annualized_return",
+          "broad_failure_rate",
+          "payment_default_rate"
+        ]
+      }
+    ],
+    "variables": [
+      [
+        "held_out_template",
+        "scenario_type",
+        "scenario_count",
+        "median_annualized_return",
+        "broad_failure_rate",
+        "payment_default_rate"
+      ]
+    ],
+    "transformations": "Plot archived median annualized returns by template within regime; annotate n and optionally archived risk counts.",
+    "main_text_or_appendix": "appendix",
+    "claim_ids": [
+      "HET-001",
+      "HET-009"
+    ],
+    "caption_restrictions": "Same synthetic system, B/methodological, descriptive; not replication or causality; n mandatory, including distressed n=21; no precision bars."
+  }
+]
+```

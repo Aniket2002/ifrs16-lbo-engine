@@ -1,0 +1,373 @@
+[
+  {
+    "table_id": "T1",
+    "title": "Stipulated synthetic archetype definitions",
+    "main_text_or_appendix": "main",
+    "source_artifact": [
+      "data/synthetic/operators.csv"
+    ],
+    "source_fields_or_rows": [
+      {
+        "artifact": "data/synthetic/operators.csv"
+      }
+    ],
+    "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+    "rounding": {
+      "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+      "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+      "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+      "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+      "multiples": "2 decimals",
+      "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+      "counts": "integers; zero denominator is undefined, never zero",
+      "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+      "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+    },
+    "notes_denominators": "Five archetypes; retain input units and distinguish stipulated policy fractions from observed rates. All CSV columns are input metadata; seed is provenance.",
+    "claim_ids": [
+      "SCR-016",
+      "HET-010"
+    ]
+  },
+  {
+    "table_id": "T2",
+    "title": "Financial-engine validation evidence",
+    "main_text_or_appendix": "main",
+    "source_artifact": [
+      "results/v3/foundation_validation.json"
+    ],
+    "source_fields_or_rows": [
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "independent_return_check"
+        ]
+      },
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "independent_debt_schedule",
+          "exact_match"
+        ]
+      },
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "runtime_validation"
+        ]
+      },
+      {
+        "artifact": "results/v3/foundation_validation.json",
+        "keys": [
+          "adversarial_corruptions_detected"
+        ]
+      }
+    ],
+    "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+    "rounding": {
+      "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+      "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+      "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+      "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+      "multiples": "2 decimals",
+      "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+      "counts": "integers; zero denominator is undefined, never zero",
+      "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+      "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+    },
+    "notes_denominators": "200 paths, 1,000 scenario-years; tested-scope statement mandatory. Counts and checks, not blanket validity.",
+    "claim_ids": [
+      "ENG-001",
+      "ENG-002",
+      "ENG-003"
+    ]
+  },
+  {
+    "table_id": "T3",
+    "title": "Aggregate threshold-transfer trade-off",
+    "main_text_or_appendix": "main",
+    "source_artifact": [
+      "results/v3/template_evaluation/summary.json"
+    ],
+    "source_fields_or_rows": [
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "selected_threshold"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "fixed_0_5"
+        ]
+      },
+      {
+        "artifact": "results/v3/template_evaluation/summary.json",
+        "keys": [
+          "ranking"
+        ]
+      }
+    ],
+    "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+    "rounding": {
+      "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+      "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+      "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+      "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+      "multiples": "2 decimals",
+      "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+      "counts": "integers; zero denominator is undefined, never zero",
+      "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+      "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+    },
+    "notes_denominators": "200 rows; 20 positive/180 negative; precision denominators 53 selected/3 fixed. AUC equality is mechanical. AP definition in note.",
+    "claim_ids": [
+      "SCR-004",
+      "SCR-005",
+      "SCR-006",
+      "SCR-007"
+    ]
+  },
+  {
+    "table_id": "T4",
+    "title": "Held-out template ranking and threshold heterogeneity",
+    "main_text_or_appendix": "main",
+    "source_artifact": [
+      "results/v3/template_evaluation/fold_results.csv"
+    ],
+    "source_fields_or_rows": [
+      {
+        "artifact": "results/v3/template_evaluation/fold_results.csv"
+      }
+    ],
+    "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+    "rounding": {
+      "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+      "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+      "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+      "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+      "multiples": "2 decimals",
+      "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+      "counts": "integers; zero denominator is undefined, never zero",
+      "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+      "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+    },
+    "notes_denominators": "All five rows; n_test/n_test_failures and nonfailures adjacent to every rate; training n and failures shown with train BA. Nulls displayed as undefined; no ranking claim for Template 005.",
+    "claim_ids": [
+      "SCR-009",
+      "SCR-010",
+      "SCR-011",
+      "SCR-012",
+      "SCR-013",
+      "SCR-014"
+    ]
+  },
+  {
+    "table_id": "T5",
+    "title": "Synthetic financing-design demonstration (classification B)",
+    "main_text_or_appendix": "appendix",
+    "source_artifact": [
+      "results/v3/optimization_validation/fold_selection.csv",
+      "results/v3/optimization_validation/summary.json"
+    ],
+    "source_fields_or_rows": [
+      {
+        "artifact": "results/v3/optimization_validation/summary.json",
+        "keys": [
+          "primary_aggregate_heldout"
+        ]
+      },
+      {
+        "artifact": "results/v3/optimization_validation/fold_selection.csv",
+        "fields": [
+          "held_out_template",
+          "selected_debt_multiple",
+          "selected_amortisation_rate",
+          "selected_cash_sweep",
+          "test_optimized_n_scenarios",
+          "test_optimized_median_annualized_return",
+          "test_reference_n_scenarios",
+          "test_reference_median_annualized_return",
+          "test_optimized_broad_failure_rate",
+          "test_reference_broad_failure_rate",
+          "test_optimized_payment_default_rate",
+          "test_reference_payment_default_rate"
+        ]
+      }
+    ],
+    "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+    "rounding": {
+      "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+      "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+      "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+      "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+      "multiples": "2 decimals",
+      "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+      "counts": "integers; zero denominator is undefined, never zero",
+      "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+      "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+    },
+    "notes_denominators": "500 unique paired scenarios, not 1,000 independent scenarios; 100 per held-out template; label B prominently. Methodological only.",
+    "claim_ids": [
+      "OPT-001",
+      "OPT-003",
+      "OPT-004",
+      "OPT-010"
+    ]
+  },
+  {
+    "table_id": "A1",
+    "title": "Bayesian exclusion diagnostics (classification C)",
+    "main_text_or_appendix": "appendix",
+    "source_artifact": [
+      "results/v3/bayesian_validation/admission_decision.json",
+      "results/v3/bayesian_validation/data_provenance.json",
+      "results/v3/bayesian_validation/prior_sensitivity.json",
+      "results/v3/bayesian_validation/recovery_summary.json"
+    ],
+    "source_fields_or_rows": [
+      {
+        "artifact": "results/v3/bayesian_validation/admission_decision.json"
+      },
+      {
+        "artifact": "results/v3/bayesian_validation/recovery_summary.json"
+      },
+      {
+        "artifact": "results/v3/bayesian_validation/prior_sensitivity.json",
+        "keys": [
+          "parameter_comparison"
+        ]
+      },
+      {
+        "artifact": "results/v3/bayesian_validation/prior_sensitivity.json",
+        "keys": [
+          "material_prior_sensitivity"
+        ]
+      },
+      {
+        "artifact": "results/v3/bayesian_validation/data_provenance.json",
+        "keys": [
+          "classification"
+        ]
+      }
+    ],
+    "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+    "rounding": {
+      "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+      "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+      "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+      "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+      "multiples": "2 decimals",
+      "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+      "counts": "integers; zero denominator is undefined, never zero",
+      "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+      "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+    },
+    "notes_denominators": "18 recovery runs/180 parameter evaluations, not 180 independent datasets; prior sensitivity on ten stipulated rows. Report failed gates beside recovery summaries; exclusion only.",
+    "claim_ids": [
+      "BAY-001",
+      "BAY-002",
+      "BAY-003"
+    ]
+  },
+  {
+    "table_id": "A2",
+    "title": "Template 004 regime-conditioned outcomes and within-regime comparison",
+    "main_text_or_appendix": "appendix",
+    "source_artifact": [
+      "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+      "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv"
+    ],
+    "source_fields_or_rows": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/template004_regime_breakdown.csv"
+      },
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/regime_conditioned_template_comparison.csv",
+        "where": {
+          "evaluation_policy": "optimized"
+        }
+      }
+    ],
+    "allowed_transformations": "Select existing summaries; rates to count plus percent only after verifying integers against heldout_results.csv. No new confidence intervals or statistical tests.",
+    "rounding": {
+      "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+      "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+      "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+      "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+      "multiples": "2 decimals",
+      "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+      "counts": "integers; zero denominator is undefined, never zero",
+      "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+      "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+    },
+    "notes_denominators": "Scenario counts in every row; Template 004 base/downside/distressed n=48/31/21. Counts recovered only by verified integer rate*n. Reference distressed 7/21 zero recovery explains P10=-100%; no confidence intervals.",
+    "claim_ids": [
+      "HET-002",
+      "HET-003",
+      "HET-004",
+      "HET-005",
+      "HET-006",
+      "HET-007",
+      "HET-008",
+      "HET-009",
+      "LIM-002"
+    ]
+  },
+  {
+    "table_id": "A3",
+    "title": "Focused optimization coverage and reproducibility scope",
+    "main_text_or_appendix": "appendix",
+    "source_artifact": [
+      "results/v3/post_optimization_diagnostics/coverage.json",
+      "results/v3/post_optimization_diagnostics/optimization_code_coverage.json"
+    ],
+    "source_fields_or_rows": [
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/optimization_code_coverage.json",
+        "keys": [
+          "statement_coverage"
+        ]
+      },
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/optimization_code_coverage.json",
+        "keys": [
+          "branch_coverage"
+        ]
+      },
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\optimization\\financing_policy.py",
+          "summary"
+        ]
+      },
+      {
+        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
+        "keys": [
+          "files",
+          "analysis\\run_v3_optimization.py",
+          "summary"
+        ]
+      }
+    ],
+    "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
+    "rounding": {
+      "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
+      "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
+      "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
+      "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
+      "multiples": "2 decimals",
+      "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
+      "counts": "integers; zero denominator is undefined, never zero",
+      "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
+      "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
+    },
+    "notes_denominators": "47/53 and 109/182 statements; 14/20 and 22/40 branches. Display statement and branch measures separately; no claim that coverage proves validity.",
+    "claim_ids": [
+      "OPT-009"
+    ]
+  }
+]

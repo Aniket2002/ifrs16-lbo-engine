@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "errors": [],
+  "claims_checked": 100,
+  "quantitative_claims_checked": 34,
+  "prohibited_claims_checked": 50,
+  "frozen_source_files_hash_checked": 66,
+  "checks": [
+    "required fields and classes",
+    "exact source selectors and snapshots",
+    "CSV/JSON equality",
+    "denominator metadata",
+    "B/C admission restrictions",
+    "prohibited and stale coverage restrictions",
+    "traceability coverage",
+    "section/abstract/visual claim links",
+    "frozen file SHA-256"
+  ],
+  "source_commit": "0f521a28150fe56f98cdabb3d1cb3664286df124",
+  "ruff_check": "passed",
+  "ruff_format_check": "passed (40 files)",
+  "focused_tests": {
+    "command": "python -m pytest -q --no-cov tests/test_manuscript_freeze.py",
+    "passed": 13
+  },
+  "protected_diff_from_original_validated_head": "",
+  "new_experiments_run": false,
+  "full_test_suite_rerun": false,
+  "read_only_source_cross_checks": [
+    "raw screening AUC and confusion counts",
+    "raw financing aggregate medians and subtype counts",
+    "Template 004 regime counts and limited-liability formulas",
+    "reference distressed P10 lies on seven zero-recovery observations among 21",
+    "monotonicity only across feasible observed debt levels"
+  ]
+}
