@@ -1,0 +1,148 @@
+{
+  "stage": "v3 foundation validation",
+  "source_commit": "c2a31756955004fac121984b3804f5385a6b30a8",
+  "reviewed_v2_head": "a990dd2166f47917781112a7e12bbc16f33605fd",
+  "baseline_checkpoint": "655953ffbce56b812f526a6a019b9c71782dc644",
+  "independent_return_check": {
+    "expected_irr": 0.1486983549970351,
+    "actual_irr": 0.1486983549970351,
+    "absolute_irr_difference": 0.0,
+    "expected_moic": 2.0,
+    "actual_moic": 2.0,
+    "absolute_moic_difference": 0.0,
+    "tolerance": 1e-12
+  },
+  "independent_debt_schedule": {
+    "expected": [
+      {
+        "year": 1,
+        "opening_debt": 100.0,
+        "cash_interest": 10.0,
+        "mandatory_amortisation": 20.0,
+        "closing_debt": 80.0
+      },
+      {
+        "year": 2,
+        "opening_debt": 80.0,
+        "cash_interest": 8.0,
+        "mandatory_amortisation": 20.0,
+        "closing_debt": 60.0
+      },
+      {
+        "year": 3,
+        "opening_debt": 60.0,
+        "cash_interest": 6.0,
+        "mandatory_amortisation": 20.0,
+        "closing_debt": 40.0
+      },
+      {
+        "year": 4,
+        "opening_debt": 40.0,
+        "cash_interest": 4.0,
+        "mandatory_amortisation": 20.0,
+        "closing_debt": 20.0
+      },
+      {
+        "year": 5,
+        "opening_debt": 20.0,
+        "cash_interest": 2.0,
+        "mandatory_amortisation": 20.0,
+        "closing_debt": 0.0
+      }
+    ],
+    "actual": [
+      {
+        "year": 1,
+        "opening_debt": 100.0,
+        "cash_interest": 10.0,
+        "mandatory_amortisation": 20.0,
+        "closing_debt": 80.0
+      },
+      {
+        "year": 2,
+        "opening_debt": 80.0,
+        "cash_interest": 8.0,
+        "mandatory_amortisation": 20.0,
+        "closing_debt": 60.0
+      },
+      {
+        "year": 3,
+        "opening_debt": 60.0,
+        "cash_interest": 6.0,
+        "mandatory_amortisation": 20.0,
+        "closing_debt": 40.0
+      },
+      {
+        "year": 4,
+        "opening_debt": 40.0,
+        "cash_interest": 4.0,
+        "mandatory_amortisation": 20.0,
+        "closing_debt": 20.0
+      },
+      {
+        "year": 5,
+        "opening_debt": 20.0,
+        "cash_interest": 2.0,
+        "mandatory_amortisation": 20.0,
+        "closing_debt": 0.0
+      }
+    ],
+    "exact_match": true
+  },
+  "runtime_validation": {
+    "seed": 42,
+    "scenarios_validated": 200,
+    "years_validated": 1000,
+    "failures": 0,
+    "failure_record_directory": "results/v3/invariant_failures"
+  },
+  "return_domain_behavior": {
+    "negative_exit_equity": "retained without floor; negative MOIC; IRR is NaN when cash flows have no sign change",
+    "zero_exit_proceeds": "MOIC is zero; IRR is NaN, not infinity or fabricated zero",
+    "multiple_sign_changes": "not representable by the current entry/zero-interim/single-exit sponsor cash-flow vector"
+  },
+  "runtime_invariants": [
+    "entry_sources_equal_uses",
+    "entry_component_reconciliation",
+    "initial_balances_and_year_to_year_roll_forwards",
+    "revolver_draw_components_nonnegativity_and_capacity",
+    "cash_before_financing_after_mandatory_and_ending_cash_reconciliation",
+    "term_debt_reconciliation_and_floor",
+    "revolver_reconciliation_capacity_and_repayment_limit",
+    "scheduled_actual_and_unpaid_amortisation_consistency",
+    "payment_default_consistency",
+    "funding_deficit_and_insolvency_flag_consistency",
+    "sweep_nonnegativity_remaining_debt_excess_cash_and_rate_limits",
+    "lease_reconciliation_and_floor",
+    "finite_financial_values",
+    "explicit_zero_ratio_denominator_recording"
+  ],
+  "adversarial_corruptions_detected": [
+    "ending_cash",
+    "closing_term_debt",
+    "revolver_draw_above_capacity",
+    "unpaid_amortisation",
+    "cash_sweep_above_remaining_term_debt",
+    "year_2_opening_cash_roll_forward"
+  ],
+  "test_results": {
+    "focused_tests_passed": 14,
+    "complete_tests_passed": 90,
+    "aggregate_statement_coverage_pct": 57.95,
+    "full_simulation_statement_coverage_pct": 100.0,
+    "ruff_check": "passed",
+    "ruff_format_check": "passed"
+  },
+  "production_financial_logic_changed": false,
+  "financial_engine_issue_discovered": false,
+  "reviewed_v2_reproduction": {
+    "artifact_verifier": "passed",
+    "benchmark_scenarios": 200,
+    "all_financial_and_statistical_fields_exact": true,
+    "excluded_from_exact_comparison": [
+      "git_sha",
+      "speed_benchmark"
+    ]
+  },
+  "later_v3_stages_run": []
+}
