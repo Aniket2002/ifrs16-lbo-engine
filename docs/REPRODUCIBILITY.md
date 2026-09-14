@@ -33,7 +33,10 @@ python analysis/validate_manuscript_freeze.py
 ```
 
 The freeze validator checks claim structure, exact source selectors, archived
-values, source hashes, admission restrictions, prohibited claims, and traceability.
+values, admission restrictions, prohibited claims, traceability, and current protected
+source identity using canonical Git blob bytes. The original checkout-byte manifest is
+preserved unchanged as historical provenance. Its separate audit remains explicit about two
+unresolved historical entries; see [V3 integrity governance](V3_INTEGRITY_GOVERNANCE.md).
 After the manuscript build creates its LaTeX auxiliary files, the final audit
 checks source and PDF wording, generated numeric cells, exhibit hashes and counts,
 bibliography, layout conditions, build status, and the archived visual review.

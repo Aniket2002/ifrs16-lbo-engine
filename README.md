@@ -37,6 +37,10 @@ python -m pytest -q --no-cov
 python analysis/validate_manuscript_freeze.py
 ```
 
+Current source-integrity checks use canonical Git blobs and are cross-platform. The
+original freeze manifest remains unchanged as historical provenance; see
+[V3 integrity governance](docs/V3_INTEGRITY_GOVERNANCE.md).
+
 Render and build the final manuscript from frozen evidence:
 
 ```powershell

@@ -66,6 +66,8 @@ equal-status introductions for new readers.
 
 ### Repository governance
 
+- [V3 source-integrity governance](V3_INTEGRITY_GOVERNANCE.md)
+- [V3 frozen-manifest forensics](V3_FROZEN_MANIFEST_FORENSICS.md)
 - [Repository cleanup report](REPOSITORY_CLEANUP_REPORT.md)
 - [Documentation consolidation report](DOCUMENTATION_CONSOLIDATION_REPORT.md)
 
