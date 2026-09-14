@@ -1,0 +1,494 @@
+{
+  "scope": "This checkpoint only reads already-frozen optimization artifacts and does not reopen the optimization admission decision or modify the financing-policy search design.",
+  "optimization_code_coverage": {
+    "command": "python -m pytest -q tests/test_financing_optimization.py --cov=analysis.optimization --cov=analysis.run_v3_optimization --cov-report=term-missing --cov-report=json:results/v3/post_optimization_diagnostics/coverage.json --cov-branch",
+    "statement_coverage": {
+      "analysis.optimization.financing_policy.py": 88.67924528301887,
+      "analysis.run_v3_optimization.py": 59.89010989010989
+    },
+    "branch_coverage": {
+      "analysis.optimization.financing_policy.py": 70.0,
+      "analysis.run_v3_optimization.py": 55.0
+    },
+    "functions_exercised": [
+      "candidate_grid",
+      "limited_liability_returns",
+      "summarize_outcomes",
+      "select_candidate",
+      "solve_known_optimum_toy",
+      "build_operating_scenarios",
+      "assumptions_for",
+      "evaluate_one",
+      "experiment_at_rate",
+      "leave_one_template_out",
+      "main"
+    ],
+    "important_uncovered_paths": [
+      "large end-to-end artifact-generation flow within main()",
+      "many error/branch-specific lines in the runner remain untested because they are not exposed by the unit suite",
+      "artifact-writing and validation output paths are not isolated into thin helper functions"
+    ],
+    "notes": "This is coverage for the optimization module itself, not the broader src/lbo total."
+  },
+  "debt_boundary_summary": {
+    "debt_levels": [
+      1.5,
+      1.75,
+      2.0,
+      2.25,
+      2.5,
+      2.75,
+      3.0
+    ],
+    "fold_count": 5,
+    "shape_classification_counts": {
+      "monotone_decreasing_with_debt": 5,
+      "monotone_increasing_with_debt": 0,
+      "nonmonotone_across_feasible_levels": 0,
+      "single_feasible_level": 0
+    },
+    "fold_classifications": [
+      {
+        "held_out_template": "SYN_HOTEL_001",
+        "shape_classification": "monotone_decreasing_with_debt",
+        "objective_by_feasible_debt_levels": [
+          0.0124710714491458,
+          0.0111210334372737,
+          0.0095774417230499,
+          0.0078860855403121,
+          0.0060246142241754
+        ]
+      },
+      {
+        "held_out_template": "SYN_HOTEL_002",
+        "shape_classification": "monotone_decreasing_with_debt",
+        "objective_by_feasible_debt_levels": [
+          0.0111691089720522,
+          0.0097952574182057,
+          0.0081929148237908,
+          0.006437313904431,
+          0.0045052876276711
+        ]
+      },
+      {
+        "held_out_template": "SYN_HOTEL_003",
+        "shape_classification": "monotone_decreasing_with_debt",
+        "objective_by_feasible_debt_levels": [
+          0.0035382132685414,
+          0.0017002177697594,
+          -0.0003089783296039,
+          -0.0025145761341584,
+          -0.0049470044016383
+        ]
+      },
+      {
+        "held_out_template": "SYN_HOTEL_004",
+        "shape_classification": "monotone_decreasing_with_debt",
+        "objective_by_feasible_debt_levels": [
+          0.0179853842111611,
+          0.0169604211604953,
+          0.0156992860989254
+        ]
+      },
+      {
+        "held_out_template": "SYN_HOTEL_005",
+        "shape_classification": "monotone_decreasing_with_debt",
+        "objective_by_feasible_debt_levels": [
+          -0.0002421286707242,
+          -0.0022652471444418,
+          -0.0044786832667137,
+          -0.0069107694598138,
+          -0.0095957912702832
+        ]
+      }
+    ],
+    "boundary_interpretation": "The objective declines monotonically across the feasible observed debt levels in all five folds. The observed surface supports a systematic within-grid preference for lower leverage, but because the grid is frozen at 1.50x and no lower debt values were permitted, the experiment cannot identify the true optimum below 1.50x."
+  },
+  "template004_regime_breakdown": {
+    "unique_template004_scenarios": 100,
+    "unique_regime_counts": {
+      "base": 48,
+      "downside": 31,
+      "distressed": 21
+    },
+    "unique_regime_frequencies": {
+      "base": 0.48,
+      "downside": 0.31,
+      "distressed": 0.21
+    },
+    "intended_probabilities": {
+      "base": 0.5,
+      "downside": 0.3,
+      "distressed": 0.2
+    },
+    "actual_vs_intended": {
+      "base": {
+        "actual": 0.48,
+        "intended": 0.5
+      },
+      "downside": {
+        "actual": 0.31,
+        "intended": 0.3
+      },
+      "distressed": {
+        "actual": 0.21,
+        "intended": 0.2
+      }
+    },
+    "interpretation": "The unique Template 004 regime mix is 48/31/21 (48%/31%/21%), which is near the intended 50%/30%/20% and does not look unusually adverse. The aggregate weakness is therefore not plausibly explained by a bad regime realization alone; the weak performance persists after conditioning on the realized regime.",
+    "policy_comparison_by_regime": [
+      {
+        "evaluation_policy": "optimized",
+        "scenario_type": "base",
+        "scenario_count": 48,
+        "denominator_scenarios": 100,
+        "actual_frequency": 0.48,
+        "intended_probability": 0.5,
+        "median_annualized_return": 0.02578274158595855,
+        "mean_annualized_return": 0.0225740353070852,
+        "p10_annualized_return": -0.0371121068169848,
+        "broad_failure_rate": 0.0,
+        "payment_default_rate": 0.0,
+        "insolvency_rate": 0.0,
+        "covenant_breach_rate": 0.0,
+        "total_equity_loss_rate": 0.0
+      },
+      {
+        "evaluation_policy": "optimized",
+        "scenario_type": "downside",
+        "scenario_count": 31,
+        "denominator_scenarios": 100,
+        "actual_frequency": 0.31,
+        "intended_probability": 0.3,
+        "median_annualized_return": -0.078420276352107,
+        "mean_annualized_return": -0.08464200119906615,
+        "p10_annualized_return": -0.1658413755567044,
+        "broad_failure_rate": 0.0,
+        "payment_default_rate": 0.0,
+        "insolvency_rate": 0.0,
+        "covenant_breach_rate": 0.0,
+        "total_equity_loss_rate": 0.0
+      },
+      {
+        "evaluation_policy": "optimized",
+        "scenario_type": "distressed",
+        "scenario_count": 21,
+        "denominator_scenarios": 100,
+        "actual_frequency": 0.21,
+        "intended_probability": 0.2,
+        "median_annualized_return": -0.188466940569059,
+        "mean_annualized_return": -0.25345499083309203,
+        "p10_annualized_return": -0.367976026095454,
+        "broad_failure_rate": 0.3333333333333333,
+        "payment_default_rate": 0.14285714285714285,
+        "insolvency_rate": 0.2857142857142857,
+        "covenant_breach_rate": 0.3333333333333333,
+        "total_equity_loss_rate": 0.047619047619047616
+      },
+      {
+        "evaluation_policy": "reference",
+        "scenario_type": "base",
+        "scenario_count": 48,
+        "denominator_scenarios": 100,
+        "actual_frequency": 0.48,
+        "intended_probability": 0.5,
+        "median_annualized_return": 0.0216248177891823,
+        "mean_annualized_return": 0.013629794431142815,
+        "p10_annualized_return": -0.05812913109605373,
+        "broad_failure_rate": 0.020833333333333332,
+        "payment_default_rate": 0.020833333333333332,
+        "insolvency_rate": 0.020833333333333332,
+        "covenant_breach_rate": 0.020833333333333332,
+        "total_equity_loss_rate": 0.0
+      },
+      {
+        "evaluation_policy": "reference",
+        "scenario_type": "downside",
+        "scenario_count": 31,
+        "denominator_scenarios": 100,
+        "actual_frequency": 0.31,
+        "intended_probability": 0.3,
+        "median_annualized_return": -0.1144276392347374,
+        "mean_annualized_return": -0.15028242423964527,
+        "p10_annualized_return": -0.2547574614063957,
+        "broad_failure_rate": 0.2903225806451613,
+        "payment_default_rate": 0.22580645161290322,
+        "insolvency_rate": 0.2903225806451613,
+        "covenant_breach_rate": 0.0967741935483871,
+        "total_equity_loss_rate": 0.03225806451612903
+      },
+      {
+        "evaluation_policy": "reference",
+        "scenario_type": "distressed",
+        "scenario_count": 21,
+        "denominator_scenarios": 100,
+        "actual_frequency": 0.21,
+        "intended_probability": 0.2,
+        "median_annualized_return": -0.2999582683675197,
+        "mean_annualized_return": -0.4979107099207226,
+        "p10_annualized_return": -1.0,
+        "broad_failure_rate": 0.8571428571428571,
+        "payment_default_rate": 0.7619047619047619,
+        "insolvency_rate": 0.8571428571428571,
+        "covenant_breach_rate": 0.6666666666666666,
+        "total_equity_loss_rate": 0.3333333333333333
+      }
+    ]
+  },
+  "regime_conditioned_template_comparison": [
+    {
+      "held_out_template": "SYN_HOTEL_001",
+      "evaluation_policy": "optimized",
+      "scenario_type": "base",
+      "scenario_count": 41,
+      "median_annualized_return": 0.0783767946327729,
+      "mean_annualized_return": 0.06596816584305175,
+      "p10_annualized_return": -0.0015612537433726,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    },
+    {
+      "held_out_template": "SYN_HOTEL_002",
+      "evaluation_policy": "optimized",
+      "scenario_type": "base",
+      "scenario_count": 62,
+      "median_annualized_return": 0.037594542632262,
+      "mean_annualized_return": 0.0349786790929251,
+      "p10_annualized_return": -0.03769276776376281,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    },
+    {
+      "held_out_template": "SYN_HOTEL_003",
+      "evaluation_policy": "optimized",
+      "scenario_type": "base",
+      "scenario_count": 55,
+      "median_annualized_return": 0.0768112438261343,
+      "mean_annualized_return": 0.07126659401258172,
+      "p10_annualized_return": 0.012711963942302262,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    },
+    {
+      "held_out_template": "SYN_HOTEL_004",
+      "evaluation_policy": "optimized",
+      "scenario_type": "base",
+      "scenario_count": 48,
+      "median_annualized_return": 0.02578274158595855,
+      "mean_annualized_return": 0.0225740353070852,
+      "p10_annualized_return": -0.0371121068169848,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    },
+    {
+      "held_out_template": "SYN_HOTEL_004",
+      "evaluation_policy": "reference",
+      "scenario_type": "base",
+      "scenario_count": 48,
+      "median_annualized_return": 0.0216248177891823,
+      "mean_annualized_return": 0.013629794431142815,
+      "p10_annualized_return": -0.05812913109605373,
+      "broad_failure_rate": 0.020833333333333332,
+      "payment_default_rate": 0.020833333333333332,
+      "insolvency_rate": 0.020833333333333332,
+      "covenant_breach_rate": 0.020833333333333332
+    },
+    {
+      "held_out_template": "SYN_HOTEL_005",
+      "evaluation_policy": "optimized",
+      "scenario_type": "base",
+      "scenario_count": 42,
+      "median_annualized_return": 0.08707777554787349,
+      "mean_annualized_return": 0.08685562914852442,
+      "p10_annualized_return": 0.03911981788620835,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    },
+    {
+      "held_out_template": "SYN_HOTEL_001",
+      "evaluation_policy": "optimized",
+      "scenario_type": "distressed",
+      "scenario_count": 18,
+      "median_annualized_return": -0.1603398897020295,
+      "mean_annualized_return": -0.15877441613844467,
+      "p10_annualized_return": -0.2599511986208657,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    },
+    {
+      "held_out_template": "SYN_HOTEL_002",
+      "evaluation_policy": "optimized",
+      "scenario_type": "distressed",
+      "scenario_count": 14,
+      "median_annualized_return": -0.1528624803392161,
+      "mean_annualized_return": -0.11382658663335334,
+      "p10_annualized_return": -0.21596289739802638,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    },
+    {
+      "held_out_template": "SYN_HOTEL_003",
+      "evaluation_policy": "optimized",
+      "scenario_type": "distressed",
+      "scenario_count": 16,
+      "median_annualized_return": -0.1400310455320775,
+      "mean_annualized_return": -0.14126263817607285,
+      "p10_annualized_return": -0.203799337016495,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    },
+    {
+      "held_out_template": "SYN_HOTEL_004",
+      "evaluation_policy": "optimized",
+      "scenario_type": "distressed",
+      "scenario_count": 21,
+      "median_annualized_return": -0.188466940569059,
+      "mean_annualized_return": -0.25345499083309203,
+      "p10_annualized_return": -0.367976026095454,
+      "broad_failure_rate": 0.3333333333333333,
+      "payment_default_rate": 0.14285714285714285,
+      "insolvency_rate": 0.2857142857142857,
+      "covenant_breach_rate": 0.3333333333333333
+    },
+    {
+      "held_out_template": "SYN_HOTEL_004",
+      "evaluation_policy": "reference",
+      "scenario_type": "distressed",
+      "scenario_count": 21,
+      "median_annualized_return": -0.2999582683675197,
+      "mean_annualized_return": -0.4979107099207226,
+      "p10_annualized_return": -1.0,
+      "broad_failure_rate": 0.8571428571428571,
+      "payment_default_rate": 0.7619047619047619,
+      "insolvency_rate": 0.8571428571428571,
+      "covenant_breach_rate": 0.6666666666666666
+    },
+    {
+      "held_out_template": "SYN_HOTEL_005",
+      "evaluation_policy": "optimized",
+      "scenario_type": "distressed",
+      "scenario_count": 16,
+      "median_annualized_return": -0.10444610603543969,
+      "mean_annualized_return": -0.11441847338766573,
+      "p10_annualized_return": -0.17704109048482214,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    },
+    {
+      "held_out_template": "SYN_HOTEL_001",
+      "evaluation_policy": "optimized",
+      "scenario_type": "downside",
+      "scenario_count": 41,
+      "median_annualized_return": -0.0423982206895269,
+      "mean_annualized_return": -0.02681715189709197,
+      "p10_annualized_return": -0.1070924432586758,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    },
+    {
+      "held_out_template": "SYN_HOTEL_002",
+      "evaluation_policy": "optimized",
+      "scenario_type": "downside",
+      "scenario_count": 24,
+      "median_annualized_return": -0.0508524154894475,
+      "mean_annualized_return": -0.035208442745551426,
+      "p10_annualized_return": -0.0979406498407384,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    },
+    {
+      "held_out_template": "SYN_HOTEL_003",
+      "evaluation_policy": "optimized",
+      "scenario_type": "downside",
+      "scenario_count": 29,
+      "median_annualized_return": -0.0179051085138538,
+      "mean_annualized_return": -0.023936463021671694,
+      "p10_annualized_return": -0.07964136488265712,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    },
+    {
+      "held_out_template": "SYN_HOTEL_004",
+      "evaluation_policy": "optimized",
+      "scenario_type": "downside",
+      "scenario_count": 31,
+      "median_annualized_return": -0.078420276352107,
+      "mean_annualized_return": -0.08464200119906615,
+      "p10_annualized_return": -0.1658413755567044,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    },
+    {
+      "held_out_template": "SYN_HOTEL_004",
+      "evaluation_policy": "reference",
+      "scenario_type": "downside",
+      "scenario_count": 31,
+      "median_annualized_return": -0.1144276392347374,
+      "mean_annualized_return": -0.15028242423964527,
+      "p10_annualized_return": -0.2547574614063957,
+      "broad_failure_rate": 0.2903225806451613,
+      "payment_default_rate": 0.22580645161290322,
+      "insolvency_rate": 0.2903225806451613,
+      "covenant_breach_rate": 0.0967741935483871
+    },
+    {
+      "held_out_template": "SYN_HOTEL_005",
+      "evaluation_policy": "optimized",
+      "scenario_type": "downside",
+      "scenario_count": 42,
+      "median_annualized_return": 0.013391311059710548,
+      "mean_annualized_return": 0.0010847071839643586,
+      "p10_annualized_return": -0.07096613083555599,
+      "broad_failure_rate": 0.0,
+      "payment_default_rate": 0.0,
+      "insolvency_rate": 0.0,
+      "covenant_breach_rate": 0.0
+    }
+  ],
+  "cross_stage_template004": {
+    "template004_false_positives": 37,
+    "template004_threshold": 0.00967805410948959,
+    "template004_specificity": 0.02631578947368421,
+    "template004_fpr": 0.9736842105263158,
+    "template004_balanced_accuracy": 0.5131578947368421,
+    "template004_fixed_0_5_specificity": 1.0,
+    "template004_fixed_0_5_fpr": 0.0,
+    "template004_fixed_0_5_balanced_accuracy": 0.6363636363636364,
+    "template004_weak_under_fixed_threshold": true,
+    "convergent_evidence_within_same_system": true,
+    "interpretation": "The corrected regime-conditioned comparison shows Template 004 remains materially weaker than the other templates in the downside and distressed regimes and is also below the base median. This supports a structural-heterogeneity interpretation within the same synthetic system without claiming independent or external validation."
+  },
+  "manuscript_implications": [
+    "All five folds are monotone decreasing across the feasible observed debt levels within the frozen grid.",
+    "The observed surface supports a systematic within-grid preference for lower leverage, but it cannot identify the true optimum below 1.50x because the grid stops at the lower boundary.",
+    "The unique Template 004 regime mix is close to the intended 50%/30%/20% split and does not plausibly explain the aggregate weakness.",
+    "Template 004 remains materially weaker than the other templates after conditioning on regime, especially in downside and distressed states, which is consistent with structural heterogeneity rather than regime composition alone.",
+    "The same archetype remains weak in a separate threshold-transfer procedure, which provides convergent evidence within the same synthetic system that transfer is affected by structural heterogeneity, without claiming external validation or empirical replication."
+  ]
+}

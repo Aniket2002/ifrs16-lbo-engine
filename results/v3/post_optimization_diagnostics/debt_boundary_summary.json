@@ -1,0 +1,74 @@
+{
+  "debt_levels": [
+    1.5,
+    1.75,
+    2.0,
+    2.25,
+    2.5,
+    2.75,
+    3.0
+  ],
+  "fold_count": 5,
+  "shape_classification_counts": {
+    "monotone_decreasing_with_debt": 5,
+    "monotone_increasing_with_debt": 0,
+    "nonmonotone_across_feasible_levels": 0,
+    "single_feasible_level": 0
+  },
+  "fold_classifications": [
+    {
+      "held_out_template": "SYN_HOTEL_001",
+      "shape_classification": "monotone_decreasing_with_debt",
+      "objective_by_feasible_debt_levels": [
+        0.0124710714491458,
+        0.0111210334372737,
+        0.0095774417230499,
+        0.0078860855403121,
+        0.0060246142241754
+      ]
+    },
+    {
+      "held_out_template": "SYN_HOTEL_002",
+      "shape_classification": "monotone_decreasing_with_debt",
+      "objective_by_feasible_debt_levels": [
+        0.0111691089720522,
+        0.0097952574182057,
+        0.0081929148237908,
+        0.006437313904431,
+        0.0045052876276711
+      ]
+    },
+    {
+      "held_out_template": "SYN_HOTEL_003",
+      "shape_classification": "monotone_decreasing_with_debt",
+      "objective_by_feasible_debt_levels": [
+        0.0035382132685414,
+        0.0017002177697594,
+        -0.0003089783296039,
+        -0.0025145761341584,
+        -0.0049470044016383
+      ]
+    },
+    {
+      "held_out_template": "SYN_HOTEL_004",
+      "shape_classification": "monotone_decreasing_with_debt",
+      "objective_by_feasible_debt_levels": [
+        0.0179853842111611,
+        0.0169604211604953,
+        0.0156992860989254
+      ]
+    },
+    {
+      "held_out_template": "SYN_HOTEL_005",
+      "shape_classification": "monotone_decreasing_with_debt",
+      "objective_by_feasible_debt_levels": [
+        -0.0002421286707242,
+        -0.0022652471444418,
+        -0.0044786832667137,
+        -0.0069107694598138,
+        -0.0095957912702832
+      ]
+    }
+  ],
+  "boundary_interpretation": "The objective declines monotonically across the feasible observed debt levels in all five folds. The observed surface supports a systematic within-grid preference for lower leverage, but because the grid is frozen at 1.50x and no lower debt values were permitted, the experiment cannot identify the true optimum below 1.50x."
+}

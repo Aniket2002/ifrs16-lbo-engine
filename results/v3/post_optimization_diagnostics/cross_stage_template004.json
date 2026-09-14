@@ -1,0 +1,13 @@
+{
+  "template004_false_positives": 37,
+  "template004_threshold": 0.00967805410948959,
+  "template004_specificity": 0.02631578947368421,
+  "template004_fpr": 0.9736842105263158,
+  "template004_balanced_accuracy": 0.5131578947368421,
+  "template004_fixed_0_5_specificity": 1.0,
+  "template004_fixed_0_5_fpr": 0.0,
+  "template004_fixed_0_5_balanced_accuracy": 0.6363636363636364,
+  "template004_weak_under_fixed_threshold": true,
+  "convergent_evidence_within_same_system": true,
+  "interpretation": "The corrected regime-conditioned comparison shows Template 004 remains materially weaker than the other templates in the downside and distressed regimes and is also below the base median. This supports a structural-heterogeneity interpretation within the same synthetic system without claiming independent or external validation."
+}

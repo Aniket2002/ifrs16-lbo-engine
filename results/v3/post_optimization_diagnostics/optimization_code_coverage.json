@@ -1,0 +1,30 @@
+{
+  "command": "python -m pytest -q tests/test_financing_optimization.py --cov=analysis.optimization --cov=analysis.run_v3_optimization --cov-report=term-missing --cov-report=json:results/v3/post_optimization_diagnostics/coverage.json --cov-branch",
+  "statement_coverage": {
+    "analysis.optimization.financing_policy.py": 88.67924528301887,
+    "analysis.run_v3_optimization.py": 59.89010989010989
+  },
+  "branch_coverage": {
+    "analysis.optimization.financing_policy.py": 70.0,
+    "analysis.run_v3_optimization.py": 55.0
+  },
+  "functions_exercised": [
+    "candidate_grid",
+    "limited_liability_returns",
+    "summarize_outcomes",
+    "select_candidate",
+    "solve_known_optimum_toy",
+    "build_operating_scenarios",
+    "assumptions_for",
+    "evaluate_one",
+    "experiment_at_rate",
+    "leave_one_template_out",
+    "main"
+  ],
+  "important_uncovered_paths": [
+    "large end-to-end artifact-generation flow within main()",
+    "many error/branch-specific lines in the runner remain untested because they are not exposed by the unit suite",
+    "artifact-writing and validation output paths are not isolated into thin helper functions"
+  ],
+  "notes": "This is coverage for the optimization module itself, not the broader src/lbo total."
+}
