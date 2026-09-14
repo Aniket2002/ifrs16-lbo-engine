@@ -6,12 +6,14 @@ This checkpoint is intentionally narrow: it only reads the already-frozen optimi
 
 ## 1. Optimization-only coverage
 
-The optimization validation run produced the following coverage summary for the optimization code path itself:
+The focused optimization coverage run reports:
 
-- analysis/optimization/financing_policy.py: 84% statement coverage, 70% branch coverage
-- analysis/run_v3_optimization.py: 59% statement coverage, 85% branch coverage
+- analysis/optimization/financing_policy.py: 88.68% statement coverage (47 / 53 statements) and 70.0% branch coverage (14 / 20 branches).
+- analysis/run_v3_optimization.py: 59.89% statement coverage (109 / 182 statements) and 55.0% branch coverage (22 / 40 branches).
 
-The coverage is enough to confirm the main candidate-grid and risk-constraint logic, selection logic, and the deterministic single-run path were exercised, while leaving artifact-writing, end-to-end orchestration, and some error-handling paths outside the focused unit suite.
+The source of truth is `results/v3/post_optimization_diagnostics/coverage.json`, corroborated by `optimization_code_coverage.json`. The previously reported 84% and 59% were rounded combined statement-and-branch coverage, incorrectly labelled statement coverage; the previously reported 85% runner branch coverage was incorrect.
+
+The helper/search kernel is comparatively well covered, while the runner has materially lower branch coverage because substantial orchestration, artifact-writing, and error-handling paths are not isolated into unit-testable helper functions. Coverage alone does not validate the optimizer. The stronger evidence remains the independent known-optimum toy, infeasibility/tie/boundary/risk tests, held-out independence, determinism, runtime invariants, and frozen-grid evaluation.
 
 Key functions that were exercised include:
 
