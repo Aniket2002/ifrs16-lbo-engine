@@ -1,0 +1,19 @@
+{
+  "source_commit": "4b7179367d7b69c6870f530f24a283a83bfd0c8f",
+  "completed_recovery_runs": 18,
+  "completed_parameter_evaluations": 180,
+  "prior_v3_artifacts_unchanged": true,
+  "financial_engine_unchanged": true,
+  "artifact_sha256_before_verification_file": {
+    "admission_decision.json": "cdf5fdceed52ffa531dad35efc829deb67e5b7974ec91084b3213eb444395d02",
+    "data_provenance.json": "313579c7268c6d4d5a9432366c65d10d3e27728f76ce331e18bab4f520a02028",
+    "implementation_audit.json": "6e16f582c30ac59822d5ba95c29e521e84ac1c8a60775b30b4ddd7c92a9352a1",
+    "mcmc_diagnostics.csv": "be48c41b2d510df0fc091544d5e97ef6fff5ba035cf2498fbd745cb81c5c0c51",
+    "posterior_predictive_summary.json": "2dd534072ce86ad9c5616652b924ae928257f98c035aae04805a9336adc08266",
+    "prior_predictive_summary.json": "3066e2438fc050a0be3de5aa3d4beae4fc7db7fb84aea099e6589791cdd166ac",
+    "prior_sensitivity.json": "6962b07e1163826731ee1abb5e975a91255d7a588ce8828f02ff612b3a773063",
+    "recovery_runs.csv": "731dcefb863671ff49552671b1bf8fed49e5a3b834e2334e01ca2bfb3f0eba0a",
+    "recovery_summary.json": "ef08dcb9e0954825b1bbb140d424ccfd69679a541add3e6227b434aad1199771",
+    "run_metadata.json": "fb2a35d832d0043865fc1e8c69a1f4abb86ebeacf54b298e329146f6b6730f61"
+  }
+}

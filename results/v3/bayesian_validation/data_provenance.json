@@ -1,0 +1,34 @@
+{
+  "classification": "UNVERIFIED / STIPULATED CALIBRATION INPUTS",
+  "n_rows": 10,
+  "repository_search": "no variable-level citations or reconstruction metadata found",
+  "variables": {
+    "revenue_growth": {
+      "classification": "unverified/stipulated",
+      "source_documented": false
+    },
+    "terminal_margin": {
+      "classification": "unverified/stipulated",
+      "source_documented": false
+    },
+    "lease_multiple": {
+      "classification": "unverified/stipulated",
+      "source_documented": false
+    },
+    "senior_rate": {
+      "classification": "unverified/stipulated",
+      "source_documented": false
+    },
+    "mezz_rate": {
+      "classification": "unverified/stipulated",
+      "source_documented": false
+    }
+  },
+  "metadata": {
+    "name": "unused categorical metadata; provenance unverified",
+    "region": "unused categorical metadata; provenance unverified",
+    "rating": "unused categorical metadata; provenance unverified",
+    "brand_tier": "unused categorical metadata; provenance unverified"
+  },
+  "sha256": "35b31b4879d8a3747311d31f7ca258b65b6e25ffbe3eee8de1aa8297ac563f7a"
+}

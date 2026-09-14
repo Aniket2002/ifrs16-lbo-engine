@@ -1,0 +1,21 @@
+{
+  "source_commit": "4b7179367d7b69c6870f530f24a283a83bfd0c8f",
+  "old_defects": {
+    "map_laplace": "sample means/population SDs; no optimization, posterior, Hessian or Laplace covariance",
+    "posterior_predictive": "Normal draws conditional on posterior-mean hyperparameters; discarded hyperparameter uncertainty",
+    "silent_mcmc_fallback": true,
+    "fit_method_provenance": "reported PyMC availability rather than method run",
+    "advertised_covariates": "loaded but never entered model",
+    "clipping": "deterministic clipping caused flat likelihood regions and predictive boundary point mass",
+    "observation_noise": "fixed 0.01 for unlike scales without measurement-error evidence"
+  },
+  "corrections": {
+    "empirical_path": "renamed empirical_moments; no Bayesian or Laplace claim",
+    "mcmc": "requested MCMC raises ImportError if unavailable and records actual method/sampler",
+    "likelihood": "direct population likelihood; truncated Normal for bounded values, Normal on log lease",
+    "predictive": "separate trace-integrated population predictive and empirical parameter draws",
+    "covariates": "explicitly metadata only",
+    "validation": "finite/domain/schema checks added"
+  },
+  "major_redesign_required": false
+}

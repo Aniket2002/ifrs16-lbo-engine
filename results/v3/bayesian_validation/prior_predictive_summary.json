@@ -1,0 +1,112 @@
+{
+  "seed": 701,
+  "n_draws": 20000,
+  "priors": {
+    "mu_g_prior": [
+      0.04,
+      0.02
+    ],
+    "sigma_g_prior": [
+      0.0,
+      0.015
+    ],
+    "g_bounds": [
+      0.0,
+      0.15
+    ],
+    "mu_m_prior": [
+      0.25,
+      0.05
+    ],
+    "sigma_m_prior": [
+      0.0,
+      0.03
+    ],
+    "m_bounds": [
+      0.1,
+      0.4
+    ],
+    "mu_L_prior": [
+      1.2,
+      0.3
+    ],
+    "sigma_L_prior": [
+      0.0,
+      0.2
+    ],
+    "mu_r_prior": [
+      0.06,
+      0.01
+    ],
+    "sigma_r_prior": [
+      0.0,
+      0.008
+    ],
+    "r_bounds": [
+      0.02,
+      0.12
+    ]
+  },
+  "dimensions": [
+    {
+      "dataset": "prior",
+      "seed": 701,
+      "dimension": "revenue_growth",
+      "predictive_mean": 0.04153545233210485,
+      "predictive_sd": 0.022564476469746873,
+      "predictive_q05": 0.006247258507691387,
+      "predictive_median": 0.040315956877312716,
+      "predictive_q95": 0.08053052121056098,
+      "plausible_range_frequency": 1.0,
+      "exact_boundary_frequency": 0.0
+    },
+    {
+      "dataset": "prior",
+      "seed": 701,
+      "dimension": "terminal_margin",
+      "predictive_mean": 0.24958915829571574,
+      "predictive_sd": 0.055733107995728594,
+      "predictive_q05": 0.1555866476825202,
+      "predictive_median": 0.25007237423875645,
+      "predictive_q95": 0.34171539644203985,
+      "plausible_range_frequency": 1.0,
+      "exact_boundary_frequency": 0.0
+    },
+    {
+      "dataset": "prior",
+      "seed": 701,
+      "dimension": "lease_multiple",
+      "predictive_mean": 3.5523925862629984,
+      "predictive_sd": 1.3328080158418831,
+      "predictive_q05": 1.86507406837244,
+      "predictive_median": 3.3374710209840748,
+      "predictive_q95": 5.99252791761398,
+      "plausible_range_frequency": 0.99055,
+      "exact_boundary_frequency": 0.0
+    },
+    {
+      "dataset": "prior",
+      "seed": 701,
+      "dimension": "senior_rate",
+      "predictive_mean": 0.060008316860906234,
+      "predictive_sd": 0.012494613979942597,
+      "predictive_q05": 0.03945633795302735,
+      "predictive_median": 0.05993510470813776,
+      "predictive_q95": 0.08066427784868095,
+      "plausible_range_frequency": 1.0,
+      "exact_boundary_frequency": 0.0
+    },
+    {
+      "dataset": "prior",
+      "seed": 701,
+      "dimension": "mezz_rate",
+      "predictive_mean": 0.059977709553078386,
+      "predictive_sd": 0.012668749988710365,
+      "predictive_q05": 0.03932251765610735,
+      "predictive_median": 0.059859951139335926,
+      "predictive_q95": 0.08082017469853724,
+      "plausible_range_frequency": 1.0,
+      "exact_boundary_frequency": 0.0
+    }
+  ]
+}

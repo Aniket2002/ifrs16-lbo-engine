@@ -63,15 +63,24 @@ should be reused, not recreated. See `results/v3/baseline/verification.json`,
   with 57.95% coverage and full simulation coverage of 100%. See
   `docs/V3_TEMPLATE_EVALUATION.md` and `results/v3/template_evaluation/`.
 
+## Bayesian validation completed — excluded from v3
+
+- The old `map`/Laplace label was false, MCMC could silently fall back, fit-method
+  provenance was wrong, covariates were unused, prediction discarded posterior
+  hyperparameter uncertainty, clipping created boundary mass, and fixed 0.01
+  observation noise was unsupported across unlike quantities.
+- The corrected independent population model uses proper truncation, explicit
+  MCMC failure/provenance and trace-integrated predictions. Synthetic recovery was
+  strong (93.89% 90%-interval coverage; 8.04% mean and 11.99% scale relative RMSE),
+  with zero divergences, but frozen R-hat/tail-ESS gates failed narrowly.
+- Wider priors materially shifted margin heterogeneity (1.081 posterior SD) and
+  mezzanine location (0.649 SD). All named-firm variables lack repository-level
+  provenance and are classified unverified/stipulated. Decision **C: exclude from
+  v3**. See `docs/V3_BAYESIAN_VALIDATION.md` and machine-readable results under
+  `results/v3/bayesian_validation/`.
+
 ## Genuinely missing work
 
-- A validation gate for the existing Bayesian module: data/provenance,
-  likelihood/identifiability, prior predictions, independent recovery,
-  posterior predictions, diagnostics and additional value. No current test module
-  exercises the calibrator. Its named MAP/Laplace fallback computes sample moments,
-  and predictive generation uses fitted hyperparameter summaries; these need
-  explicit scrutiny before calling outputs a posterior. This inspection is not
-  a completed Bayesian validation or an admission decision.
 - Independent sponsor-return validation and an economic admission decision for
   financing optimization. Any retained search needs independently solved toy cases
   and infeasible/tied/boundary/binding-constraint tests. Threshold tuning alone
@@ -82,8 +91,8 @@ should be reused, not recreated. See `results/v3/baseline/verification.json`,
 
 1. Template-held-out selection and adversarial tests are complete; preserve the
    frozen protocol and its documented threshold-transfer limitations.
-2. Audit/test the existing Bayesian module against the stated admission gate.
-   Retain posterior simulation only if the gate passes; otherwise record exclusion.
+2. Bayesian audit/validation is complete and records exclusion. Do not integrate
+   its posterior samples into v3 LBO results.
 3. Define and independently solve a small genuine financing problem before any
    larger search. Retain optimization only with defensible economics and tests.
 4. Run the fixed v3 protocol, archive machine-readable outputs and provenance,
@@ -94,15 +103,16 @@ should be reused, not recreated. See `results/v3/baseline/verification.json`,
 - Foundation files now added: `tests/test_returns_independent.py`,
   `tests/test_runtime_invariants.py`, `src/lbo/validation.py`, and
   `analysis/run_v3_foundation.py`. `tests/test_template_evaluation.py` and
-  `analysis/run_v3_template_evaluation.py` are now also complete;
-  Bayesian/optimization tests depend on their validation and admission decisions.
-- Audit `analysis/calibration/bayes_calibrate.py`; amend it only if justified by
-  independent failures. Any retained optimizer belongs in a separate tested module.
+  `analysis/run_v3_template_evaluation.py` are now also complete. Bayesian tests,
+  corrected calibration code and its validation runner are complete; the admission
+  decision excludes posterior integration. Optimization remains separate.
+- Any retained optimizer belongs in a separate tested module.
 - Add versioned configuration and reports under `docs/` and `results/v3/`.
 - After numerical validation, add v3 figure/table generation and
   `paper/ifrs16_lbo_ssrn_v3.tex`/PDF, with reproduction instructions and changelog.
   Preserve the reviewed v2 source and artifacts.
 
-Branch consolidation, baseline reproduction, foundation financial validation and
-template-held-out threshold evaluation are complete. No Bayesian analysis,
-optimization, financial model change or manuscript rewrite was undertaken in this stage.
+Branch consolidation, baseline reproduction, foundation financial validation,
+template-held-out threshold evaluation and Bayesian validation/admission are
+complete. Bayesian integration is excluded. No optimization, financial-model
+change or manuscript rewrite was undertaken in this stage.

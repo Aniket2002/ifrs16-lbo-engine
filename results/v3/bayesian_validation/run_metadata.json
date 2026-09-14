@@ -1,0 +1,28 @@
+{
+  "source_commit": "4b7179367d7b69c6870f530f24a283a83bfd0c8f",
+  "command": "python -m analysis.run_v3_bayesian_validation",
+  "input_sha256": "35b31b4879d8a3747311d31f7ca258b65b6e25ffbe3eee8de1aa8297ac563f7a",
+  "protocol_sha256": "bdee1cabde639448b8edf1ad570332ef79a40f230fc621a38a2e6e5a8be704a5",
+  "python": "3.11.3",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "packages": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.5",
+    "scipy": "1.17.1",
+    "pymc": "5.28.5",
+    "arviz": "0.23.4",
+    "nutpie": "0.16.8"
+  },
+  "mcmc": {
+    "draws": 600,
+    "tune": 600,
+    "chains": 2,
+    "target_accept": 0.95,
+    "nuts_sampler": "nutpie"
+  },
+  "recovery_seeds": [
+    1101,
+    1102,
+    1103
+  ]
+}

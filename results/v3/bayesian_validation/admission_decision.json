@@ -1,0 +1,9 @@
+{
+  "classification": "C",
+  "label": "EXCLUDE FROM V3",
+  "technical_validation": "FAIL",
+  "empirical_validation": "FAIL",
+  "reason": "The corrected model fails a frozen technical recovery/diagnostic or prior-sensitivity gate; unverified inputs independently preclude main-results admission.",
+  "not_admitted_to_main_results": true,
+  "no_lbo_integration_performed": true
+}

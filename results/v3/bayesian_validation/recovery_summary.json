@@ -1,0 +1,52 @@
+{
+  "n_runs": 18,
+  "n_parameter_evaluations": 180,
+  "overall_90_interval_coverage": 0.9388888888888889,
+  "coverage_by_design": {
+    "central": 0.9666666666666667,
+    "high_variance": 0.9,
+    "larger_sample": 0.9,
+    "low_variance": 0.9666666666666667,
+    "near_boundary": 0.9333333333333333,
+    "small_sample": 0.9666666666666667
+  },
+  "error_by_parameter_type": {
+    "mean": {
+      "relative_rmse": 0.08035836885815568
+    },
+    "scale": {
+      "relative_rmse": 0.1198846557061126
+    }
+  },
+  "mean_signed_relative_error_by_parameter": {
+    "mu_L": 0.021272621826019366,
+    "mu_g": 0.006093736967222701,
+    "mu_m": -0.0019330069184642178,
+    "mu_r_mezz": -0.019972222619018654,
+    "mu_r_sen": -0.010363047647853759,
+    "sigma_L": 0.032515473215846497,
+    "sigma_g": -0.05665770626193045,
+    "sigma_m": -0.012037043071365985,
+    "sigma_r_mezz": 0.008334101290693093,
+    "sigma_r_sen": 0.08312645916051771
+  },
+  "diagnostic_extrema": {
+    "max_r_hat": 1.0146085972518615,
+    "min_bulk_ess": 391.48627301744915,
+    "min_tail_ess": 176.2803688085891,
+    "total_divergences": 0,
+    "total_tree_depth_warnings": 0
+  },
+  "acceptance_criteria": {
+    "zero_divergences": true,
+    "r_hat_at_most_1_01": false,
+    "bulk_ess_at_least_200": true,
+    "tail_ess_at_least_200": false,
+    "overall_90_coverage_at_least_0_80": true,
+    "each_design_coverage_at_least_0_70": true,
+    "mean_relative_rmse_at_most_0_35": true,
+    "scale_relative_rmse_at_most_0_60": true,
+    "max_absolute_relative_bias_at_most_0_75": true
+  },
+  "technical_recovery_gate_passed": false
+}

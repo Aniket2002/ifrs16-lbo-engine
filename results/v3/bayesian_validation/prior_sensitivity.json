@@ -1,0 +1,127 @@
+{
+  "fits": {
+    "baseline_seed": 2101,
+    "wider_seed": 2102
+  },
+  "wider_prior": {
+    "mu_g_prior": [
+      0.04,
+      0.04
+    ],
+    "sigma_g_prior": [
+      0.0,
+      0.03
+    ],
+    "g_bounds": [
+      0.0,
+      0.15
+    ],
+    "mu_m_prior": [
+      0.25,
+      0.1
+    ],
+    "sigma_m_prior": [
+      0.0,
+      0.06
+    ],
+    "m_bounds": [
+      0.1,
+      0.4
+    ],
+    "mu_L_prior": [
+      1.2,
+      0.6
+    ],
+    "sigma_L_prior": [
+      0.0,
+      0.4
+    ],
+    "mu_r_prior": [
+      0.06,
+      0.02
+    ],
+    "sigma_r_prior": [
+      0.0,
+      0.016
+    ],
+    "r_bounds": [
+      0.02,
+      0.12
+    ]
+  },
+  "parameter_comparison": [
+    {
+      "parameter": "mu_g",
+      "baseline_mean": 0.029471664378149475,
+      "wider_mean": 0.029289798688357595,
+      "baseline_sd": 0.002020251402691086,
+      "absolute_shift_in_baseline_sd": 0.09002131593603874
+    },
+    {
+      "parameter": "sigma_g",
+      "baseline_mean": 0.006468534526545451,
+      "wider_mean": 0.006450896765918655,
+      "baseline_sd": 0.0018460460436974932,
+      "absolute_shift_in_baseline_sd": 0.009554344913016813
+    },
+    {
+      "parameter": "mu_m",
+      "baseline_mean": 0.27153859278631165,
+      "wider_mean": 0.2726674324988168,
+      "baseline_sd": 0.01607117070515076,
+      "absolute_shift_in_baseline_sd": 0.07024004244714849
+    },
+    {
+      "parameter": "sigma_m",
+      "baseline_mean": 0.0474934155685505,
+      "wider_mean": 0.05853125947216783,
+      "baseline_sd": 0.010213924753220728,
+      "absolute_shift_in_baseline_sd": 1.0806662639781826
+    },
+    {
+      "parameter": "mu_L",
+      "baseline_mean": 1.18928589553895,
+      "wider_mean": 1.1898158552531266,
+      "baseline_sd": 0.04610984932671013,
+      "absolute_shift_in_baseline_sd": 0.011493416740999516
+    },
+    {
+      "parameter": "sigma_L",
+      "baseline_mean": 0.13207123202298354,
+      "wider_mean": 0.1327893743438152,
+      "baseline_sd": 0.03655437525043496,
+      "absolute_shift_in_baseline_sd": 0.01964586498638351
+    },
+    {
+      "parameter": "mu_r_sen",
+      "baseline_mean": 0.05296513696417449,
+      "wider_mean": 0.05276943541496319,
+      "baseline_sd": 0.0018212000789647501,
+      "absolute_shift_in_baseline_sd": 0.1074574680023879
+    },
+    {
+      "parameter": "sigma_r_sen",
+      "baseline_mean": 0.0057720037981219925,
+      "wider_mean": 0.005988003613736937,
+      "baseline_sd": 0.0014447607630884364,
+      "absolute_shift_in_baseline_sd": 0.14950559368265628
+    },
+    {
+      "parameter": "mu_r_mezz",
+      "baseline_mean": 0.08949926995893603,
+      "wider_mean": 0.09137155109774829,
+      "baseline_sd": 0.002887070015716727,
+      "absolute_shift_in_baseline_sd": 0.648505622870201
+    },
+    {
+      "parameter": "sigma_r_mezz",
+      "baseline_mean": 0.00857694518751147,
+      "wider_mean": 0.009158690962324145,
+      "baseline_sd": 0.0022074890103769076,
+      "absolute_shift_in_baseline_sd": 0.2635328067673353
+    }
+  ],
+  "maximum_shift_in_baseline_posterior_sd": 1.0806662639781826,
+  "material_threshold": 0.5,
+  "material_prior_sensitivity": true
+}
