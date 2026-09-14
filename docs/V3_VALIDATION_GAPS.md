@@ -28,15 +28,28 @@ overfunded-entry rejection, default aggregation and v2 artifact verification
 should be reused, not recreated. See `results/v3/baseline/verification.json`,
 `branch_start.json` and the archived pipeline logs for this checkpoint.
 
+## Foundation validation completed
+
+- Independent geometric IRR and MOIC expectations now match production exactly;
+  a five-year debt/interest schedule also matches its hand-derived values exactly.
+- Negative exit equity remains an unfloored diagnostic, producing negative MOIC
+  and no finite IRR. Zero exit proceeds likewise have no finite IRR. The sponsor
+  vector supports only entry, zero intermediate flows and one exit flow, so it
+  cannot generate multiple sign changes.
+- `src/lbo/validation.py` now checks all material closing, cash, debt, revolver,
+  amortisation, default, sweep, lease, roll-forward and finite-value invariants.
+  It records zero ratio denominators explicitly rather than treating them as valid
+  ratios. The seed-42 benchmark's 1,000 simulation years all pass.
+- Six required adversarial corruptions are detected with invariant, scenario,
+  year, expected/actual values, assumptions, current/previous row state, tolerance
+  and source commit available as JSON. V3 execution writes this record before
+  propagating a failure.
+- No production simulation or return logic changed. Reviewed-v2 results remain
+  the comparison baseline; the complete reproduction check is recorded in the
+  foundation report.
+
 ## Genuinely missing work
 
-- Independent geometric IRR expectation and a hand-calculated fixed debt/interest
-  schedule. The existing IRR check uses `numpy_financial.irr`, also used by
-  production; it is not independent. Supplement existing zero-equity/empty-return
-  regressions with negative-exit and no-valid-root cases without duplicating them.
-- A reusable runtime invariant validator that fails every affected run and archives
-  failing inputs/year state. Existing tests and v2 post-run cash checks do not
-  enforce all requested invariants on every newly simulated path.
 - Leave-one-template-out threshold selection with training-only decisions,
   held-out aggregate classification metrics, and adversarial leakage checks.
 - A validation gate for the existing Bayesian module: data/provenance,
@@ -54,24 +67,21 @@ should be reused, not recreated. See `results/v3/baseline/verification.json`,
 
 ## Proposed v3 implementation order
 
-1. Independent return and debt checks; reusable runtime invariants with preserved
-   failure state. Keep the financial engine unless an independent check fails.
-2. Record the threshold selection objective, tie rule and uncertainty protocol
+1. Record the threshold selection objective, tie rule and uncertainty protocol
    before evaluating; implement template-held-out selection and adversarial tests.
-3. Audit/test the existing Bayesian module against the stated admission gate.
+2. Audit/test the existing Bayesian module against the stated admission gate.
    Retain posterior simulation only if the gate passes; otherwise record exclusion.
-4. Define and independently solve a small genuine financing problem before any
+3. Define and independently solve a small genuine financing problem before any
    larger search. Retain optimization only with defensible economics and tests.
-5. Run the fixed v3 protocol, archive machine-readable outputs and provenance,
+4. Run the fixed v3 protocol, archive machine-readable outputs and provenance,
    then extend figure/table generation and update the manuscript and changelog.
 
 ## Files expected to change
 
-- Add focused `tests/test_returns_independent.py`, `tests/test_runtime_invariants.py`
-  and `tests/test_template_evaluation.py`; Bayesian/optimization tests depend on
-  their validation and admission decisions.
-- Add `src/lbo/validation.py` and a v3 evaluation entry point such as
-  `analysis/run_v3.py`, reusing the existing benchmark sampler and financial engine.
+- Foundation files now added: `tests/test_returns_independent.py`,
+  `tests/test_runtime_invariants.py`, `src/lbo/validation.py`, and
+  `analysis/run_v3_foundation.py`. Add `tests/test_template_evaluation.py` next;
+  Bayesian/optimization tests depend on their validation and admission decisions.
 - Audit `analysis/calibration/bayes_calibrate.py`; amend it only if justified by
   independent failures. Any retained optimizer belongs in a separate tested module.
 - Add versioned configuration and reports under `docs/` and `results/v3/`.
@@ -79,6 +89,6 @@ should be reused, not recreated. See `results/v3/baseline/verification.json`,
   `paper/ifrs16_lbo_ssrn_v3.tex`/PDF, with reproduction instructions and changelog.
   Preserve the reviewed v2 source and artifacts.
 
-This checkpoint completes branch consolidation and baseline reproduction only.
-No v3 numerical methodology, financial-model changes or manuscript rewrite has
-been undertaken, and no Bayesian or optimization result has been admitted.
+Branch consolidation, baseline reproduction and foundation financial validation
+are complete. No threshold selection, Bayesian analysis, optimization, financial
+model change or manuscript rewrite has been undertaken.
