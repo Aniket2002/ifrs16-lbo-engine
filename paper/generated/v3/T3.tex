@@ -1,0 +1,20 @@
+% Claims: SCR-004, SCR-005, SCR-006, SCR-007
+\begin{table}[htbp]\centering\small
+\caption{Aggregate threshold-transfer trade-off}\label{tab:T3}
+\begin{tabular}{lrr}
+\toprule
+Metric & Transferred threshold & Fixed threshold \\
+\midrule
+True positives & 15 & 3 \\
+False positives & 38 & 0 \\
+True negatives & 142 & 180 \\
+False negatives & 5 & 17 \\
+Recall & 15/20 (75.0\%) & 3/20 (15.0\%) \\
+Specificity & 142/180 (78.9\%) & 180/180 (100.0\%) \\
+Balanced accuracy & 0.769 & 0.575 \\
+Precision & 15/53 (28.3\%) & 3/3 (100.0\%) \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{\linewidth}\footnotesize Both policies classify the same 200 scenarios: 20 failures and 180 non-failures. The fixed threshold is 0.5. Rates show numerator/denominator; balanced accuracy averages recall and specificity. Aggregate ROC-AUC is 0.947 and average precision is 0.781 for the unchanged score under both policies. This identity is not independent generalization evidence.\end{minipage}
+\end{table}

@@ -1,0 +1,18 @@
+% Claims: ENG-001, ENG-002, ENG-003
+\begin{table}[htbp]\centering\small
+\caption{Financial-engine validation evidence}\label{tab:T2}
+\begin{tabular}{lr}
+\toprule
+Check & Archived evidence \\
+\midrule
+Independent return & 14.87\% expected and actual \\
+Independent MOIC & 2.00 expected and actual \\
+Debt schedule & Exact match to independent schedule \\
+Runtime validation & 200 paths; 1000 scenario-years \\
+Recorded invariant failures & 0 \\
+Adversarial corruption checks & 6 specified corruptions detected \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{\linewidth}\footnotesize The recorded return comparison uses the archived tolerance. These checks establish consistency on tested paths, not correctness for every possible input or validation against external transactions.\end{minipage}
+\end{table}

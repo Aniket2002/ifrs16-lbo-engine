@@ -223,6 +223,9 @@ calibration_summary.json
 !paper/ifrs16_lbo_ssrn_v2.pdf
 !paper/figures/v2/*.pdf
 !paper/figures/v2/*.png
+!paper/ifrs16_lbo_ssrn_v3.pdf
+!paper/figures/v3/*.pdf
+!paper/figures/v3/*.png
 paper/*.aux
 paper/*.out
 paper/*.fls
