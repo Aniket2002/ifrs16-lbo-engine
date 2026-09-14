@@ -1,0 +1,17 @@
+........................................................................ [ 94%]
+....                                                                     [100%]
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.0-final-0 _______________
+
+Name                            Stmts   Miss  Cover   Missing
+-------------------------------------------------------------
+src\lbo\__init__.py                 9      0   100%
+src\lbo\analytic_bounds.py         16      0   100%
+src\lbo\covenants.py               34      2    94%   12, 30
+src\lbo\data.py                    19      0   100%
+src\lbo\full_simulation.py        124      0   100%
+src\lbo\lbo_model.py              187    169    10%   26-34, 38, 41-44, 47-52, 91-142, 164-192, 196-200, 206-375
+src\lbo\lbo_model_analytic.py     244    132    46%   247, 273-274, 291, 303-360, 366-445, 450-520, 524
+-------------------------------------------------------------
+TOTAL                             633    303    52%
+Required test coverage of 52% reached. Total coverage: 52.13%

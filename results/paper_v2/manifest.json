@@ -1,0 +1,68 @@
+{
+  "source_commit": "f07796efc537468122804e6eae25b1a4f284efbb",
+  "benchmark_commit": "f07796efc537468122804e6eae25b1a4f284efbb",
+  "source_files_dirty": false,
+  "python": "3.14.0",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "seed": 42,
+  "scenarios": 200,
+  "horizon_years": 5,
+  "bootstrap_attempts": 500,
+  "benchmark_command": "python -m analysis.run_benchmark --seed 42",
+  "figure_command": "python -m analysis.scripts.generate_paper_v2_figures --run-benchmark",
+  "sha256": {
+    "analysis/scripts/generate_paper_v2_figures.py": "ef83d25fe9f5ca5175dff3a22c326190558bafe0b9c7a7c93025f37d5934a1da",
+    "analysis/scripts/verify_paper_v2.py": "b21cfd20affe4fd62d27797fac1b80d763f0c65d23de4017f2b7ed0615d97635",
+    "analysis/run_benchmark.py": "d64551b897cc2bf270e1b8f495d1751acfdb1cc4dfc8acac4f0dac2fdb15a70c",
+    "src/lbo/full_simulation.py": "30b9dbde94f7d95d9b78125625094c0e2a4f4c8dc1a6dd3fee8e63378c224725",
+    "src/lbo/lbo_model_analytic.py": "303b8643047b6f4c7c78111bd51bcd53aa1ac414e88643fe6bf69d93d2ab86be",
+    "src/lbo/covenants.py": "748cef743b7c6f817c710efc0bf74fb9da930f42204fb78492f07f3d224b473d",
+    "src/lbo/analytic_bounds.py": "13f4e5878d6cfbad59bd4a4641e0887cb13bb22d6f68765f4ae29424fbe5567b",
+    "analysis/scripts/case_study_accor.py": "e963d1f384dd4c5df9293f65a078b8672417dc6544a43145c506edc7219915e5",
+    "paper/ifrs16_lbo_ssrn_v2.tex": "f4ad8c7da1c8af0446edb812fb883fb7c095c1a1c1cfad99ccfbce65c9fc0a3e",
+    "data/case_study/accor.csv": "69279d8f507f69095b51f2737e47a8a338ac4ad6a34a979a05ecf6033018520f",
+    "data/synthetic/operators.csv": "54261ec2efa13b908c426193eabcd71f33865c5d9a39bb6b3fdbd8d9e7cf70a5",
+    "data/synthetic/scenario_parameters.csv": "eb3da4ac4e7b5af0b56cd0a47c4db31b41d607bad95e0f3c63efbd39d4c3618e",
+    "src/lbo/data.py": "abaa3180d760e55721c0ca0dd2935b3cf0063fa2d03b0165eded18be3abe51f5",
+    "src/lbo/__init__.py": "e849dcf9d10358288da116e68a744719ee91c679c79c997d5fdae1e85815c3fb",
+    "pyproject.toml": "9d308a79e17de4effc89c4e63174078c618655f8802d5b9d88828a03a1c8ff9b",
+    "paper/REVISION_AUDIT.md": "b2605002b65bba6a68c312e547010a85671e496a9f3052815d6285ddee063c98",
+    "paper/REPRODUCE_V2.md": "132f3b395971c684cd484c2b2d1ce0d3aae747cf1d2c3eea486f5d63e607441d"
+  },
+  "environment_sha256": "8adf35826a18275799f7a7fe3e5a9723631ddf53f7b7159965aad9dcd974c0eb",
+  "benchmark_sha256": "2430cd2816ea2fc403c1a9e7409212874f21247823ee31c7f77aaa1c5973cb31",
+  "figure_sha256": {
+    "accor_case_study.pdf": "e74a4ce127a9597e595c3f8c55f47d194c63c82bfa425aa4c542b29aa25db3b7",
+    "accor_case_study.png": "780ede3a7d631d1382a32dcdb0e3c8f26e0421b70528aa415f7981fbf1603fdb",
+    "F12_theoretical_guarantees.pdf": "f2efb647af42fdf58b45d0051aa30c47151cd7df4835a6792a7a512d9c6de165",
+    "F12_theoretical_guarantees.png": "91d859a50479214a8150d8c84d6e1a0ad95952e9e38f24d7a014460adc868f5a",
+    "F13_benchmark_overview.pdf": "913c6d1a165d9118a94026d1eca521249ad12f20b6d7acb1bbbc87ab7c271c64",
+    "F13_benchmark_overview.png": "8b1b26d87e39933254cf747fd2e6e3c240edbf5b02ffc39ffdfc30b15f1bcd55",
+    "F14_method_comparison.pdf": "6c8aed60ac7105f37be8e89c5df6a8dcda6a17d10f6a998bf49f95a9ac0bf48c",
+    "F14_method_comparison.png": "343d2f1c8e08f6412533a220ebae4b35b1c595270b3ebe0f1cf312239074fc2b",
+    "F15_failure_modes.pdf": "20245e487a6f654ba4fe09f23edbad08ce2381ba8c2b87f45de628b1bc1573b2",
+    "F15_failure_modes.png": "ba2594963503c3d25981650b60bb930de0fbde6476156bb1e696a315d891d492",
+    "F16_breach_composition.pdf": "c0c57f48b26b9d49f15276435502bafcb9cc80249eeafd9aa397ba402cebfa95",
+    "F16_breach_composition.png": "7cd59bfa8dd6fdfad5161148d04d2c37da0579474df918c4584849108ec6f28f"
+  },
+  "regime_counts": {
+    "base": 105,
+    "downside": 55,
+    "distressed": 40
+  },
+  "overlapping_failure_counts": {
+    "payment_default": 17,
+    "insolvency": 20,
+    "covenant_breach": 19
+  },
+  "confusion_matrix_actual_rows_predicted_columns": [
+    [
+      180,
+      0
+    ],
+    [
+      17,
+      3
+    ]
+  ]
+}

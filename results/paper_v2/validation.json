@@ -1,0 +1,54 @@
+{
+  "source_commit": "f07796efc537468122804e6eae25b1a4f284efbb",
+  "benchmark_commit": "f07796efc537468122804e6eae25b1a4f284efbb",
+  "baseline_commit": "3903eccbf4650e84691aac9834caacdda0c7f5e5",
+  "financial_code_and_tests_unchanged_from_baseline": true,
+  "pytest": {
+    "command": "python -m pytest -q --cov=src/lbo --cov-report=term-missing --cov-fail-under=52",
+    "passed": 76,
+    "exit_code": 0,
+    "aggregate_statement_coverage_pct": 52.13,
+    "full_simulation_statement_coverage_pct": 100
+  },
+  "ruff_check": "passed",
+  "ruff_format_check": "passed",
+  "full_seed42_benchmark": "passed; exact baseline financial agreement, excluding timings and git SHA",
+  "figure_generation": "passed; six PDF and six PNG outputs; all six error metrics reconstructed and checked",
+  "pdf": {
+    "pages": 16,
+    "figures": 6,
+    "sha256": "aeeda717feac8a917a1ca3a05957efad859539787769deee26a48ec35eed1dd7",
+    "all_pages_visually_inspected": true,
+    "inspected_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "findings": "All figures render; labels, legends, tables and equations legible. Accor 2020 gaps intentional. No missing graphics, undefined citations/references, duplicate labels or overfull boxes."
+  },
+  "build": {
+    "engine": "Tectonic 0.17.0",
+    "command": "tectonic --keep-logs paper/ifrs16_lbo_ssrn_v2.tex",
+    "fallback_reason": "Neither latexmk nor pdflatex installed",
+    "executable_sha256": "99ffcfdbf1ebf8bdda9e791942e3d06aedb12463fddc33f07de6f5211c8bf08d",
+    "tex_warnings": [],
+    "host_diagnostic": "Fontconfig emitted missing default configuration notice; bundled TeX fonts rendered successfully."
+  },
+  "diff_review": "Reviewed source and artifacts. Whitespace checks pass except six inherited trailing-whitespace lines in byte-preserved historical source and two lines in verbatim TeX build log.",
+  "ci_status": "Remote Python 3.10-3.12 matrix not run locally; no remote success claimed before opening PR.",
+  "unsupported_claim_review": "Old result assertions absent from canonical manuscript; historical values retained only in the audit and historical archive.",
+  "publication_state": "Source commit followed by generated-artifact commit; no tag or release, no merge."
+}
