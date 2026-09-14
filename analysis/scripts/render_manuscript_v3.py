@@ -1,4 +1,4 @@
-"""Render only the eight frozen tables and six frozen figures; never run a model."""
+"""Render seven public tables and six figures from frozen plans; never run a model."""
 
 import csv
 import hashlib
@@ -104,8 +104,13 @@ class Renderer:
             folder.mkdir(parents=True, exist_ok=True)
         self.cells = []
         self.macros = {}
-        self.tables = {x["table_id"]: x for x in load(FREEZE + "table_plan.json")}
+        self.tables = {
+            x["table_id"]: x for x in load(FREEZE + "table_plan.json") if x["table_id"] != "A3"
+        }
         self.figures = {x["figure_id"]: x for x in load(FREEZE + "figure_plan.json")}
+        coverage_table = self.table_dir / "A3.tex"
+        if coverage_table.exists():
+            coverage_table.unlink()
 
     def cell(self, exhibit, reference, style="number", denominator=None, macro=None):
         value = resolve(ROOT, reference)
@@ -154,7 +159,11 @@ class Renderer:
         plan = self.tables[tid]
         text = "% Claims: " + ", ".join(plan["claim_ids"]) + "\n"
         text += r"\begin{table}[htbp]\centering\small" + "\n"
-        text += r"\caption{" + plan["title"] + r"}\label{tab:" + tid + "}\n"
+        public_titles = {
+            "T5": "Synthetic financing-design methodological demonstration",
+            "A1": "Bayesian exclusion diagnostics",
+        }
+        text += r"\caption{" + public_titles.get(tid, plan["title"]) + r"}\label{tab:" + tid + "}\n"
         text += "\n\\medskip\n\n".join(panels)
         text += (
             "\n\\par\\smallskip\n\\begin{minipage}{\\linewidth}\\footnotesize "
@@ -343,7 +352,7 @@ class Renderer:
                 ),
                 self.panel(["Template", "TP", "FP", "TN", "FN", "Transfer BA", "Fixed BA"], b),
             ],
-            "BA: balanced accuracy; AP: average precision. Counts identify each class denominator (positives = TP+FN; negatives = TN+FP). Train/test cells give scenarios/failures. All threshold fitting excludes the test template. Undefined metrics for Template 005 are not zeros; this template has no failures and supports no within-template ranking inference. Thresholds are rounded for display only.",
+            "BA: balanced accuracy; AP: average precision. Counts identify each class denominator (positives = TP+FN; negatives = TN+FP). Train/test cells give scenarios/failures. All threshold fitting excludes the test template. Template 003 contains one positive observation; AUC = 1.000 therefore means only that this single positive ranked above the 46 non-failures in the frozen realization and should not be interpreted as a precise estimate of discrimination. Undefined metrics for Template 005 are not zeros; this template has no failures and supports no within-template ranking inference. Thresholds are rounded for display only.",
         )
         data = []
         for label, key, style, n in [
@@ -403,7 +412,7 @@ class Renderer:
                     b,
                 ),
             ],
-            "Classification B: methodological demonstration only. Each policy is evaluated on the same 500 operating scenarios, with 100 per held-out template; the paired rows are not independent samples. Fold returns are medians (n=100 each); amortisation and sweep are stipulated policy parameters. Returns use the limited-liability sponsor convention. Grid-boundary selection is not an economic optimum.",
+            "Methodological demonstration only. Each policy is evaluated on the same 500 operating scenarios, with 100 per held-out template; the paired rows are not independent samples. Fold returns are medians (n=100 each); amortisation and sweep are stipulated policy parameters. Returns use the limited-liability sponsor convention. Grid-boundary selection is not an economic optimum.",
         )
         load(B + "recovery_summary.json")
         data = []
@@ -421,7 +430,7 @@ class Renderer:
             ["Frozen tail-ESS gate", "Failed"],
             ["Material prior sensitivity", "Present"],
             ["Input provenance", "Unverified/stipulated"],
-            ["Main-results admission", "C: excluded"],
+            ["Substantive-results treatment", "Excluded"],
         ]
         self.table(
             "A1",
@@ -512,40 +521,7 @@ class Renderer:
                     cdata,
                 ),
             ],
-            "Classification B; same synthetic system, descriptive small cells. Risk entries are count/n (percent); return percentages have n in the same row. Template 004 regime counts are 48/100, 31/100 and 21/100, close to stipulated probabilities 50/30/20 percent. Reference distressed P10 is the limited-liability floor: 7/21 zero recoveries (33.3 percent) place it at -100 percent. No confidence intervals are inferred.",
-        )
-        data = []
-        cov = load(D + "coverage.json")["files"]
-        for file, label in [
-            ("analysis\\optimization\\financing_policy.py", "Search kernel"),
-            ("analysis\\run_v3_optimization.py", "Runner"),
-        ]:
-            cov[file]["summary"]
-
-            def c(k, style):
-                return self.jc("A3", D + "coverage.json", ["files", file, "summary", k], style)
-
-            data.append(
-                [
-                    label,
-                    c("percent_statements_covered", "coverage")
-                    + " ("
-                    + c("covered_lines", "integer")
-                    + "/"
-                    + c("num_statements", "integer")
-                    + ")",
-                    c("percent_branches_covered", "branch")
-                    + " ("
-                    + c("covered_branches", "integer")
-                    + "/"
-                    + c("num_branches", "integer")
-                    + ")",
-                ]
-            )
-        self.table(
-            "A3",
-            [self.panel(["Module", "Statement coverage", "Branch coverage"], data)],
-            "Focused optimization coverage only. The runner has lower branch coverage than the search kernel. Coverage alone does not validate the optimizer; independent toy, held-out independence and runtime checks provide separate evidence. Statement and branch coverage are distinct measures.",
+            "Methodological financing demonstration in the same synthetic system; cells are descriptive and small. Risk entries are count/n (percent); return percentages have n in the same row. Template 004 regime counts are 48/100, 31/100 and 21/100, close to stipulated probabilities 50/30/20 percent. Reference distressed P10 is the limited-liability floor: 7/21 zero recoveries (33.3 percent) place it at -100 percent. No confidence intervals are inferred.",
         )
 
     def render_values(self):
@@ -831,6 +807,9 @@ class Renderer:
             for p in sorted(folder.iterdir())
             if p.name != "provenance.tex"
         }
+        coverage = load(D + "coverage.json")["files"]
+        search_kernel = coverage["analysis\\optimization\\financing_policy.py"]["summary"]
+        runner = coverage["analysis\\run_v3_optimization.py"]["summary"]
         report = {
             "claim_freeze_commit": FREEZE_COMMIT,
             "input_only": True,
@@ -841,6 +820,20 @@ class Renderer:
             "output_sha256": artifacts,
             "protected_hash_check": check,
             "rounding": "Frozen manuscript policy, applied only at rendering; count/rate checks reject noninteger recovery.",
+            "non_public_coverage_metadata": {
+                "decision": "Former Table A4 removed from the public manuscript; exact coverage remains repository validation metadata.",
+                "source": D + "coverage.json",
+                "search_kernel": {
+                    "statement_coverage_percent": round(
+                        search_kernel["percent_statements_covered"], 2
+                    ),
+                    "branch_coverage_percent": round(search_kernel["percent_branches_covered"], 1),
+                },
+                "runner": {
+                    "statement_coverage_percent": round(runner["percent_statements_covered"], 2),
+                    "branch_coverage_percent": round(runner["percent_branches_covered"], 1),
+                },
+            },
         }
         (self.report_dir / "render_manifest.json").write_text(
             json.dumps(report, indent=2) + "\n", encoding="utf-8"

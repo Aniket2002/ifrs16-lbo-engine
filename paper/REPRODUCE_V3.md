@@ -48,9 +48,11 @@ inspect every page, check all exhibit-heavy pages, and update that record with t
 actual reviewed hash. Intermediate build success is not final visual approval.
 
 Frozen planning IDs remain in source labels. Publication numbers are Tables 1--4
-for T1--T4, then Tables A1--A4 for T5/A1/A2/A3. Main figures are 1--3; appendix
+for T1--T4, then Tables A1--A3 for T5/A1/A2. Main figures are 1--3; appendix
 figures are numbered in their manuscript order: A-F2, A-F3, A-F1 become A1, A2, A3.
-All eight tables and six figures come from the frozen plans.
+All seven public tables and six figures come from the frozen plans. The focused
+optimization coverage formerly shown as Table A4 remains in repository validation
+metadata and the build/audit report.
 
 Lightweight checks:
 

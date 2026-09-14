@@ -196,6 +196,7 @@ def run_audit(source_commit, build_result, visual_review=None):
     doc = pymupdf.open(PDF)
     pages = [normalize(page.get_text()) for page in doc]
     full = "\n".join(pages)
+    flat_full = re.sub(r"\s+", " ", full)
     (folder / "pdf_text.txt").write_text(full, encoding="utf-8")
     pdf_scan = scan_prohibited(full)
     labels = {
@@ -205,10 +206,17 @@ def run_audit(source_commit, build_result, visual_review=None):
             SOURCE.with_suffix(".aux").read_text(),
         )
     }
-    cited = set(re.findall(r"\\cite[pt]\{([^}]+)\}", text))
+    cited = {
+        key.strip()
+        for group in re.findall(r"\\cite[pt]\{([^}]+)\}", text)
+        for key in group.split(",")
+    }
     bib = set(re.findall(r"\\bibitem(?:\[[^]]*\])?\{([^}]+)\}", text))
     abstract = text.split("\\begin{abstract}")[1].split("\\end{abstract}")[0]
     main = text.split("\\section{Introduction}")[1].split("\\appendix")[0]
+    literature = text.split("\\section{Related literature and validation perspective}")[1].split(
+        "\\section{IFRS 16 covenant-screening setup}"
+    )[0]
     used = sorted(set(cid for b in audit["blocks"] for cid in b.get("claim_ids", [])))
     freeze = validate(ROOT)
     cell_errors = []
@@ -237,9 +245,38 @@ def run_audit(source_commit, build_result, visual_review=None):
         "protected_hashes": freeze["passed"],
         "rendered_numeric_cells": not cell_errors,
         "exhibit_hashes": outputs_match,
-        "eight_tables": len([k for k in labels if k.startswith("tab:")]) == 8,
+        "seven_tables": len([k for k in labels if k.startswith("tab:")]) == 7,
         "six_figures": len([k for k in labels if k.startswith("fig:")]) == 6,
-        "bibliography": cited == bib and len(bib) == 2,
+        "bibliography": cited == bib and 8 <= len(bib) <= 12,
+        "publication_title_uses_ifrs_16": "Validating IFRS 16 Covenant Screening"
+        in doc.metadata["title"],
+        "internal_version_label_removed": "V3 manuscript" not in full,
+        "reader_facing_admission_labels_removed": not re.search(
+            r"classification\s+[BC]\b", full, re.I
+        ),
+        "abstract_length": 160 <= word_count(abstract, macros) <= 190,
+        "template_003_auc_note": (
+            "Template 003 contains one positive observation; AUC = 1.000 therefore means only "
+            "that this single positive ranked above the 46 non-failures in the frozen realization "
+            "and should not be interpreted as a precise estimate of discrimination."
+        )
+        in flat_full,
+        "code_availability": bool(
+            re.search(r"github\.com/Aniket2002/ifrs16\s*-\s*lbo\s*-\s*engine", full)
+        ),
+        "coverage_metadata_preserved": render.get("non_public_coverage_metadata", {})
+        == {
+            "decision": "Former Table A4 removed from the public manuscript; exact coverage remains repository validation metadata.",
+            "source": "results/v3/post_optimization_diagnostics/coverage.json",
+            "search_kernel": {
+                "statement_coverage_percent": 88.68,
+                "branch_coverage_percent": 70.0,
+            },
+            "runner": {
+                "statement_coverage_percent": 59.89,
+                "branch_coverage_percent": 55.0,
+            },
+        },
         "no_placeholder_or_broken_reference": not re.search(
             r"\?\?|\bTODO\b|\bPLACEHOLDER\b|\ufffd|[A-Z]+-\d{3}", full
         ),
@@ -259,8 +296,9 @@ def run_audit(source_commit, build_result, visual_review=None):
         "page_count": len(doc),
         "abstract_word_count": word_count(abstract, macros),
         "main_text_word_count": word_count(main, macros),
+        "literature_context_word_count": word_count(literature, macros),
         "word_count_policy": "TeX prose after macro expansion; excludes abstract from main count, floats, table fragments, displayed equations, bibliography and appendices; includes headings and inline numeric tokens.",
-        "table_count": 8,
+        "table_count": 7,
         "figure_count": 6,
         "appendix_count": 3,
         "exhibit_labels": labels,
@@ -291,7 +329,25 @@ def run_audit(source_commit, build_result, visual_review=None):
             "passed": checks["bibliography"],
             "cited_keys": sorted(cited),
             "entries": len(bib),
-            "provenance": "Existing manual bibliography in paper/ifrs16_lbo_ssrn_v2.tex; no external literature expansion.",
+            "provenance": "IFRS Foundation and peer-reviewed publisher, journal, PubMed/PMC, and MIT Press records verified during the publication-polish pass.",
+        },
+        "publication_polish": {
+            "literature_sources_added": [
+                "Dichev and Skinner (2002)",
+                "Christensen and Nikolaev (2012)",
+                "Fawcett (2006)",
+                "Hand (2009)",
+                "Steyerberg et al. (2010)",
+                "Vickers and Elkin (2006)",
+                "Quinonero-Candela et al. (2008)",
+            ],
+            "title_normalization": "Reader-facing references use IFRS 16; repository identifiers remain unchanged.",
+            "internal_version_label": "V3 manuscript removed; title page dated September 2026.",
+            "abstract_revision": "Retains all frozen headline results and adds the Template 004 balanced-accuracy comparison.",
+            "template_003_auc_note": "Table 4 states that the single positive ranked above 46 non-failures and that AUC 1.000 is not a precise discrimination estimate.",
+            "coverage_table": render["non_public_coverage_metadata"],
+            "code_availability": "Public repository, canonical branch and exact manuscript-source lineage stated in the reproducibility appendix.",
+            "numerical_conclusions": "Unchanged; no experiment, model, threshold, simulation, optimization, Bayesian result or admission decision was changed.",
         },
         "build_status": build_result,
         "protected_artifact_hash_status": freeze,

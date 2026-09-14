@@ -69,6 +69,14 @@ def test_render_is_deterministic_and_preserves_frozen_inputs(tmp_path):
     first = Renderer(tmp_path / "first").run()
     second = Renderer(tmp_path / "second").run()
     assert first["output_sha256"] == second["output_sha256"]
-    assert len(first["tables"]) == 8
+    assert len(first["tables"]) == 7
     assert len(first["figures"]) == 6
+    assert first["non_public_coverage_metadata"]["search_kernel"] == {
+        "statement_coverage_percent": 88.68,
+        "branch_coverage_percent": 70.0,
+    }
+    assert first["non_public_coverage_metadata"]["runner"] == {
+        "statement_coverage_percent": 59.89,
+        "branch_coverage_percent": 55.0,
+    }
     assert first["protected_hash_check"]["passed"]
