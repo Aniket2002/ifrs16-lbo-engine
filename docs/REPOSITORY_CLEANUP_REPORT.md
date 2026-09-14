@@ -21,6 +21,27 @@ Two cleanup documents were added, leaving 237 tracked files.
 | Working-tree directories, excluding `.git` | 6,578 | 35 |
 | Working-tree size, excluding `.git` | 1,607,445,643 bytes (1,532.98 MiB) | 5,392,716 bytes (5.14 MiB) |
 
+## Pre-deletion decision record
+
+The pre-deletion inventory classified final v3 manuscript, evidence, source data,
+active code, tests, and configuration as **keep**; claim audits, historical source,
+and reviewed v2 results as **keep for provenance**; corrected v2 publication
+material and documented older workflows as **legacy but useful**; local caches,
+environments, previews, and compiler output as **generated and reproducible**;
+and unique older results or documents with an unclear dependency as **uncertain**.
+Uncertain material was preserved.
+
+Deletion candidates were searched across source, imports, tests, Make targets,
+documentation, TeX inputs, JSON manifests, hashes, and reproducibility commands.
+High-risk candidates were never eligible. Low-risk candidates were removed only
+when they were empty, generated, or unreferenced. The sole medium-risk candidate
+was the old v1 ZIP: it had no path consumer, duplicated a recoverable repository
+snapshot, and retained source/audit history covered its provenance role.
+
+This section preserves the cleanup plan's unique pre-deletion rationale. The
+separate plan was removed during documentation consolidation after confirming
+that no manifest, audit, test, script, or reader-facing document referenced it.
+
 ## Files removed
 
 Tracked deletions:

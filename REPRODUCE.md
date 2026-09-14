@@ -1,7 +1,13 @@
-# Reproduce the current workflow
+# Reproduce the current repository
 
-From the repository root, create and activate a virtual environment (CI uses
-Python 3.10, 3.11 and 3.12), then install the package and development tools:
+`main` is the authoritative current branch. The final paper is reproduced from
+committed, frozen evidence; ordinary validation does not require rerunning the
+archived stochastic experiments.
+
+## Environment and checks
+
+From the repository root, create and activate a virtual environment, then install
+the package and development tools. CI supports Python 3.10, 3.11, and 3.12.
 
 ```powershell
 python -m venv .venv
@@ -9,31 +15,50 @@ python -m venv .venv
 python -m pip install -e ".[dev]"
 python -m ruff check .
 python -m ruff format --check .
-python -m pytest -q --cov=src/lbo --cov-report=term-missing --cov-fail-under=52
+python -m pytest -q --no-cov
+python analysis/validate_manuscript_freeze.py
+```
+
+## Final manuscript
+
+The exact manuscript workflow, Tectonic version, visual-review requirement, and
+artifact conventions are documented in [`paper/REPRODUCE_V3.md`](paper/REPRODUCE_V3.md).
+The commands are:
+
+```powershell
+python -m analysis.scripts.render_manuscript_v3
+python -m analysis.scripts.build_manuscript_v3
+python -m analysis.scripts.audit_manuscript_v3
+```
+
+The renderer produces seven public tables and six figures from archived inputs.
+The final build records its source commit in generated provenance, so a build from
+a later commit need not be byte-identical to the archived publication PDF. A new
+PDF is not considered visually approved until its own review record is completed.
+
+## Optional benchmark regeneration
+
+The older benchmark command remains available for controlled reproduction:
+
+```powershell
 python -m analysis.run_benchmark --smoke-test
 python -m analysis.run_benchmark --seed 42
 ```
 
-The benchmark writes `output/benchmark/benchmark_report.json`. The full command
-overwrites the smoke report. See [the protocol](docs/experimental_design.md) for
-metrics, classification and reproducibility limits. No calibration curve or Brier
-score is generated. Preserve the exact code revision (including any local diff),
-data checksums and `python -m pip freeze` with archived results.
+It writes `output/benchmark/benchmark_report.json`; the full run overwrites the
+smoke report. Preserve the exact revision, local diff, data checksums, dependency
+versions, and output if conducting a new run. This benchmark command is separate
+from the frozen manuscript build and is unnecessary for validating the final PDF.
 
-The financial regression suite covers the full annual simulation, but aggregate
-coverage remains about 52% because legacy simulation and analytic utilities have
-substantial untested paths. The attempted 70% gate is not supported by the suite;
-CI retains 52% without excluding code from measurement.
-
-Run the separate Accor illustration with:
+The Accor illustration remains available as:
 
 ```powershell
 python analysis/scripts/case_study_accor.py
 ```
 
-It writes `analysis/figures/accor_case_study.png` and
-`output/accor_case_study_results.csv`. The optional calibration CLI is a separate
-workflow requiring `--input` and a pandas Parquet engine; it is not run by the
-benchmark. Consult `python analysis/calibration/bayes_calibrate.py --help` before
-using it. There is no current `output/manifest.json` or `setup.py` archive contract.
-Older paper snapshots are not updated by these commands.
+It writes ignored outputs under `analysis/figures/` and `output/`. The optional
+calibration CLI is also separate from the benchmark and final manuscript.
+
+See [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md) for the complete artifact
+map and [`docs/MODEL_AND_METHODS.md`](docs/MODEL_AND_METHODS.md) for benchmark and
+model conventions.

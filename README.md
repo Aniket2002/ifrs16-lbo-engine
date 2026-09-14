@@ -1,101 +1,87 @@
-# IFRS-16 LBO Engine
+# Ranking Is Not Threshold Portability
 
-Practical research code for comparing covenant behavior under IFRS-16 and frozen-GAAP conventions.
+**Validating IFRS 16 Covenant Screening in a Synthetic Benchmark**
 
-## Scope
+This repository contains the final validated research workflow, frozen evidence,
+and publication manuscript for a synthetic study of IFRS 16 covenant screening.
+Its central result is that mechanical correctness and strong pooled ranking do
+not establish that one decision threshold will transfer across structurally
+different borrower archetypes.
 
-This repository contains:
-- A simulation-oriented LBO workflow.
-- A reduced-form analytic screening approximation.
-- Synthetic benchmark utilities for method comparison.
+The authoritative current branch is `main`. The research and manuscript are
+complete; no release, archival DOI, or external-data validation is claimed.
 
-Research framing: assumption-bounded analytic approximations evaluated against simulation.
+## Paper
 
-## What Is Implemented
+- [Final paper (PDF)](paper/ifrs16_lbo_ssrn_v3.pdf)
+- [LaTeX source](paper/ifrs16_lbo_ssrn_v3.tex)
+- [Manuscript reproduction instructions](paper/REPRODUCE_V3.md)
+- [Final manuscript build report](docs/V3_MANUSCRIPT_BUILD_REPORT.md)
 
-- IFRS-16 lease-liability mechanics in the model workflow.
-- Dual-convention covenant reporting (IFRS-16 and frozen-GAAP views).
-- Bayesian-style calibration scripts and sensitivity analysis utilities.
-- Test modules for integration and acceptance checks.
-- Two distinct model families:
-	- Reduced-form analytical model for fast screening.
-	- Full simulation model with explicit operating and financing line items.
+## Reproduce and validate
 
-## Benchmark Data Positioning
+Create a Python environment and install the package with development tools:
 
-The benchmark package is synthetic and intended for method evaluation.
-
-- Data package: `data/synthetic/`
-- Core table: `data/synthetic/operators.csv`
-- Data dictionary: `data/DATA_DICTIONARY.md`
-- Provenance notes: `data/PROVENANCE.md`
-- Separate reported case study: `data/case_study/accor.csv`
-
-Use the benchmark as a transparent synthetic testbed, not as a cleaned panel of public-company financial statements.
-
-## Quick Start
-
-```bash
-git clone https://github.com/Aniket2002/ifrs16-lbo-engine.git
-cd ifrs16-lbo-engine
-pip install -e .
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -e ".[dev]"
 ```
 
-Run a small reproducible case:
+Run the repository checks:
 
-```bash
-python analysis/scripts/case_study_accor.py
+```powershell
+python -m ruff check .
+python -m ruff format --check .
+python -m pytest -q --no-cov
+python analysis/validate_manuscript_freeze.py
 ```
 
-Run benchmark regeneration (single command):
+Render and build the final manuscript from frozen evidence:
 
-```bash
-python -m analysis.run_benchmark --seed 42
+```powershell
+python -m analysis.scripts.render_manuscript_v3
+python -m analysis.scripts.build_manuscript_v3
+python -m analysis.scripts.audit_manuscript_v3
 ```
 
-Run tests:
+The manuscript workflow reads archived evidence. It does not rerun a simulation,
+fit, threshold search, bootstrap, optimization, or Bayesian recovery experiment.
+See [reproducibility](docs/REPRODUCIBILITY.md) for the evidence map and toolchain
+details.
 
-```bash
-pytest -q
-```
+## Research scope
 
-## Reproducibility
+The repository implements a full annual financing simulation and a distinct
+reduced-form screening model. The benchmark contains 200 scenarios generated
+from five stipulated synthetic archetypes. The score is a ranking score, not a
+calibrated probability of default, and the results do not establish performance
+on real borrowers.
 
-The revised SSRN manuscript is [available as a PDF](paper/ifrs16_lbo_ssrn_v2.pdf),
-with [LaTeX source](paper/ifrs16_lbo_ssrn_v2.tex), a
-[claim-by-claim revision audit](paper/REVISION_AUDIT.md), and
-[paper reproduction instructions](paper/REPRODUCE_V2.md).
-Its six figures use archived current outputs in `results/paper_v2/`.
+Foundation tests support accounting and financing mechanics on the tested paths.
+The fixed score ranks the frozen synthetic cases strongly in aggregate, while
+training-only thresholds transfer unevenly across archetypes. The Bayesian
+calibration experiment is excluded from substantive results. The separate
+financing-design experiment is retained only as a methodological demonstration.
 
-- Core assumptions are explicitly parameterized in the workflow code.
-- Benchmark reporting is scripted in `analysis/run_benchmark.py`.
-- Outputs include AUC with a bootstrap interval, approximation errors, scenario/failure counts, timing measurements, data checksums, and git SHA in `output/benchmark/benchmark_report.json`.
+Source inputs remain under [`data/synthetic/`](data/synthetic/). Frozen validation
+and manuscript evidence remains under [`results/v3/`](results/v3/).
 
-Opening operating cash is a funded closing use, not an acquisition cash source. With the
-default assumptions, uses are 1,000 purchase price + 30 fees + 40 retained cash;
-450 debt and 620 sponsor equity fund the 1,070 total. The simulation opens with that
-same 40 cash. Entry equity cash flow is exactly -620.
+## Documentation
 
-Mandatory amortisation has priority over the minimum cash reserve. Revolver draws
-for amortisation are spent directly on debt repayment; only separate liquidity
-draws increase cash. Unpaid amortisation and unfunded cash deficits are reported.
-See [model conventions and limitations](docs/model_specification.md) and the
-[current benchmark protocol](docs/experimental_design.md).
+| Topic | Document |
+| --- | --- |
+| Documentation index | [docs/README.md](docs/README.md) |
+| Model and benchmark methods | [docs/MODEL_AND_METHODS.md](docs/MODEL_AND_METHODS.md) |
+| Validation conclusions | [docs/VALIDATION_SUMMARY.md](docs/VALIDATION_SUMMARY.md) |
+| Research contribution and limits | [docs/RESEARCH_CONTRIBUTION.md](docs/RESEARCH_CONTRIBUTION.md) |
+| Reproducibility | [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) |
+| Repository history | [docs/REPOSITORY_HISTORY.md](docs/REPOSITORY_HISTORY.md) |
 
-The benchmark does not generate calibration curves or Brier scores, and its risk
-score is not a calibrated default probability. Timing varies by environment.
-Older manuscript snapshots are not regenerated by this command.
+Detailed protocols, claim governance, source audits, and historical records are
+indexed separately as internal provenance in the documentation index.
 
-## Research Framing
+## Citation and license
 
-Recommended wording for external summaries:
-
-> Developed a reproducible framework for comparing IFRS-16 and frozen-GAAP covenant metrics using simulation, calibration, and assumption-bounded analytic screening approximations under explicit modeling assumptions.
-
-## Citation
-
-If you use this repository, cite the project and your exact commit hash. If referencing the associated paper, use the published SSRN citation details in your manuscript or report.
-
-## License
-
-MIT
+Use the metadata in [`CITATION.cff`](CITATION.cff) and cite the exact commit used.
+The code is available under the [MIT License](LICENSE).
