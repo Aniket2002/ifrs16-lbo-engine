@@ -1,25 +1,26 @@
 Ranking Is Not Threshold Portability:
-Validating IFRS-16 Covenant Screening
+Validating IFRS 16 Covenant Screening
 in a Synthetic Benchmark
 Aniket Bhardwaj
 Independent Researcher
 bhardwaj.aniket2002@gmail.com
-V3 manuscript
+September 2026
 Abstract
-Covenant screening requires a distinction between a mechanically consistent financial model,
+Covenant screening requires separate validation of a mechanically consistent financial engine,
 a score that ranks adverse outcomes, and a decision threshold that transfers across borrower
-structures. We examine these layers in an IFRS-16 synthetic benchmark containing 200 scenar-
-ios across five archetypes, with 20 broad financial failures. The financial engine passes archived
-independent checks and runtime invariants on the tested paths. A fixed screening score achieves
-ROC-AUC 0.947 and average precision 0.781. Leave-one-template-out thresholds, selected us-
-ing only training balanced accuracy, increase recall from 3/20 (15.0%) to 15/20 (75.0%), but
-introduce 38 false positives. Template 004 contributes 37 of those 38 false positives. Thus the
-aggregate improvement coexists with marked cross-archetype instability. The score is not a cal-
-ibrated probability of default, and sparse failures and overlapping training sets limit inference
-beyond the synthetic realization. High ranking performance did not imply a portable decision
-threshold across synthetic borrower archetypes. Engine correctness, ranking performance, and
-decision usefulness require separate validation.
-Keywords: IFRS-16; covenant screening; synthetic benchmark; threshold transfer; model valida-
+structures. We examine these layers in a synthetic IFRS 16 benchmark of 200 scenarios across
+five archetypes, including 20 broad financial failures. Archived independent checks and runtime
+invariants support the engine mechanics on the tested paths. The fixed screening score achieves
+ROC-AUC 0.947 and average precision 0.781. Leave-one-template-out thresholds selected only
+on the training archetypes raise recall from 3/20 (15.0%) under the fixed 0.5 comparator to
+15/20 (75.0%), but generate 38 false positives. This trade-offis sharply heterogeneous: Tem-
+plate 004 contributes 37 of 38 false positives, and its balanced accuracy is 0.513 under the
+transferred threshold versus 0.636 at 0.5. The score is not a calibrated probability of default,
+and sparse failures and overlapping training sets constrain inference beyond this synthetic real-
+ization. Strong ranking therefore did not imply threshold portability across synthetic borrower
+archetypes. Engine correctness, ranking performance, and decision usefulness require separate
+validation.
+Keywords: IFRS 16; covenant screening; synthetic benchmark; threshold transfer; model valida-
 tion.
 1
 Introduction
@@ -43,10 +44,10 @@ tinction between mechanical correctness, ranking performance and threshold porta
 stipulated borrower archetypes. It does not estimate borrower-population performance or claim
 that the observed transfer difficulty occurs with the same frequency outside this system.
 The
-central thesis is a possibility demonstrated within the benchmark: strong ranking can coexist with
-an unstable decision rule.
 1
 
+central thesis is a possibility demonstrated within the benchmark: strong ranking can coexist with
+an unstable decision rule.
 The organization follows that distinction. We first establish what the mechanical validation
 supports, then separate the fixed score from the procedure used to select a threshold. Aggregate
 results are followed by the held-out template evidence, so that a favorable aggregate does not
@@ -80,7 +81,64 @@ Figure 1: Three distinct validation layers. Passing one layer does not establish
 a conceptual synthesis of the frozen validation evidence, not a causal diagram or a claim about
 external borrower performance.
 3
-IFRS-16 covenant-screening setup
+Related literature and validation perspective
+Debt covenants turn accounting measurements into contractual control points. Large-sample ev-
+idence on accounting-based covenants shows that firms cluster close to covenant thresholds and
+that apparent technical violations are economically meaningful rather than rare accounting curiosi-
+ties (Dichev and Skinner, 2002). Covenant violations can transfer control rights to creditors and
+alter firm investment policy, which gives the measured boundary consequences beyond the label
+attached to a screen (Nini et al., 2009). Contract design also distinguishes capital covenants, which
+constrain balance-sheet positions, from performance covenants that act as trip wires when credi-
+tor claims become vulnerable (Christensen and Nikolaev, 2012). These findings do not determine
+the contractual definition for a synthetic benchmark. They instead explain why the accounting
+convention, breach rule and tested financial mechanics must be explicit. IFRS 16 changes the
+recognition of most lessee obligations, subject to exemptions (IFRS Foundation, 2016); whether
+2
+
+a credit agreement incorporates, freezes or adjusts that accounting treatment remains a separate
+contractual question. In the framework used here, this concern belongs first to engine correctness:
+a screen cannot be interpreted until the quantities entering it are calculated consistently with the
+stated convention.
+Ranking quality answers a different question.
+ROC analysis evaluates how a score orders
+positives and negatives as its threshold varies, and it is particularly useful when class frequencies
+or error costs make raw accuracy hard to interpret (Fawcett, 2006). A high ROC-AUC can therefore
+support a discrimination statement without identifying a useful operating threshold. Hand (2009)
+goes further by showing that an AUC summary embeds assumptions about the relative costs of
+errors and can be misleading for comparison when those assumptions do not match the decision
+problem. The broader prediction-model literature likewise treats discrimination, calibration and
+decision-analytic value as separate dimensions of performance (Steyerberg et al., 2010).
+That
+separation is central here. The screening score is a monotone ordering device derived from analytic
+headroom; it has not been calibrated as an event probability.
+Its AUC and average precision
+describe ranking within the frozen benchmark, while the confusion counts describe what happens
+after a particular decision rule is applied.
+Threshold choice adds an objective that ranking metrics do not supply. Decision-curve analysis
+formalizes this point by evaluating predictions through the relative consequences of false-positive
+and false-negative actions over candidate thresholds (Vickers and Elkin, 2006). That literature is
+developed for clinical decisions, but its narrow methodological lesson carries over: a threshold is
+useful only in relation to an action and the costs attached to the two kinds of error. Balanced
+accuracy gives equal weight to sensitivity and specificity and is a transparent selection objective for
+this experiment. It is not an estimate of economic utility. A transferred rule can improve aggregate
+balanced accuracy while imposing an unacceptable burden in one borrower structure, so threshold
+evaluation must retain both confusion counts and subgroup denominators.
+Transport adds a third distinction. Dataset shift refers to changes in the joint distribution of
+inputs and outcomes between training and use, with covariate shift as the special case in which
+the input distribution changes (Quiñonero-Candela et al., 2008). The five archetypes in this study
+create a controlled form of structural heterogeneity rather than a sample from an identified borrower
+population. Leave-one-template-out evaluation asks whether a threshold chosen on four stipulated
+structures behaves similarly on the fifth. It is a stronger check of within-benchmark transfer than
+reapplying a threshold to its fitting rows, but it does not identify performance under an external
+population distribution. The overlapping training sets and sparse positive counts further limit any
+population-style interpretation.
+Together, these literatures motivate the paper’s three layers. Accounting and covenant design
+define what the engine must compute; discrimination evidence evaluates the ordering produced
+by the score; threshold and transport evidence evaluates the resulting rule in its intended setting.
+This paper’s narrower contribution is to use a synthetic IFRS 16 screening system to demonstrate
+why mechanical validation, discrimination and threshold portability should be assessed separately.
+4
+IFRS 16 covenant-screening setup
 The outcome is broad financial failure over five annual observations. It is the union of nonpositive
 EBITDA, payment default, reserve funding deficit, leverage above 6.0, or interest coverage below
 1.8. These are stipulated benchmark tests. Broad failure is consequently not interchangeable with
@@ -105,11 +163,11 @@ z =
 1
 1 + exp(2Ha).
 (1)
+3
+
 Classification declares a positive when z ≥τ. The comparator uses τ = 0.5, including equality.
 The classification boundary and the strict simulated covenant-breach test therefore have different
 equality conventions.
-2
-
 Throughout the paper, z is called a screening score.
 It is not a calibrated probability of
 default. The analytic path and the financial simulation differ in timing, cash, financing and input
@@ -198,7 +256,7 @@ Additions
 0.8%
 All values are stipulated synthetic inputs; monetary quantities share the input file’s currency unit. Growth, margin,
 sweep and lease rates are parameters, not estimated sample frequencies.
-4
+5
 Financial-engine mechanics and validation
 The financial-engine checks provide a foundation for the subsequent screening evaluation. Indepen-
 dent geometric return and MOIC expectations match production within the recorded tolerance,
@@ -215,7 +273,7 @@ and independent return/debt sanity checks. It is not proof of correctness for ev
 economic validity for every modeling convention, or validation against real borrower transactions.
 The engine section is therefore a prerequisite to interpreting the synthetic exercise, not the paper’s
 principal finding.
-3
+4
 
 Table 2: Financial-engine validation evidence
 Check
@@ -234,7 +292,7 @@ Adversarial corruption checks
 6 specified corruptions detected
 The recorded return comparison uses the archived tolerance. These checks establish consistency on tested paths, not
 correctness for every possible input or validation against external transactions.
-5
+6
 Synthetic benchmark and evaluation protocol
 The screening benchmark contains 200 scenarios across 5 synthetic templates and 20 broad financial
 failures.
@@ -257,9 +315,9 @@ Exclusion during threshold fitting is the relevant safeguard in this evaluation.
 earlier choices in the construction of the synthetic benchmark, nor does it establish performance on
 new real operators. The experiment evaluates the transfer of the selected rule within the stipulated
 archetype system. It should not be described as validation of a learned borrower-default model.
-6
+7
 Ranking performance versus threshold transfer
-6.1
+7.1
 Strong discrimination of the fixed score
 The screening score has aggregate ROC-AUC 0.947 and average precision 0.781 on the 200 scenarios,
 of which 20 fail. Figure 2 displays the ROC and precision–recall curves from the frozen scores.
@@ -271,11 +329,11 @@ template from threshold selection cannot change that aggregate ranking. The equa
 not an independent piece of evidence that discrimination transfers across templates.
 The new
 decision evidence is the behavior of the thresholds selected without the held-out template.
-6.2
+7.2
 Recall improves at a material false-positive cost
 Table 3 gives the aggregate confusion counts. Training-selected thresholds yield 15 true positives,
 38 false positives, 142 true negatives and 5 false negatives. The fixed comparator yields 3 true
-4
+5
 
 0.0
 0.2
@@ -356,9 +414,9 @@ economic superiority: that would require an explicit error-cost or utility model
 addressed here is narrower—whether the training-only rule behaves consistently across the held-
 out structures. That question requires the template-level evidence, even though the aggregate
 balanced-accuracy objective improves.
-5
+6
 
-7
+8
 Held-out template results
 Table 4 and Figure 3 make the uneven transfer visible.
 Template 001 misses four of its five
@@ -464,10 +522,12 @@ Fixed BA
 undef.
 undef.
 BA: balanced accuracy; AP: average precision. Counts identify each class denominator (positives = TP+FN; nega-
-tives = TN+FP). Train/test cells give scenarios/failures. All threshold fitting excludes the test template. Undefined
-metrics for Template 005 are not zeros; this template has no failures and supports no within-template ranking infer-
-ence. Thresholds are rounded for display only.
-7.1
+tives = TN+FP). Train/test cells give scenarios/failures. All threshold fitting excludes the test template. Template
+003 contains one positive observation; AUC = 1.000 therefore means only that this single positive ranked above
+the 46 non-failures in the frozen realization and should not be interpreted as a precise estimate of discrimination.
+Undefined metrics for Template 005 are not zeros; this template has no failures and supports no within-template
+ranking inference. Thresholds are rounded for display only.
+8.1
 Cross-archetype heterogeneity
 The secondary evidence is convergent and descriptive. Template 004 shows weak threshold transfer
 and comparatively weak financing-policy outcomes, providing evidence within the same synthetic
@@ -480,9 +540,7 @@ rower evidence. The financing comparison remains a methodological demonstration,
 conditioned cells are small. The descriptive comparison does not show strict dominance on every
 risk metric: base and downside broad-failure rates under selected policies tie at zero. Template
 004 has the lowest absolute opening cash and the highest debt/EBITDA among the stipulated
-archetypes, but not the lowest cash/EBITDA. That distinction prevents an unsupported interpre-
-tation of the cash ratios.
-6
+7
 
 001
 38/5
@@ -540,7 +598,11 @@ racy, with selected thresholds annotated above; Template 005 is undefined. Right
 threshold confusion counts, including the concentration of 37/38 aggregate false positives in Tem-
 plate 004. Tick labels show total scenarios/failures; non-failure counts follow from their difference.
 Aggregated classification is not an equal-weight average across templates.
+archetypes, but not the lowest cash/EBITDA. That distinction prevents an unsupported interpre-
+tation of the cash ratios.
 8
+
+9
 Limitations
 The benchmark is a synthetic system with few archetypes and sparse failures in some folds. The
 overlapping training sets do not supply independent replications. The score is not a calibrated
@@ -560,20 +622,18 @@ The same archetype system appears in both decision procedures.
 Convergence within that system is informative descriptively, but it cannot identify which structural
 component causes the transfer difficulty or establish that the same mechanism operates in observed
 borrowers.
-The financing appendix is classification B, a methodological demonstration with stipulated
+The financing-design experiment is retained as a methodological demonstration with stipulated
 assumptions.
 Its pervasive boundary selection and fixed-rate sensitivity restrict interpretation.
 There is no leverage-dependent credit pricing or recovery process, and the simulation continues
 mechanically after default. Entry and exit retain an asymmetric lease-treatment convention. These
 features preclude treating the selected policies as a substantive financing recommendation.
-The Bayesian component is classification C and excluded from the main results. Unverified cali-
+The Bayesian calibration experiment is excluded from the substantive results. Unverified cali-
 bration inputs and failed frozen technical and prior-sensitivity gates preclude posterior integration.
 This exclusion concerns the examined experiment and its evidence; it is not a general judgment that
 Bayesian methods are invalid. Neither appendix changes the central screening result or supplies
 external borrower validation.
-7
-
-9
+10
 Conclusion
 The synthetic benchmark separates three validation questions that should not be collapsed into one.
 The reviewed engine passes the archived mechanical checks on tested paths. The fixed screening
@@ -586,17 +646,19 @@ nounced template-level instability. The methodological implication is to evaluat
 olds explicitly under structural heterogeneity rather than infer their usefulness from discrimination
 alone. The conclusion is conditional on this synthetic system: it demonstrates neither successful
 deployment in real borrowers nor economic superiority of the selected rule.
-8
+9
 
 A
 Financing-design experiment:
 methodological demonstration
 only
-The financing-design experiment is retained as classification B: a methodological demonstration
-only. The reviewed screening benchmark is unsuitable for sponsor-return optimization because its
-entry valuation is revenue-based while exit valuation is EBITDA-based. The separate financing
-experiment uses EBITDA for both valuation bases. This consistency does not establish market
-calibration or remove the retained entry/exit lease-treatment limitation.
+The financing-design experiment is retained as a methodological demonstration only. The reviewed
+screening benchmark is unsuitable for sponsor-return optimization because its entry valuation is
+revenue-based while exit valuation is EBITDA-based.
+The separate financing experiment uses
+EBITDA for both valuation bases.
+This consistency does not establish market calibration or
+remove the retained entry/exit lease-treatment limitation.
 The separate experiment uses 100 operating scenarios per template and a frozen common policy
 grid. Each fold selects on the other four templates, using the same operating paths for candidates
 and the reference policy. Feasibility requires training broad-failure and payment-default rates no
@@ -618,7 +680,7 @@ scenarios per policy, median annualized sponsor return is 1.10% under the select
 Broad failure is 1.4% (7/500) versus 6.8% (34/500), and
 payment default is 0.6% (3/500) versus 5.0% (25/500). All five folds select the 1.50 debt/EBITDA
 lower boundary; four of five select the 70% maximum sweep parameter.
-Table A1: Synthetic financing-design demonstration (classification B)
+Table A1: Synthetic financing-design methodological demonstration
 Aggregate metric
 Selected policy
 Reference
@@ -676,10 +738,10 @@ Ref. return
 70.0%
 2.74%
 2.68%
-Classification B: methodological demonstration only. Each policy is evaluated on the same 500 operating scenarios,
-with 100 per held-out template; the paired rows are not independent samples. Fold returns are medians (n=100
-each); amortisation and sweep are stipulated policy parameters. Returns use the limited-liability sponsor convention.
-Grid-boundary selection is not an economic optimum.
+Methodological demonstration only. Each policy is evaluated on the same 500 operating scenarios, with 100 per held-
+out template; the paired rows are not independent samples. Fold returns are medians (n=100 each); amortisation
+and sweep are stipulated policy parameters. Returns use the limited-liability sponsor convention. Grid-boundary
+selection is not an economic optimum.
 Figure A1 shows a systematic within-grid preference for lower leverage across the feasible
 observed debt levels. It does not establish what happens below the lower boundary or at infeasible
 levels. Fixed-rate sensitivity changes policy components in 2/5 folds. The independent known-
@@ -687,7 +749,7 @@ optimum toy, training-only checks and runtime invariants support search mechanic
 establish economic optimality.
 Missing endogenous credit pricing and recovery, together with
 mechanical continuation after default, keep the outcome methodological.
-9
+10
 
 1.6
 1.8
@@ -712,21 +774,20 @@ Held-out template
 003
 004
 005
-Figure A1: Feasible observed debt-objective profile in the classification-B demonstration. Each
-fold uses 400 training scenarios. Points are archived best-feasible objectives; infeasible levels are
-missing, and no curve extends below 1.50. Connecting observed feasible levels is a display aid, not
-an estimated surface. The within-grid pattern does not establish an economic optimum.
-10
+Figure A1: Feasible observed debt-objective profile in the methodological financing demonstration.
+Each fold uses 400 training scenarios. Points are archived best-feasible objectives; infeasible levels
+are missing, and no curve extends below 1.50. Connecting observed feasible levels is a display aid,
+not an estimated surface. The within-grid pattern does not establish an economic optimum.
+11
 
 B
 Excluded Bayesian calibration experiment
-The Bayesian calibration experiment is classification C and excluded from the main results.
-The corrected experiment examined synthetic recovery, but the ten named-firm calibration rows
-remained unverified/stipulated.
-Firm names are not variable-level provenance.
-The recorded
-convergence/effective-sampling and prior-sensitivity gates did not support integration, and no
-posterior samples were used in the LBO results.
+The Bayesian calibration experiment is excluded from the substantive results.
+The corrected
+experiment examined synthetic recovery, but the ten named-firm calibration rows remained unveri-
+fied/stipulated. Firm names are not variable-level provenance. The recorded convergence/effective-
+sampling and prior-sensitivity gates did not support integration, and no posterior samples were
+used in the LBO results.
 Table A2 places the failed gates alongside the diagnostic evidence. Attractive synthetic recovery
 does not overcome poor provenance and failed admission criteria. The relevant methodological
 conclusion is exclusion of this experiment from substantive results, not an empirical calibration
@@ -737,7 +798,7 @@ It
 bounds what the current evidence permits. The exclusion is preserved here because it limits the
 admissible interpretation of the broader workflow, not because the excluded method is a principal
 contribution of the paper.
-Table A2: Bayesian exclusion diagnostics (classification C)
+Table A2: Bayesian exclusion diagnostics
 Diagnostic
 Archived result
 Recovery runs
@@ -760,12 +821,12 @@ Material prior sensitivity
 Present
 Input provenance
 Unverified/stipulated
-Main-results admission
-C: excluded
+Substantive-results treatment
+Excluded
 The 18 recovery runs yield 180 parameter evaluations, not 180 independent datasets. Calibration and prior sensitivity
 use ten stipulated named-firm rows. Synthetic recovery does not override the failed diagnostic and prior-sensitivity
 gates; posterior samples were not integrated into LBO results.
-11
+12
 
 C
 Regime diagnostics and reproducibility
@@ -882,18 +943,18 @@ Distressed return (n)
 8.71% (42)
 1.34% (42)
 -10.44% (16)
-Classification B; same synthetic system, descriptive small cells. Risk entries are count/n (percent); return percentages
-have n in the same row. Template 004 regime counts are 48/100, 31/100 and 21/100, close to stipulated probabilities
-50/30/20 percent. Reference distressed P10 is the limited-liability floor: 7/21 zero recoveries (33.3 percent) place it
-at -100 percent. No confidence intervals are inferred.
+Methodological financing demonstration in the same synthetic system; cells are descriptive and small. Risk entries
+are count/n (percent); return percentages have n in the same row. Template 004 regime counts are 48/100, 31/100
+and 21/100, close to stipulated probabilities 50/30/20 percent. Reference distressed P10 is the limited-liability floor:
+7/21 zero recoveries (33.3 percent) place it at -100 percent. No confidence intervals are inferred.
 C.2
-Screening distributions and coverage scope
+Screening score distributions
 Figure A3 displays the frozen screening scores directly by template and outcome.
 No density
 smoothing or score recalibration is used. The transferred threshold is shown for each template, with
 total and positive counts retained. The display supports the ranking-versus-threshold distinction
 without treating a score value as an estimated default probability.
-12
+13
 
 001
 41
@@ -940,9 +1001,12 @@ Downside
 Template / n
 Distressed
 Figure A2: Selected-policy median annualized sponsor return within each realized regime; tick
-labels show template and n. Template 004 is highlighted. Classification B remains methodological,
-and the comparison is descriptive within the same synthetic system, not independent replication
-or causal evidence. Distressed Template 004 has n=21. No uncertainty bars are inferred.
+labels show template and n.
+Template 004 is highlighted.
+The financing experiment remains
+methodological, and the comparison is descriptive within the same synthetic system, not indepen-
+dent replication or causal evidence. Distressed Template 004 has n=21. No uncertainty bars are
+inferred.
 No fail
 Fail
 0.0
@@ -973,28 +1037,8 @@ Figure A3: Raw screening scores by template and failure status. Titles give n an
 non-failure counts are the difference. Dashed lines mark transferred thresholds. Overlapping points
 retain their original values; no smoothing or uncertainty intervals are added. The single positive in
 Template 003 and absence of positives in Template 005 restrict within-template ranking inference.
-13
+14
 
-Table A4 records focused optimization coverage. The search kernel is comparatively well cov-
-ered, while the runner has lower branch coverage.
-Coverage is a description of the exercised
-implementation, not a substitute for the independent toy or mechanical validation. Statement and
-branch coverage are reported separately to avoid conflating their denominators.
-Table A4: Focused optimization coverage and reproducibility scope
-Module
-Statement coverage
-Branch coverage
-Search kernel
-88.68% (47/53)
-70.0% (14/20)
-Runner
-59.89% (109/182)
-55.0% (22/40)
-Focused optimization coverage only.
-The runner has lower branch coverage than the search kernel.
-Coverage
-alone does not validate the optimizer; independent toy, held-out independence and runtime checks provide separate
-evidence. Statement and branch coverage are distinct measures.
 C.3
 Artifact lineage and rendering
 The archived baseline reproduced its financial and statistical fields exactly, excluding runtime
@@ -1002,7 +1046,7 @@ timing and source-commit metadata. Repository reproducibility does not establish
 The present manuscript uses frozen numerical outputs and adds only rendering, exposition and
 build verification.
 The claim-freeze commit is 21d726606f3208bcee6e3e84ae4c357e3a33d79b; the manuscript
-source commit is 4b39bfd8b512d9ed0f84f2073d5ecf5ea184e4ea. The corrected pre-freeze source
+source commit is 52401f00292a9feee762075dcfcc1f92b45be231. The corrected pre-freeze source
 is 0f521a28150fe56f98cdabb3d1cb3664286df124. Input and artifact hashes are preserved in the
 freeze source manifest, with protocol lineage in the freeze summary. Synthetic input definitions
 reside in data/synthetic/operators.csv. The screening benchmark uses seed 42; the separate
@@ -1016,10 +1060,38 @@ toolchain documented for the prior manuscript. Rendering records individual nume
 transformations; source comments retain claim links without exposing claim identifiers in the PDF.
 The final build audit records source and PDF hashes, exhibit counts, citation/reference checks and
 protected-artifact verification.
+C.4
+Code and data availability
+Code, synthetic inputs, frozen validation artifacts and reproduction instructions are available in the
+accompanying public repository at https://github.com/Aniket2002/ifrs16-lbo-engine. The
+repository branch v3/validated-rebuild contains the manuscript lineage; the exact manuscript-
+source commit is recorded above and in the build audit. No archival DOI is claimed.
 References
 IFRS Foundation (2016). IFRS 16: Leases. International Accounting Standards Board. https:
 //www.ifrs.org/issued-standards/list-of-standards/ifrs-16-leases/.
 Nini, G., Smith, D. C., and Sufi, A. (2009). Creditor control rights and firm investment policy.
 Journal of Financial Economics, 92(3), 400–420. https://doi.org/10.1016/j.jfineco.2008
 .04.008.
-14
+Dichev, I. D., and Skinner, D. J. (2002). Large-sample evidence on the debt covenant hypothesis.
+Journal of Accounting Research, 40(4), 1091–1123. https://doi.org/10.1111/1475-679X.00
+083.
+Christensen, H. B., and Nikolaev, V. V. (2012). Capital versus performance covenants in debt
+contracts. Journal of Accounting Research, 50(1), 75–116. https://doi.org/10.1111/j.1475
+-679X.2011.00432.x.
+Fawcett, T. (2006). An introduction to ROC analysis. Pattern Recognition Letters, 27(8), 861–874.
+https://doi.org/10.1016/j.patrec.2005.10.010.
+Hand, D. J. (2009). Measuring classifier performance: A coherent alternative to the area under the
+ROC curve. Machine Learning, 77, 103–123. https://doi.org/10.1007/s10994-009-5119-5.
+Steyerberg, E. W., Vickers, A. J., Cook, N. R., Gerds, T., Gonen, M., Obuchowski, N., Pencina,
+M. J., and Kattan, M. W. (2010). Assessing the performance of prediction models: A framework
+for traditional and novel measures. Epidemiology, 21(1), 128–138. https://doi.org/10.1097/
+EDE.0b013e3181c30fb2.
+15
+
+Vickers, A. J., and Elkin, E. B. (2006). Decision curve analysis: A novel method for evaluating
+prediction models. Medical Decision Making, 26(6), 565–574. https://doi.org/10.1177/0272
+989X06295361.
+Quiñonero-Candela, J., Sugiyama, M., Schwaighofer, A., and Lawrence, N. D., eds. (2008). Dataset
+Shift in Machine Learning. MIT Press. ISBN 978-0-262-17005-5. https://mitpress.mit.edu
+/9780262545877/dataset-shift-in-machine-learning/.
+16

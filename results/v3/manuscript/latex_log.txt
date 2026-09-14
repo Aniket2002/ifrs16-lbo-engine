@@ -514,9 +514,10 @@ Package microtype Info: Loading generic protrusion settings for font family
 ]
 File: figures/v3//F1.pdf Graphic file (type pdf)
 <use figures/v3//F1.pdf>
+ [2]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 71.
- [2] (generated/v3/T1.tex
+(Font)              <10.95> on input line 88.
+ [3] (generated/v3/T1.tex
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -524,19 +525,19 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 4.
 )
-(generated/v3/T2.tex) [3]
+(generated/v3/T2.tex) [4]
 File: figures/v3//F2.pdf Graphic file (type pdf)
 <use figures/v3//F2.pdf>
- [4] (generated/v3/T3.tex) [5] (generated/v3/T4.tex)
+ [5] (generated/v3/T3.tex) [6] (generated/v3/T4.tex)
 File: figures/v3//F3.pdf Graphic file (type pdf)
 <use figures/v3//F3.pdf>
 
-[6] [7] [8] (generated/v3/T5.tex)
+[7] [8] [9] (generated/v3/T5.tex)
 File: figures/v3//A-F2.pdf Graphic file (type pdf)
 <use figures/v3//A-F2.pdf>
- [9
+ [10
 
-] [10] (generated/v3/A1.tex) [11
+] [11] (generated/v3/A1.tex) [12
 
 ]
 (generated/v3/A2.tex)
@@ -544,11 +545,10 @@ File: figures/v3//A-F3.pdf Graphic file (type pdf)
 <use figures/v3//A-F3.pdf>
 File: figures/v3//A-F1.pdf Graphic file (type pdf)
 <use figures/v3//A-F1.pdf>
- (generated/v3/A3.tex) [12
+ [13
 
-] [13] [14]
-(ifrs16_lbo_ssrn_v3.aux)
+] [14] [15] [16] (ifrs16_lbo_ssrn_v3.aux)
 Package rerunfilecheck Info: File `ifrs16_lbo_ssrn_v3.out' has not changed.
-(rerunfilecheck)             Checksum: 54CE432B021F9A18F6A0DDD3DC90B86F;4095.
+(rerunfilecheck)             Checksum: A98422CEAEDEB93A5C5711AA483D661E;4507.
  )
-Output written on ifrs16_lbo_ssrn_v3.xdv (14 pages, 64532 bytes).
+Output written on ifrs16_lbo_ssrn_v3.xdv (16 pages, 78168 bytes).

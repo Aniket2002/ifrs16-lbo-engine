@@ -6,12 +6,12 @@
     "--keep-intermediates",
     "paper\\ifrs16_lbo_ssrn_v3.tex"
   ],
-  "source_commit": "4b39bfd8b512d9ed0f84f2073d5ecf5ea184e4ea",
+  "source_commit": "52401f00292a9feee762075dcfcc1f92b45be231",
   "source_files_dirty": false,
   "draft": false,
   "serious_warnings": [],
   "console_path": "results/v3/manuscript/build_console.txt",
   "tectonic_version": "Tectonic 0.17.0",
   "tectonic_executable_sha256": "99ffcfdbf1ebf8bdda9e791942e3d06aedb12463fddc33f07de6f5211c8bf08d",
-  "source_date_epoch": "1789403464"
+  "source_date_epoch": "1789404709"
 }

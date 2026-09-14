@@ -1,15 +1,16 @@
 {
   "manuscript_source_path": "paper/ifrs16_lbo_ssrn_v3.tex",
   "pdf_path": "paper/ifrs16_lbo_ssrn_v3.pdf",
-  "source_commit": "4b39bfd8b512d9ed0f84f2073d5ecf5ea184e4ea",
+  "source_commit": "52401f00292a9feee762075dcfcc1f92b45be231",
   "claim_freeze_commit": "21d726606f3208bcee6e3e84ae4c357e3a33d79b",
-  "title": "Ranking Is Not Threshold Portability: Validating IFRS-16 Covenant Screening in a Synthetic Benchmark",
+  "title": "Ranking Is Not Threshold Portability: Validating IFRS 16 Covenant Screening in a Synthetic Benchmark",
   "author": "Aniket Bhardwaj",
-  "page_count": 14,
-  "abstract_word_count": 162,
-  "main_text_word_count": 2099,
+  "page_count": 16,
+  "abstract_word_count": 179,
+  "main_text_word_count": 2713,
+  "literature_context_word_count": 616,
   "word_count_policy": "TeX prose after macro expansion; excludes abstract from main count, floats, table fragments, displayed equations, bibliography and appendices; includes headings and inline numeric tokens.",
-  "table_count": 8,
+  "table_count": 7,
   "figure_count": 6,
   "appendix_count": 3,
   "exhibit_labels": {
@@ -19,54 +20,50 @@
     },
     "tab:T1": {
       "number": "1",
-      "page": 3
+      "page": 4
     },
     "tab:T2": {
       "number": "2",
-      "page": 4
+      "page": 5
     },
     "fig:F2": {
       "number": "2",
-      "page": 5
+      "page": 6
     },
     "tab:T3": {
       "number": "3",
-      "page": 5
+      "page": 6
     },
     "tab:T4": {
       "number": "4",
-      "page": 6
+      "page": 7
     },
     "fig:F3": {
       "number": "3",
-      "page": 7
+      "page": 8
     },
     "tab:T5": {
       "number": "A1",
-      "page": 9
+      "page": 10
     },
     "fig:A-F2": {
       "number": "A1",
-      "page": 10
+      "page": 11
     },
     "tab:A1": {
       "number": "A2",
-      "page": 11
+      "page": 12
     },
     "tab:A2": {
       "number": "A3",
-      "page": 12
+      "page": 13
     },
     "fig:A-F3": {
       "number": "A2",
-      "page": 13
+      "page": 14
     },
     "fig:A-F1": {
       "number": "A3",
-      "page": 13
-    },
-    "tab:A3": {
-      "number": "A4",
       "page": 14
     }
   },
@@ -97,7 +94,6 @@
     "OPT-006",
     "OPT-007",
     "OPT-008",
-    "OPT-009",
     "OPT-010",
     "REP-001",
     "REP-002",
@@ -184,6 +180,10 @@
           "matched_frozen_value_or_display": true
         },
         {
+          "token": "0.5",
+          "matched_frozen_value_or_display": true
+        },
+        {
           "token": "15",
           "matched_frozen_value_or_display": true
         },
@@ -209,6 +209,18 @@
         },
         {
           "token": "38",
+          "matched_frozen_value_or_display": true
+        },
+        {
+          "token": "0.513",
+          "matched_frozen_value_or_display": true
+        },
+        {
+          "token": "0.636",
+          "matched_frozen_value_or_display": true
+        },
+        {
+          "token": "0.5",
           "matched_frozen_value_or_display": true
         }
       ],
@@ -310,6 +322,36 @@
     },
     {
       "line": 67,
+      "category": "Literature",
+      "evidence": "ifrs2016leases, dichev2002covenant, nini2009creditor, christensen2012covenants",
+      "status": "metadata or existing repository citation"
+    },
+    {
+      "line": 70,
+      "category": "Literature",
+      "evidence": "fawcett2006roc, hand2009auc, steyerberg2010performance",
+      "status": "metadata or existing repository citation"
+    },
+    {
+      "line": 73,
+      "category": "Literature",
+      "evidence": "vickers2006decision",
+      "status": "metadata or existing repository citation"
+    },
+    {
+      "line": 76,
+      "category": "Literature",
+      "evidence": "quinonero2008shift",
+      "status": "metadata or existing repository citation"
+    },
+    {
+      "line": 79,
+      "category": "Literature",
+      "evidence": "synthesis of cited covenant and validation sources",
+      "status": "metadata or existing repository citation"
+    },
+    {
+      "line": 84,
       "category": "Claims",
       "claim_ids": [
         "SCR-015",
@@ -331,7 +373,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 70,
+      "line": 87,
       "category": "Claims",
       "claim_ids": [
         "SCR-018",
@@ -369,7 +411,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 79,
+      "line": 96,
       "category": "Claims",
       "claim_ids": [
         "SCR-015",
@@ -382,7 +424,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 86,
+      "line": 103,
       "category": "Claims",
       "claim_ids": [
         "ENG-001",
@@ -395,7 +437,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 89,
+      "line": 106,
       "category": "Claims",
       "claim_ids": [
         "ENG-002"
@@ -416,7 +458,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 92,
+      "line": 109,
       "category": "Claims",
       "claim_ids": [
         "ENG-001",
@@ -430,7 +472,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 98,
+      "line": 115,
       "category": "Claims",
       "claim_ids": [
         "SCR-003",
@@ -456,7 +498,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 101,
+      "line": 118,
       "category": "Claims",
       "claim_ids": [
         "SCR-008"
@@ -468,7 +510,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 104,
+      "line": 121,
       "category": "Claims",
       "claim_ids": [
         "SCR-008"
@@ -485,7 +527,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 107,
+      "line": 124,
       "category": "Claims",
       "claim_ids": [
         "SCR-008"
@@ -497,7 +539,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 113,
+      "line": 130,
       "category": "Claims",
       "claim_ids": [
         "SCR-004",
@@ -527,7 +569,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 116,
+      "line": 133,
       "category": "Claims",
       "claim_ids": [
         "SCR-005"
@@ -539,7 +581,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 121,
+      "line": 138,
       "category": "Claims",
       "claim_ids": [
         "SCR-003",
@@ -566,7 +608,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 127,
+      "line": 144,
       "category": "Claims",
       "claim_ids": [
         "SCR-006",
@@ -616,7 +658,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 130,
+      "line": 147,
       "category": "Claims",
       "claim_ids": [
         "SCR-006",
@@ -686,7 +728,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 134,
+      "line": 151,
       "category": "Claims",
       "claim_ids": [
         "SCR-001",
@@ -699,7 +741,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 139,
+      "line": 156,
       "category": "Claims",
       "claim_ids": [
         "SCR-009",
@@ -748,7 +790,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 142,
+      "line": 159,
       "category": "Claims",
       "claim_ids": [
         "SCR-012"
@@ -821,7 +863,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 145,
+      "line": 162,
       "category": "Claims",
       "claim_ids": [
         "SCR-013",
@@ -843,7 +885,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 151,
+      "line": 168,
       "category": "Claims",
       "claim_ids": [
         "SCR-009",
@@ -876,7 +918,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 157,
+      "line": 174,
       "category": "Claims",
       "claim_ids": [
         "HET-001",
@@ -931,7 +973,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 160,
+      "line": 177,
       "category": "Claims",
       "claim_ids": [
         "HET-001",
@@ -950,7 +992,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 165,
+      "line": 182,
       "category": "Claims",
       "claim_ids": [
         "SCR-014",
@@ -965,7 +1007,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 168,
+      "line": 185,
       "category": "Claims",
       "claim_ids": [
         "SCR-014",
@@ -978,7 +1020,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 171,
+      "line": 188,
       "category": "Claims",
       "claim_ids": [
         "HET-001"
@@ -990,7 +1032,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 174,
+      "line": 191,
       "category": "Claims",
       "claim_ids": [
         "OPT-001",
@@ -1006,7 +1048,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 177,
+      "line": 194,
       "category": "Claims",
       "claim_ids": [
         "BAY-001",
@@ -1020,7 +1062,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 182,
+      "line": 199,
       "category": "Claims",
       "claim_ids": [
         "SCR-001",
@@ -1035,7 +1077,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 185,
+      "line": 202,
       "category": "Claims",
       "claim_ids": [
         "SCR-001",
@@ -1061,7 +1103,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 195,
+      "line": 212,
       "category": "Claims",
       "claim_ids": [
         "OPT-001",
@@ -1075,7 +1117,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 198,
+      "line": 215,
       "category": "Claims",
       "claim_ids": [
         "OPT-010"
@@ -1092,7 +1134,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 201,
+      "line": 218,
       "category": "Claims",
       "claim_ids": [
         "LIM-001"
@@ -1129,7 +1171,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 208,
+      "line": 225,
       "category": "Claims",
       "claim_ids": [
         "OPT-003",
@@ -1212,7 +1254,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 212,
+      "line": 229,
       "category": "Claims",
       "claim_ids": [
         "OPT-005",
@@ -1236,7 +1278,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 217,
+      "line": 234,
       "category": "Claims",
       "claim_ids": [
         "OPT-004",
@@ -1259,7 +1301,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 225,
+      "line": 242,
       "category": "Claims",
       "claim_ids": [
         "BAY-001",
@@ -1273,7 +1315,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 228,
+      "line": 245,
       "category": "Claims",
       "claim_ids": [
         "BAY-003"
@@ -1285,7 +1327,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 231,
+      "line": 248,
       "category": "Claims",
       "claim_ids": [
         "BAY-001"
@@ -1297,7 +1339,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 239,
+      "line": 256,
       "category": "Claims",
       "claim_ids": [
         "HET-003",
@@ -1324,7 +1366,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 242,
+      "line": 259,
       "category": "Claims",
       "claim_ids": [
         "HET-005",
@@ -1462,7 +1504,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 245,
+      "line": 262,
       "category": "Claims",
       "claim_ids": [
         "LIM-002"
@@ -1499,7 +1541,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 251,
+      "line": 268,
       "category": "Claims",
       "claim_ids": [
         "HET-001",
@@ -1525,7 +1567,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 257,
+      "line": 274,
       "category": "Claims",
       "claim_ids": [
         "SCR-004",
@@ -1542,7 +1584,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 262,
+      "line": 279,
       "category": "Claims",
       "claim_ids": [
         "SCR-004",
@@ -1568,19 +1610,7 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 267,
-      "category": "Claims",
-      "claim_ids": [
-        "OPT-009"
-      ],
-      "numerical_tokens": [],
-      "percentage_present": false,
-      "adjacent_n_or_count": false,
-      "parameter_or_floor_exception": false,
-      "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
-    },
-    {
-      "line": 272,
+      "line": 285,
       "category": "Claims",
       "claim_ids": [
         "REP-001"
@@ -1592,21 +1622,27 @@
       "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
     },
     {
-      "line": 275,
+      "line": 288,
       "category": "Reproducibility",
       "evidence": "source commits, paths, commands and seeds recorded in repository artifacts.",
       "status": "metadata or existing repository citation"
     },
     {
-      "line": 278,
+      "line": 291,
       "category": "Reproducibility",
       "evidence": "commands for rendering/building only, not model evaluation.",
+      "status": "metadata or existing repository citation"
+    },
+    {
+      "line": 300,
+      "category": "Reproducibility",
+      "evidence": "public repository and exact manuscript lineage.",
       "status": "metadata or existing repository citation"
     }
   ],
   "rendered_number_traceability": {
     "manifest": "results/v3/manuscript/render_manifest.json",
-    "numeric_cells_checked": 280,
+    "numeric_cells_checked": 268,
     "errors": [],
     "all_exhibit_hashes_match": true
   },
@@ -1660,6 +1696,10 @@
             "matched_frozen_value_or_display": true
           },
           {
+            "token": "0.5",
+            "matched_frozen_value_or_display": true
+          },
+          {
             "token": "15",
             "matched_frozen_value_or_display": true
           },
@@ -1685,6 +1725,18 @@
           },
           {
             "token": "38",
+            "matched_frozen_value_or_display": true
+          },
+          {
+            "token": "0.513",
+            "matched_frozen_value_or_display": true
+          },
+          {
+            "token": "0.636",
+            "matched_frozen_value_or_display": true
+          },
+          {
+            "token": "0.5",
             "matched_frozen_value_or_display": true
           }
         ],
@@ -1786,6 +1838,36 @@
       },
       {
         "line": 67,
+        "category": "Literature",
+        "evidence": "ifrs2016leases, dichev2002covenant, nini2009creditor, christensen2012covenants",
+        "status": "metadata or existing repository citation"
+      },
+      {
+        "line": 70,
+        "category": "Literature",
+        "evidence": "fawcett2006roc, hand2009auc, steyerberg2010performance",
+        "status": "metadata or existing repository citation"
+      },
+      {
+        "line": 73,
+        "category": "Literature",
+        "evidence": "vickers2006decision",
+        "status": "metadata or existing repository citation"
+      },
+      {
+        "line": 76,
+        "category": "Literature",
+        "evidence": "quinonero2008shift",
+        "status": "metadata or existing repository citation"
+      },
+      {
+        "line": 79,
+        "category": "Literature",
+        "evidence": "synthesis of cited covenant and validation sources",
+        "status": "metadata or existing repository citation"
+      },
+      {
+        "line": 84,
         "category": "Claims",
         "claim_ids": [
           "SCR-015",
@@ -1807,7 +1889,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 70,
+        "line": 87,
         "category": "Claims",
         "claim_ids": [
           "SCR-018",
@@ -1845,7 +1927,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 79,
+        "line": 96,
         "category": "Claims",
         "claim_ids": [
           "SCR-015",
@@ -1858,7 +1940,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 86,
+        "line": 103,
         "category": "Claims",
         "claim_ids": [
           "ENG-001",
@@ -1871,7 +1953,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 89,
+        "line": 106,
         "category": "Claims",
         "claim_ids": [
           "ENG-002"
@@ -1892,7 +1974,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 92,
+        "line": 109,
         "category": "Claims",
         "claim_ids": [
           "ENG-001",
@@ -1906,7 +1988,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 98,
+        "line": 115,
         "category": "Claims",
         "claim_ids": [
           "SCR-003",
@@ -1932,7 +2014,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 101,
+        "line": 118,
         "category": "Claims",
         "claim_ids": [
           "SCR-008"
@@ -1944,7 +2026,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 104,
+        "line": 121,
         "category": "Claims",
         "claim_ids": [
           "SCR-008"
@@ -1961,7 +2043,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 107,
+        "line": 124,
         "category": "Claims",
         "claim_ids": [
           "SCR-008"
@@ -1973,7 +2055,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 113,
+        "line": 130,
         "category": "Claims",
         "claim_ids": [
           "SCR-004",
@@ -2003,7 +2085,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 116,
+        "line": 133,
         "category": "Claims",
         "claim_ids": [
           "SCR-005"
@@ -2015,7 +2097,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 121,
+        "line": 138,
         "category": "Claims",
         "claim_ids": [
           "SCR-003",
@@ -2042,7 +2124,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 127,
+        "line": 144,
         "category": "Claims",
         "claim_ids": [
           "SCR-006",
@@ -2092,7 +2174,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 130,
+        "line": 147,
         "category": "Claims",
         "claim_ids": [
           "SCR-006",
@@ -2162,7 +2244,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 134,
+        "line": 151,
         "category": "Claims",
         "claim_ids": [
           "SCR-001",
@@ -2175,7 +2257,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 139,
+        "line": 156,
         "category": "Claims",
         "claim_ids": [
           "SCR-009",
@@ -2224,7 +2306,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 142,
+        "line": 159,
         "category": "Claims",
         "claim_ids": [
           "SCR-012"
@@ -2297,7 +2379,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 145,
+        "line": 162,
         "category": "Claims",
         "claim_ids": [
           "SCR-013",
@@ -2319,7 +2401,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 151,
+        "line": 168,
         "category": "Claims",
         "claim_ids": [
           "SCR-009",
@@ -2352,7 +2434,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 157,
+        "line": 174,
         "category": "Claims",
         "claim_ids": [
           "HET-001",
@@ -2407,7 +2489,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 160,
+        "line": 177,
         "category": "Claims",
         "claim_ids": [
           "HET-001",
@@ -2426,7 +2508,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 165,
+        "line": 182,
         "category": "Claims",
         "claim_ids": [
           "SCR-014",
@@ -2441,7 +2523,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 168,
+        "line": 185,
         "category": "Claims",
         "claim_ids": [
           "SCR-014",
@@ -2454,7 +2536,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 171,
+        "line": 188,
         "category": "Claims",
         "claim_ids": [
           "HET-001"
@@ -2466,7 +2548,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 174,
+        "line": 191,
         "category": "Claims",
         "claim_ids": [
           "OPT-001",
@@ -2482,7 +2564,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 177,
+        "line": 194,
         "category": "Claims",
         "claim_ids": [
           "BAY-001",
@@ -2496,7 +2578,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 182,
+        "line": 199,
         "category": "Claims",
         "claim_ids": [
           "SCR-001",
@@ -2511,7 +2593,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 185,
+        "line": 202,
         "category": "Claims",
         "claim_ids": [
           "SCR-001",
@@ -2537,7 +2619,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 195,
+        "line": 212,
         "category": "Claims",
         "claim_ids": [
           "OPT-001",
@@ -2551,7 +2633,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 198,
+        "line": 215,
         "category": "Claims",
         "claim_ids": [
           "OPT-010"
@@ -2568,7 +2650,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 201,
+        "line": 218,
         "category": "Claims",
         "claim_ids": [
           "LIM-001"
@@ -2605,7 +2687,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 208,
+        "line": 225,
         "category": "Claims",
         "claim_ids": [
           "OPT-003",
@@ -2688,7 +2770,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 212,
+        "line": 229,
         "category": "Claims",
         "claim_ids": [
           "OPT-005",
@@ -2712,7 +2794,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 217,
+        "line": 234,
         "category": "Claims",
         "claim_ids": [
           "OPT-004",
@@ -2735,7 +2817,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 225,
+        "line": 242,
         "category": "Claims",
         "claim_ids": [
           "BAY-001",
@@ -2749,7 +2831,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 228,
+        "line": 245,
         "category": "Claims",
         "claim_ids": [
           "BAY-003"
@@ -2761,7 +2843,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 231,
+        "line": 248,
         "category": "Claims",
         "claim_ids": [
           "BAY-001"
@@ -2773,7 +2855,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 239,
+        "line": 256,
         "category": "Claims",
         "claim_ids": [
           "HET-003",
@@ -2800,7 +2882,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 242,
+        "line": 259,
         "category": "Claims",
         "claim_ids": [
           "HET-005",
@@ -2938,7 +3020,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 245,
+        "line": 262,
         "category": "Claims",
         "claim_ids": [
           "LIM-002"
@@ -2975,7 +3057,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 251,
+        "line": 268,
         "category": "Claims",
         "claim_ids": [
           "HET-001",
@@ -3001,7 +3083,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 257,
+        "line": 274,
         "category": "Claims",
         "claim_ids": [
           "SCR-004",
@@ -3018,7 +3100,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 262,
+        "line": 279,
         "category": "Claims",
         "claim_ids": [
           "SCR-004",
@@ -3044,19 +3126,7 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 267,
-        "category": "Claims",
-        "claim_ids": [
-          "OPT-009"
-        ],
-        "numerical_tokens": [],
-        "percentage_present": false,
-        "adjacent_n_or_count": false,
-        "parameter_or_floor_exception": false,
-        "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
-      },
-      {
-        "line": 272,
+        "line": 285,
         "category": "Claims",
         "claim_ids": [
           "REP-001"
@@ -3068,15 +3138,21 @@
         "traceability": "claim IDs -> frozen artifact selectors; numeric identity/rounding checked; semantics manually reviewed"
       },
       {
-        "line": 275,
+        "line": 288,
         "category": "Reproducibility",
         "evidence": "source commits, paths, commands and seeds recorded in repository artifacts.",
         "status": "metadata or existing repository citation"
       },
       {
-        "line": 278,
+        "line": 291,
         "category": "Reproducibility",
         "evidence": "commands for rendering/building only, not model evaluation.",
+        "status": "metadata or existing repository citation"
+      },
+      {
+        "line": 300,
+        "category": "Reproducibility",
+        "evidence": "public repository and exact manuscript lineage.",
         "status": "metadata or existing repository citation"
       }
     ]
@@ -3087,7 +3163,7 @@
       "hits": [
         {
           "phrase": "calibrated probability of default",
-          "context": "Thus the aggregate improvement coexists with marked cross-archetype instability. The score is not a calibrated probability of default, and sparse failures and overlapping training sets limit inference beyond the s",
+          "context": " balanced accuracy is 0.513 under the transferred threshold versus 0.636 at 0.5. The score is not a calibrated probability of default, and sparse failures and overlapping training sets constrain inference beyond t",
           "explicit_negative_context": true
         },
         {
@@ -3120,8 +3196,13 @@
       "passed": true,
       "hits": [
         {
+          "phrase": "calibrated probability of default",
+          "context": " balanced accuracy is 0.513 under the\ntransferred threshold versus 0.636 at 0.5. The score is not a calibrated probability of default,\nand sparse failures and overlapping training sets constrain inference beyond t",
+          "explicit_negative_context": true
+        },
+        {
           "phrase": "calibrated probability of\ndefault",
-          "context": "different\nequality conventions.\n2\n\nThroughout the paper, z is called a screening score.\nIt is not a calibrated probability of\ndefault. The analytic path and the financial simulation differ in timing, cash, financi",
+          "context": "ve different\nequality conventions.\nThroughout the paper, z is called a screening score.\nIt is not a calibrated probability of\ndefault. The analytic path and the financial simulation differ in timing, cash, financi",
           "explicit_negative_context": true
         },
         {
@@ -3156,11 +3237,47 @@
   "bibliography_status": {
     "passed": true,
     "cited_keys": [
+      "christensen2012covenants",
+      "dichev2002covenant",
+      "fawcett2006roc",
+      "hand2009auc",
       "ifrs2016leases",
-      "nini2009creditor"
+      "nini2009creditor",
+      "quinonero2008shift",
+      "steyerberg2010performance",
+      "vickers2006decision"
     ],
-    "entries": 2,
-    "provenance": "Existing manual bibliography in paper/ifrs16_lbo_ssrn_v2.tex; no external literature expansion."
+    "entries": 9,
+    "provenance": "IFRS Foundation and peer-reviewed publisher, journal, PubMed/PMC, and MIT Press records verified during the publication-polish pass."
+  },
+  "publication_polish": {
+    "literature_sources_added": [
+      "Dichev and Skinner (2002)",
+      "Christensen and Nikolaev (2012)",
+      "Fawcett (2006)",
+      "Hand (2009)",
+      "Steyerberg et al. (2010)",
+      "Vickers and Elkin (2006)",
+      "Quinonero-Candela et al. (2008)"
+    ],
+    "title_normalization": "Reader-facing references use IFRS 16; repository identifiers remain unchanged.",
+    "internal_version_label": "V3 manuscript removed; title page dated September 2026.",
+    "abstract_revision": "Retains all frozen headline results and adds the Template 004 balanced-accuracy comparison.",
+    "template_003_auc_note": "Table 4 states that the single positive ranked above 46 non-failures and that AUC 1.000 is not a precise discrimination estimate.",
+    "coverage_table": {
+      "decision": "Former Table A4 removed from the public manuscript; exact coverage remains repository validation metadata.",
+      "source": "results/v3/post_optimization_diagnostics/coverage.json",
+      "search_kernel": {
+        "statement_coverage_percent": 88.68,
+        "branch_coverage_percent": 70.0
+      },
+      "runner": {
+        "statement_coverage_percent": 59.89,
+        "branch_coverage_percent": 55.0
+      }
+    },
+    "code_availability": "Public repository, canonical branch and exact manuscript-source lineage stated in the reproducibility appendix.",
+    "numerical_conclusions": "Unchanged; no experiment, model, threshold, simulation, optimization, Bayesian result or admission decision was changed."
   },
   "build_status": {
     "returncode": 0,
@@ -3170,14 +3287,14 @@
       "--keep-intermediates",
       "paper\\ifrs16_lbo_ssrn_v3.tex"
     ],
-    "source_commit": "4b39bfd8b512d9ed0f84f2073d5ecf5ea184e4ea",
+    "source_commit": "52401f00292a9feee762075dcfcc1f92b45be231",
     "source_files_dirty": false,
     "draft": false,
     "serious_warnings": [],
     "console_path": "results/v3/manuscript/build_console.txt",
     "tectonic_version": "Tectonic 0.17.0",
     "tectonic_executable_sha256": "99ffcfdbf1ebf8bdda9e791942e3d06aedb12463fddc33f07de6f5211c8bf08d",
-    "source_date_epoch": "1789403464"
+    "source_date_epoch": "1789404709"
   },
   "protected_artifact_hash_status": {
     "passed": true,
@@ -3200,7 +3317,7 @@
   },
   "visual_review": {
     "status": "passed",
-    "pdf_sha256": "b1325ff7b774a9fa3fee42dbd5a9bcbf84861bcd71415d38a8b18c01f2f1ac93",
+    "pdf_sha256": "f113a3ba6d057c02f51fd6347131230bbe802139cd25c8a09c7a277cc57a0bc9",
     "pages_reviewed": [
       1,
       2,
@@ -3215,35 +3332,42 @@
       11,
       12,
       13,
-      14
+      14,
+      15,
+      16
     ],
-    "method": "All pages visually inspected in four contact sheets, with individual page images available; all figure/table-heavy pages included.",
+    "method": "All 16 pages visually inspected in four contact sheets generated from the final PDF; every figure- and table-heavy page was included.",
     "checks": [
-      "title, author and abstract",
+      "title, date, author, revised abstract and keywords",
+      "literature section placement, flow and citations",
       "section and appendix order",
-      "all eight tables and six figures",
-      "legible labels and captions",
+      "all seven public tables and six figures",
+      "Table 4 single-positive AUC note",
+      "legible labels, notes and captions",
       "no clipping or serious overfull boxes",
       "no missing glyphs or visible claim IDs",
       "no blank or duplicate pages",
-      "bibliography and commands rendered correctly"
+      "code and data availability statement",
+      "nine-entry bibliography and wrapped links"
     ],
     "unresolved_visual_warnings": [],
     "page_image_sha256": {
-      "1": "e7650b9b5ffd1415d724799c55d26d54ab26951fb076c8a03d0fc865da3429e7",
-      "2": "3c6dcac0b93a18e5113ee43b2beb42ccd069619602c5394bbbcf4962892dbc7e",
-      "3": "407b31ef6a571bece897628b27419032d06532b8292e56bddeaa3332c2e42027",
-      "4": "a9a72320b096ea794f34ded9b8e3540dcb2a89d0e7a28b5e41ff3c1c686626cd",
-      "5": "13677f0fe8eeb7cc12d9bfc0bb54bd126165da165af1a3235a8d75a6a8ad60a3",
-      "6": "31af82cba7aa6ba1c555b0e862bb2044c36b8b34ae1662b74f69d429e6b8efb2",
-      "7": "9b6554943bf26970e0c9dc14af129fe3abe71a74ed0d43921f6c39e1aa95bd93",
-      "8": "a44e376e3f4b7d829231b12d7fd6d259e04616fe290938d53b3125a1b5341f59",
-      "9": "b99651dd395de3f60696db5c13be87cca7af2b9ac20c9e860e45a166ebe9ad40",
-      "10": "a113f5cff7b81cf213ae955fceba3b05b516298c171319c1b4b52c4017975c0e",
-      "11": "718f1c112f5a4db569e81b914402174b259471ee1f979484cb98b6aea53dc376",
-      "12": "e68d6a613ddda3c868aa45382c18ea5cea0f76661573bb8f8fa95a9bc4e371a9",
-      "13": "0ef8131473c4d3b369c82a59f1baf75264c74f0317eb31508a42ed3c0a564c81",
-      "14": "70eea2040bf72d531f773b6558f05800d47740e2887a1c56c86d395ebecf1cec"
+      "1": "bef8afc49319e9be6cc016fa013538390cc4f992622be9771ac17d6e92a8627c",
+      "2": "870337d1cbd53172850cc64d8466615e5755d37293b3764390f953390fef3daa",
+      "3": "b6b2a3227e0c4055c83fdb6cf7e3200942b98f1ef4ef3d93532949c3787fcade",
+      "4": "3f5303d4b332e87c199dcc68b0434464d599cbcbbe1078f3526f12f7d2234ef6",
+      "5": "710ed1d8d15424fe9e417d96ec96da39457d166fadac28c4c985a03c5d3ee35b",
+      "6": "503823fdce867e4e377cd03b1b764a2ed20a0d08999ef102ca0d9204e08d73ce",
+      "7": "ee75e7b62105fb3e994df93e93e089a24679cb57434df11754d7600097b8597a",
+      "8": "b167bc93131e86bf1188364c380851752b8ed189af5e59c0deb038216b67bd51",
+      "9": "2f5258162482c8c89943d3c3d9e1d7de03c9f3c5c715e7c09b54b4fcd1b867b6",
+      "10": "8a32daa1893157be474fda4c36fc91a8e5ac1159f8e8dac51e16800607eea031",
+      "11": "5cd96b9c3be18911882ca2b8f7b2f2a9410b43e8c651431e3b9549906416015b",
+      "12": "0ce4926d67b1af462e502e4642972c711f99483aebcefb7a3467e90fb30dafae",
+      "13": "835bb9838e396f69af01129cb23a3535d3a9b165cdbd7c8186485d2b4446297d",
+      "14": "e35edc2690e2220acb4245878b86a9bd1770a975c4cfc2f46000310ac2f16425",
+      "15": "3a2ba2ecead9ee89873d69212df3255ca7cbca1cf7f52727e7ed8b8275b22cba",
+      "16": "59704976931bf28fd9574db2c3be0b9d82db17706cea3974a7d00905c15ab1a6"
     }
   },
   "checks": {
@@ -3253,9 +3377,16 @@
     "protected_hashes": true,
     "rendered_numeric_cells": true,
     "exhibit_hashes": true,
-    "eight_tables": true,
+    "seven_tables": true,
     "six_figures": true,
     "bibliography": true,
+    "publication_title_uses_ifrs_16": true,
+    "internal_version_label_removed": true,
+    "reader_facing_admission_labels_removed": true,
+    "abstract_length": true,
+    "template_003_auc_note": true,
+    "code_availability": true,
+    "coverage_metadata_preserved": true,
     "no_placeholder_or_broken_reference": true,
     "no_blank_pages": true,
     "no_duplicate_pages": true,
@@ -3265,7 +3396,7 @@
     "committed_source_build": true
   },
   "passed": true,
-  "source_sha256": "f02a29395b441291a099e7fafd8e8bf9b528e36a4b5aa3fb6c86010efa214798",
-  "pdf_sha256": "b1325ff7b774a9fa3fee42dbd5a9bcbf84861bcd71415d38a8b18c01f2f1ac93",
+  "source_sha256": "6b3fe479e9c40db7706547ce2f27458815dbd9372c880146e54e6245e1d190a1",
+  "pdf_sha256": "f113a3ba6d057c02f51fd6347131230bbe802139cd25c8a09c7a277cc57a0bc9",
   "manual_review_scope": "Substantive sentences reviewed against eligible wording and exact source references; automatic numeric matching alone is not semantic proof. All 50 prohibited families reviewed; no prior headline numbers imported."
 }

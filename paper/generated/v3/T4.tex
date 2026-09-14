@@ -26,5 +26,5 @@ Template & TP & FP & TN & FN & Transfer BA & Fixed BA \\
 \bottomrule
 \end{tabular}
 \par\smallskip
-\begin{minipage}{\linewidth}\footnotesize BA: balanced accuracy; AP: average precision. Counts identify each class denominator (positives = TP+FN; negatives = TN+FP). Train/test cells give scenarios/failures. All threshold fitting excludes the test template. Undefined metrics for Template 005 are not zeros; this template has no failures and supports no within-template ranking inference. Thresholds are rounded for display only.\end{minipage}
+\begin{minipage}{\linewidth}\footnotesize BA: balanced accuracy; AP: average precision. Counts identify each class denominator (positives = TP+FN; negatives = TN+FP). Train/test cells give scenarios/failures. All threshold fitting excludes the test template. Template 003 contains one positive observation; AUC = 1.000 therefore means only that this single positive ranked above the 46 non-failures in the frozen realization and should not be interpreted as a precise estimate of discrimination. Undefined metrics for Template 005 are not zeros; this template has no failures and supports no within-template ranking inference. Thresholds are rounded for display only.\end{minipage}
 \end{table}

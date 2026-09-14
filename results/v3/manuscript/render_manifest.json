@@ -318,61 +318,6 @@
         "HET-009",
         "LIM-002"
       ]
-    },
-    {
-      "table_id": "A3",
-      "title": "Focused optimization coverage and reproducibility scope",
-      "main_text_or_appendix": "appendix",
-      "source_artifact": [
-        "results/v3/post_optimization_diagnostics/coverage.json",
-        "results/v3/post_optimization_diagnostics/optimization_code_coverage.json"
-      ],
-      "source_fields_or_rows": [
-        {
-          "artifact": "results/v3/post_optimization_diagnostics/optimization_code_coverage.json",
-          "keys": [
-            "statement_coverage"
-          ]
-        },
-        {
-          "artifact": "results/v3/post_optimization_diagnostics/optimization_code_coverage.json",
-          "keys": [
-            "branch_coverage"
-          ]
-        },
-        {
-          "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-          "keys": [
-            "files",
-            "analysis\\optimization\\financing_policy.py",
-            "summary"
-          ]
-        },
-        {
-          "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-          "keys": [
-            "files",
-            "analysis\\run_v3_optimization.py",
-            "summary"
-          ]
-        }
-      ],
-      "allowed_transformations": "Select specified rows/fields; display fractions as percentages; no new estimation or refitting.",
-      "rounding": {
-        "auc_ap": "3 decimals; AP means average precision, not trapezoidal PR area",
-        "percentage": "1 decimal percentage point; numerator/denominator for observed subgroup rates",
-        "threshold": "6 decimals (retain full precision in ledger and predictions; do not recompute classifications from rounded thresholds)",
-        "returns": "2 decimal percentage points; label annualized limited-liability sponsor return",
-        "multiples": "2 decimals",
-        "coverage": "statement coverage 2 decimals, branch coverage 1 decimal; counts alongside",
-        "counts": "integers; zero denominator is undefined, never zero",
-        "source_artifacts": "Never round or rewrite; machine snapshots preserve full stored precision",
-        "confidence_intervals": "No new intervals; old v2 bootstrap interval is not promoted"
-      },
-      "notes_denominators": "47/53 and 109/182 statements; 14/20 and 22/40 branches. Display statement and branch measures separately; no claim that coverage proves validity.",
-      "claim_ids": [
-        "OPT-009"
-      ]
     }
   ],
   "figures": [
@@ -4805,210 +4750,6 @@
       "macro": null
     },
     {
-      "exhibit": "A3",
-      "reference": {
-        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-        "keys": [
-          "files",
-          "analysis\\optimization\\financing_policy.py",
-          "summary",
-          "percent_statements_covered"
-        ]
-      },
-      "raw_value": 88.67924528301887,
-      "style": "coverage",
-      "denominator": null,
-      "rendered": "88.68\\%",
-      "macro": null
-    },
-    {
-      "exhibit": "A3",
-      "reference": {
-        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-        "keys": [
-          "files",
-          "analysis\\optimization\\financing_policy.py",
-          "summary",
-          "covered_lines"
-        ]
-      },
-      "raw_value": 47,
-      "style": "integer",
-      "denominator": null,
-      "rendered": "47",
-      "macro": null
-    },
-    {
-      "exhibit": "A3",
-      "reference": {
-        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-        "keys": [
-          "files",
-          "analysis\\optimization\\financing_policy.py",
-          "summary",
-          "num_statements"
-        ]
-      },
-      "raw_value": 53,
-      "style": "integer",
-      "denominator": null,
-      "rendered": "53",
-      "macro": null
-    },
-    {
-      "exhibit": "A3",
-      "reference": {
-        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-        "keys": [
-          "files",
-          "analysis\\optimization\\financing_policy.py",
-          "summary",
-          "percent_branches_covered"
-        ]
-      },
-      "raw_value": 70.0,
-      "style": "branch",
-      "denominator": null,
-      "rendered": "70.0\\%",
-      "macro": null
-    },
-    {
-      "exhibit": "A3",
-      "reference": {
-        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-        "keys": [
-          "files",
-          "analysis\\optimization\\financing_policy.py",
-          "summary",
-          "covered_branches"
-        ]
-      },
-      "raw_value": 14,
-      "style": "integer",
-      "denominator": null,
-      "rendered": "14",
-      "macro": null
-    },
-    {
-      "exhibit": "A3",
-      "reference": {
-        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-        "keys": [
-          "files",
-          "analysis\\optimization\\financing_policy.py",
-          "summary",
-          "num_branches"
-        ]
-      },
-      "raw_value": 20,
-      "style": "integer",
-      "denominator": null,
-      "rendered": "20",
-      "macro": null
-    },
-    {
-      "exhibit": "A3",
-      "reference": {
-        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-        "keys": [
-          "files",
-          "analysis\\run_v3_optimization.py",
-          "summary",
-          "percent_statements_covered"
-        ]
-      },
-      "raw_value": 59.89010989010989,
-      "style": "coverage",
-      "denominator": null,
-      "rendered": "59.89\\%",
-      "macro": null
-    },
-    {
-      "exhibit": "A3",
-      "reference": {
-        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-        "keys": [
-          "files",
-          "analysis\\run_v3_optimization.py",
-          "summary",
-          "covered_lines"
-        ]
-      },
-      "raw_value": 109,
-      "style": "integer",
-      "denominator": null,
-      "rendered": "109",
-      "macro": null
-    },
-    {
-      "exhibit": "A3",
-      "reference": {
-        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-        "keys": [
-          "files",
-          "analysis\\run_v3_optimization.py",
-          "summary",
-          "num_statements"
-        ]
-      },
-      "raw_value": 182,
-      "style": "integer",
-      "denominator": null,
-      "rendered": "182",
-      "macro": null
-    },
-    {
-      "exhibit": "A3",
-      "reference": {
-        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-        "keys": [
-          "files",
-          "analysis\\run_v3_optimization.py",
-          "summary",
-          "percent_branches_covered"
-        ]
-      },
-      "raw_value": 55.0,
-      "style": "branch",
-      "denominator": null,
-      "rendered": "55.0\\%",
-      "macro": null
-    },
-    {
-      "exhibit": "A3",
-      "reference": {
-        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-        "keys": [
-          "files",
-          "analysis\\run_v3_optimization.py",
-          "summary",
-          "covered_branches"
-        ]
-      },
-      "raw_value": 22,
-      "style": "integer",
-      "denominator": null,
-      "rendered": "22",
-      "macro": null
-    },
-    {
-      "exhibit": "A3",
-      "reference": {
-        "artifact": "results/v3/post_optimization_diagnostics/coverage.json",
-        "keys": [
-          "files",
-          "analysis\\run_v3_optimization.py",
-          "summary",
-          "num_branches"
-        ]
-      },
-      "raw_value": 40,
-      "style": "integer",
-      "denominator": null,
-      "rendered": "40",
-      "macro": null
-    },
-    {
       "exhibit": "prose",
       "reference": {
         "artifact": "results/v3/template_evaluation/summary.json",
@@ -5292,14 +5033,13 @@
     }
   ],
   "output_sha256": {
-    "paper/generated/v3/A1.tex": "eb55804c9e196c99d73329d14f6a1e7efddca81e95ee2174051c8809fb935a35",
-    "paper/generated/v3/A2.tex": "48dacc49b17845670d28b2742b94435e908916c808f2905e2319adcd934b2c24",
-    "paper/generated/v3/A3.tex": "507f531ad0758cbcbe8a862be8c7bd9851c3ae64c4e737896bb094420bd9d32e",
+    "paper/generated/v3/A1.tex": "4210ea4db41462a600e0af8b6c32f5b427041a68a04303a4e0ab249e6a9af884",
+    "paper/generated/v3/A2.tex": "24ddf03b4aa2e8e055ef38c29f9b5c7831eca53e054f76bc7cc5cc68b162b277",
     "paper/generated/v3/T1.tex": "5b67b99fafe92a8c140462a9db3090c28708c51331702c6123bea93f81cb9c9a",
     "paper/generated/v3/T2.tex": "e6d99e9fbe2c0669d6eae708ef0e5d2dbd5355165d4faa44a40f4acae38c4fe2",
     "paper/generated/v3/T3.tex": "3791bc1930feb43f789c4a2984b5403d58758d4dfa361596938c16c3ff69baac",
-    "paper/generated/v3/T4.tex": "99024d13fa9d5573842bfca111f6904399ba062c76fa873bade7cee09ad78788",
-    "paper/generated/v3/T5.tex": "6000f0dcf018696cb5f6084bf857807eccce48e9e0b7a11496da6138ca854a7b",
+    "paper/generated/v3/T4.tex": "bc6627f86276aae83c830e9b6ab19ebe50777f294b08ffa2f0b65cb7d12facca",
+    "paper/generated/v3/T5.tex": "734d18952486648dcdd47c3343355108fd6a0b1216e7a53f7baf2a4764b33b0f",
     "paper/generated/v3/values.tex": "e83c27aea94e3564bdb84f016c37f373c9b6ec9d93eb3c8f55b0289a481783fa",
     "paper/figures/v3/A-F1.pdf": "c5d776f9afb6e3fe7edff8ec2d9f4a43e358ab064560046e4429d81237b7fb04",
     "paper/figures/v3/A-F1.png": "318c920703c06a349cb7b2ec22fd94d063fed7eece0559c514d766d97a60c5cb",
@@ -5333,5 +5073,17 @@
       "frozen file SHA-256"
     ]
   },
-  "rounding": "Frozen manuscript policy, applied only at rendering; count/rate checks reject noninteger recovery."
+  "rounding": "Frozen manuscript policy, applied only at rendering; count/rate checks reject noninteger recovery.",
+  "non_public_coverage_metadata": {
+    "decision": "Former Table A4 removed from the public manuscript; exact coverage remains repository validation metadata.",
+    "source": "results/v3/post_optimization_diagnostics/coverage.json",
+    "search_kernel": {
+      "statement_coverage_percent": 88.68,
+      "branch_coverage_percent": 70.0
+    },
+    "runner": {
+      "statement_coverage_percent": 59.89,
+      "branch_coverage_percent": 55.0
+    }
+  }
 }
