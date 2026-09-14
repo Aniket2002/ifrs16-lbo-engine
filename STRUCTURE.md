@@ -11,8 +11,8 @@
 - `data/synthetic/`: current benchmark inputs; `data/case_study/`: separate case data.
 - `tests/`: acceptance, regression, integration and utility tests.
 - `docs/`: current model conventions and benchmark protocol.
-- `analysis/paper/main.tex`: current reproducibility note. Other paper directories,
-  `benchmark_dataset_v1.0/` and the bundled ZIP contain older snapshots.
+- `analysis/paper/main.tex`: current reproducibility note. Other paper directories
+  and `benchmark_dataset_v1.0/` contain older snapshots.
 - `output/`, `analysis/figures/`: ignored generated artifacts.
 - `pyproject.toml`, `.github/workflows/ci.yml`: packaging and CI checks.
 

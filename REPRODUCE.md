@@ -36,4 +36,4 @@ It writes `analysis/figures/accor_case_study.png` and
 workflow requiring `--input` and a pandas Parquet engine; it is not run by the
 benchmark. Consult `python analysis/calibration/bayes_calibrate.py --help` before
 using it. There is no current `output/manifest.json` or `setup.py` archive contract.
-The bundled ZIP and older paper snapshots are not updated by these commands.
+Older paper snapshots are not updated by these commands.

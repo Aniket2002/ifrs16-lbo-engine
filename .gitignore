@@ -228,6 +228,9 @@ calibration_summary.json
 !paper/figures/v3/*.png
 paper/*.aux
 paper/*.out
+paper/*.toc
+paper/*.bbl
+paper/*.blg
 paper/*.fls
 paper/*.fdb_latexmk
 paper/*.synctex.gz
@@ -235,3 +238,11 @@ paper/*.synctex.gz
 # IDEs
 .vscode/
 .idea/
+
+# OS and editor artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~

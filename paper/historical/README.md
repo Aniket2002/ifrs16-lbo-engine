@@ -14,4 +14,5 @@ replacements are in `paper/figures/v2/`. No historical source was overwritten.
 Discovery: fetched all remotes with pruning, inspected all branches and the full
 history of `*.tex`, and searched all reachable revisions for both parts of the
 requested title. Current `analysis/paper/main.tex` is a shorter implementation
-note. Empty files in `paper/` and `arxiv_submission/` were not used as sources.
+note. The empty files formerly in `paper/` and `arxiv_submission/` were not used
+as sources.
