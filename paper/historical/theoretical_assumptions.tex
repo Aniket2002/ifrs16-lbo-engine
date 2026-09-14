@@ -1,0 +1,28 @@
+
+\section{Theoretical Assumptions and Constants}
+
+\subsection{Mathematical Assumptions}
+
+\begin{enumerate}
+\item \textbf{Growth Bounds (A1):} Revenue growth satisfies $|g_t| \leq 0.12$ with volatility $\sigma_g \leq 0.03$.
+
+\item \textbf{Cash Flow Structure (A2):} FCF conversion satisfies $\alpha \geq 0.6$ and growth capex drag $\kappa \leq 0.15$.
+
+\item \textbf{Debt Structure (A3):} Combined debt rate $r_d \leq 0.15$ and cash sweep rate $s \in [0.5, 0.95]$.
+
+\item \textbf{IFRS-16 Lease Dynamics (A4):} Lease discount rate $r_L \leq 0.08$, amortization rate $\delta_L \in [0.08, 0.2]$, and initial lease multiple $L_0/\text{EBITDA}_0 \leq 5.0$.
+
+\item \textbf{Approximation Quality (A5):} Taylor remainder $\varepsilon_T \leq 0.05$ and Monte Carlo noise $\sigma_{MC} \leq 0.02$.
+
+\item \textbf{Time Horizon (A6):} Analysis horizon $T \in [3, 10]$ years.
+\end{enumerate}
+
+\subsection{Mathematical Constants}
+
+\begin{align}
+C_{ICR} &= 1.85 \quad \text{(ICR approximation constant)} \\
+C_{LEV} &= 1.42 \quad \text{(Leverage approximation constant)} \\
+\beta &= 0.75 \quad \text{(Monotonicity factor)} \\
+\alpha_f &= 2.1 \quad \text{(Frontier curvature constant)} \\
+\delta &= 1.96 \quad \text{(Safety margin for 95\% confidence)}
+\end{align}

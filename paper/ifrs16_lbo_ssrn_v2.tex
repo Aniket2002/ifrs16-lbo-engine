@@ -1,0 +1,830 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Input & fonts ---
+\usepackage{iftex}
+\ifPDFTeX\usepackage[utf8]{inputenc}\fi
+\usepackage[T1]{fontenc}
+
+% --- Math & theorems ---
+\usepackage{amsmath,amssymb,amsthm}
+\DeclareMathOperator{\Var}{Var}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+
+% Currency symbol (for \euro)
+\usepackage{eurosym}
+
+% Financial notation
+\newcommand{\ND}{\mathrm{ND}} % Net Debt
+\newcommand{\EBITDA}{\mathrm{EBITDA}}
+\newcommand{\EBITDAR}{\mathrm{EBITDAR}}
+\newcommand{\ICR}{\mathrm{ICR}}
+\newcommand{\Lev}{\mathrm{Lev}}
+\newcommand{\Ifin}{I^{\mathrm{fin}}}
+\newcommand{\Ilease}{I^{\mathrm{lease}}}
+\newcommand{\CFCF}{C_{\text{FCF}}}
+\newcommand{\pimin}{\pi_{\min}}
+\newcommand{\pimax}{\pi_{\max}}
+\newcommand{\CPI}{\mathrm{CPI}}
+\newcommand{\FCF}{\mathrm{FCF}}
+
+% Theorem environments (plain for results, definition style for defs/assumptions)
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\renewcommand\theassumption{A\arabic{assumption}}
+
+% --- Figures, tables, algorithms, typography ---
+\usepackage{graphicx}
+% Prefer local paper figures first, then shared analysis figures
+\graphicspath{{paper/figures/v2/}{figures/v2/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg,.jpeg}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{float}                 % [H] exact placement
+\usepackage[section]{placeins}     % keep floats within sections
+
+% Allow pasted Unicode math symbols
+\ifdefined\DeclareUnicodeCharacter
+\DeclareUnicodeCharacter{2265}{$\ge$} % â‰¥
+\DeclareUnicodeCharacter{2264}{$\le$} % â‰¤
+\DeclareUnicodeCharacter{2212}{$-$}   % âˆ’
+
+\fi
+
+% --- Bibliography (authorâ€“year) ---
+\usepackage[authoryear,round]{natbib}
+\setlength{\bibsep}{0pt plus 0.3ex}
+
+% --- Page & links ---
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  filecolor=magenta,
+  urlcolor=cyan,
+  citecolor=red,
+  pdftitle={Covenant Screening Under IFRS-16: Assumption-Bounded Analytic Approximations and Simulation-Based Evaluation},
+  pdfauthor={Aniket Bhardwaj},
+  pdfkeywords={leveraged buyout, IFRS-16, covenant screening, synthetic evaluation, computational finance},
+  pdfcreator={LaTeX}
+}
+\urlstyle{same}
+
+% --- Clever references: load after hyperref (with fallback if missing) ---
+\IfFileExists{cleveref.sty}{%
+  \usepackage[capitalise,nameinlink]{cleveref}
+  \crefname{proposition}{Proposition}{Propositions}
+  \crefname{theorem}{Theorem}{Theorems}
+  \crefname{lemma}{Lemma}{Lemmas}
+  \crefname{definition}{Definition}{Definitions}
+  \crefname{assumption}{Assumption}{Assumptions}
+  \crefname{figure}{Figure}{Figures}
+  \crefname{table}{Table}{Tables}
+  \crefname{section}{Section}{Sections}
+}{%
+  % Minimal fallback to avoid compile failure when cleveref is unavailable
+  \newcommand{\cref}[1]{\ref{#1}}
+  \newcommand{\Cref}[1]{\ref{#1}}
+}
+
+% Title and authors
+\title{Covenant Screening Under IFRS-16: \\
+Assumption-Bounded Analytic Approximations and Simulation-Based Evaluation}
+\author{
+Aniket Bhardwaj\\
+\textit{Independent Researcher}\\
+\texttt{bhardwaj.aniket2002@gmail.com}
+}
+
+\usepackage{tabularx}
+\usepackage{xurl}
+\IfFileExists{paper/generated/metrics_table.tex}{\def\generatedpath{paper/generated/}}{\def\generatedpath{generated/}}
+\makeatletter
+\newcommand{\paperinput}[1]{\@@input\generatedpath#1 }
+\makeatother
+\date{Revised manuscript}
+\begin{document}
+\maketitle
+\begin{abstract}
+We compare IFRS-16-inclusive and stipulated frozen-GAAP covenant calculations
+using a reduced-form analytic screening model and a full annual financing
+simulation. The latter funds opening cash through closing sources and uses and
+reconciles mandatory principal, revolver drawings, cash sweeps and payment
+default. Deterministic screening statements apply only to matched reduced-form
+paths with established error budgets and positive denominator floors; empirical
+cross-model discrepancies also reflect structural, timing and input differences.
+In the current seed-42 synthetic benchmark of 200 five-year scenarios, the
+analytic ranking score has AUC 0.9472 (scenario-bootstrap 95\% interval
+[0.8974, 0.9828]), but the 0.5 classification threshold has an 85\% false-negative
+rate and a zero false-positive rate. Twenty scenarios financially fail, including
+17 payment defaults. Mean scenario RMSE is 0.8084 for leverage and 2.3157 for
+coverage; minimum-headroom RMSE is 1.4884. A separate Accor accounting-convention
+illustration reproduces supplied reported/reconstructed inputs and hypothetical
+thresholds, without claiming predictive validation. The score is not a calibrated
+default probability, and the benchmark supplies no equity-return or optimization
+uplift result. Code, input assumptions, numerical artifacts and six regenerated
+figures accompany the revised manuscript.
+\end{abstract}
+
+\textbf{Keywords:} IFRS-16, leveraged buyout, covenant screening, synthetic benchmark\\
+\textbf{JEL Classification:} G24, G32, C61
+
+\section{Introduction}
+Lease capitalization changes the quantities entering debt covenants, while a credit
+agreement's definitions determine which accounting effects enter its tests. IFRS~16,
+issued in 2016 and effective for annual periods beginning in 2019, brings most lessee
+lease commitments onto the balance sheet, subject to its exemptions
+\citep{ifrs2016leases}. Comparing a lease-inclusive covenant calculation with a
+stipulated rent-adjusted alternative is therefore useful for lease-intensive
+transactions. Neither calculation by itself establishes the terms of an actual loan.
+
+This paper studies assumption-bounded analytic screening alongside an explicit
+annual financing simulation. These are two materially different model families.
+The analytic model provides transparent debt and coverage paths. The simulation
+reconciles closing funding, operating cash, debt service, revolver capacity and
+cash retention. Differences between their outputs combine approximation error,
+structural-model differences, timing differences and input/convention differences.
+An empirical comparison cannot isolate the first component without a separate,
+matched-model experiment.
+
+\subsection{Contributions and scope}
+The contribution is a reproducible characterization of this screening workflow,
+conditional mathematical statements about matched reduced-form paths, and an
+evaluation on synthetic scenarios. We distinguish a ranking score from an
+operational decision rule, and distinguish covenant compliance from the broader
+financial-failure union. An Accor SA accounting-convention illustration retains
+the link to a named company while making reconstructed inputs and hypothetical
+thresholds explicit. The present evaluation does not fit a borrower prediction
+model or estimate the return from an optimized covenant package.
+
+The revision replaces historical empirical claims after financing corrections.
+In particular, retained opening cash is a funded use, so sponsor equity and any
+return calculated from it must use the repaired closing bridge. Historical IRR
+tables cannot be carried forward. The title accordingly emphasizes screening and
+simulation-based evaluation rather than an empirically demonstrated optimization
+or a universal deterministic guarantee.
+
+\section{Related Work and Background}
+\subsection{Covenants and control rights}
+\citet{dichev2002quality} investigate the debt covenant hypothesis using a large
+sample of private lending agreements. \citet{nini2009creditor} study creditor
+control rights and investment restrictions outside payment default. These studies
+motivate careful separation of covenant conditions from missed debt service; they
+do not validate the synthetic data-generating process used here. The present
+exercise concerns model behavior under stipulated inputs, rather than estimating
+contracting effects in those borrower populations.
+
+\subsection{Lease reporting and covenant conventions}
+IFRS~16 specifies lease reporting, whereas contractual covenant definitions may
+adjust accounting quantities. We use the repository's two named conventions as
+explicit formulas. Its frozen-GAAP helper adds supplied rent to supplied EBITDA
+for coverage and excludes leases from net debt. This is a stipulated rent-adjusted
+coverage convention, not an automatic reconstruction of historical-GAAP accounts.
+Historical operating-lease EBITDA deducts operating rent; IFRS-16 EBITDA generally
+does not include that same operating rent charge. Inputs must therefore be aligned
+with the intended credit agreement before using either helper.
+
+\section{Notation and Constants}
+\begin{table}[H]
+\centering\small
+\caption{Notation and units. Superscript $a$ identifies the analytic family.}
+\begin{tabularx}{\textwidth}{l l X}
+\toprule Symbol & Unit & Definition\\\midrule
+$t,T$ & years & Annual index and horizon; empirical $T=5$.\\
+$B_t,R_t,L_t,C_t$ & currency & Closing term debt, revolver, lease liability and cash.\\
+$E_t,V_t$ & currency/year & EBITDA and revenue.\\
+$I_t^d,I_t^L$ & currency/year & Financial interest and lease interest.\\
+$A_t,U_t,S_t$ & currency/year & Actual mandatory amortisation, unpaid amount and sweep.\\
+$X_t^a,X_t^\ell,Q_t$ & currency/year & Amortisation draw, liquidity draw and revolver repayment.\\
+$s,q,\eta$ & fractions & Sweep, lease principal and lease-addition coefficients.\\
+$c^{\rm lev},c^{\rm icr}$ & ratios & Maximum leverage and minimum coverage.\\
+$h_t,H$ & ratio points & Minimum of two covenant margins; minimum over time.\\
+$\epsilon_Z$ & units of $Z$ & Assumed or established error budget for component $Z$.\\
+\bottomrule\end{tabularx}
+\end{table}
+Combining leverage and coverage margins by their numerical minimum is the
+implemented screening convention. The two margins have different economic
+interpretations despite both being dimensionless ratios; this minimum is not a
+monetary distance to default.
+
+\section{Model Framework}
+\subsection{Dual covenant conventions}
+For positive EBITDA and positive applicable interest denominators, the project
+calculates
+\begin{align}
+\ND_t^{16}&=B_t+R_t+L_t-C_t,&
+\Lev_t^{16}&=\frac{\ND_t^{16}}{E_t},&
+\ICR_t^{16}&=\frac{E_t}{I_t^d+I_t^L},\label{eq:ifrs}\\
+\ND_t^{F}&=B_t+R_t-C_t,&
+\Lev_t^{F}&=\frac{\ND_t^{F}}{E_t},&
+\ICR_t^{F}&=\frac{E_t+P_t}{I_t^d},\label{eq:frozen}
+\end{align}
+where $P_t$ is supplied rent in the frozen-GAAP helper. The full synthetic benchmark
+evaluates only the IFRS-16-style view in \eqref{eq:ifrs}; the separate Accor
+illustration evaluates both. Nonpositive EBITDA is a failure condition rather than
+evidence of favorable negative leverage. The Accor helpers return undefined ratios
+in that state. The benchmark instead checks the failure flag separately and floors
+the interest denominator at $10^{-6}$ in calculating simulated coverage.
+
+\subsection{Reduced-form analytic screening}
+The implemented paths use $E_t^a=E_0^a(1+g)^t$ and
+$F_t^a=(\alpha-\kappa)E_t^a$, with weighted financial rate
+$r_d=w r_{\rm sen}+(1-w)r_{\rm mezz}$. They obey
+\begin{align}
+D_{t+1}^a&=\max\{0,(1+r_d)D_t^a-sF_t^a\},\label{eq:analyticdebt}\\
+L_{t+1}^a&=\max\{0,(1-q)L_t^a+\eta E_t^a\},\label{eq:analyticleases}\\
+C_0^a&=C_{\rm initial}^a,\qquad C_t^a=C_{\min}^a\quad(t\ge1).
+\end{align}
+Equation~\eqref{eq:analyticleases} is the run-off mode used by the benchmark.
+The alternative steady-state mode sets $L_t^a=\lambda E_t^a$. Where the debt floor
+does not bind, the familiar linear-recurrence expression is
+\begin{equation}
+D_t^a=D_0^a(1+r_d)^t-s\sum_{k=0}^{t-1}(1+r_d)^{t-1-k}F_k^a.
+\label{eq:closedform}
+\end{equation}
+After a floor binds, the implemented recursion, rather than an unrestricted
+closed-form extrapolation, defines the path. Analytic coverage uses closing debt
+and lease balances. Interest capitalization in \eqref{eq:analyticdebt} and fixed
+cash are reduced-form assumptions; there is no reconciled mandatory-amortisation
+or revolver waterfall in this family.
+
+\subsection{Full simulation: closing and operating cash}
+For stipulated debt-free purchase use $V_{\rm purchase}$, fee fraction $f$ and
+retained opening cash $C_0$, sponsor funding is
+\begin{equation}
+E_{\rm sponsor}=V_{\rm purchase}(1+f)+C_0-B_0.\label{eq:closing}
+\end{equation}
+Closing debt plus sponsor equity equals total uses. Opening cash is not a source
+of acquisition funding. Debt above uses is rejected; zero sponsor equity remains
+exactly zero, with undefined IRR and MOIC. Default assumptions provide a mechanical
+check: purchase 1,000, fees 30 and cash 40 are funded by debt 450 and equity 620.
+These are model currency units, not observed transaction amounts.
+
+Revenue in year 1 equals the supplied starting revenue; growth begins in year 2:
+$V_t=V_0(1+g)^{t-1}$ and $E_t=mV_t$. Using opening balances,
+\begin{align}
+I_t^d&=r_d^{s}(B_{t-1}+R_{t-1}),& I_t^L&=r_L^{s}L_{t-1},\\
+\mathrm{Tax}_t&=\max\{0,\tau(E_t-dV_t-I_t^d-I_t^L)\},\\
+O_t&=E_t-\Delta WC_t-\mathrm{Tax}_t-I_t^d-I_t^L-kV_t,\\
+K_t&=C_{t-1}+O_t-qL_{t-1},&
+L_t&=\max\{0,(1-q)L_{t-1}+\eta V_t\}.
+\end{align}
+Here $K_t$ is cash before financing. Working capital is a fixed revenue fraction;
+the initial working-capital balance makes year-1 $\Delta WC$ zero. Lease additions
+are noncash and proportional to current revenue. This stylized schedule is not a
+lease-by-lease IFRS valuation or a complete financial-statement model.
+
+\subsection{Full simulation: financing waterfall}
+Let $M_t=\min\{M,B_{t-1}\}$ denote scheduled principal and
+$U_t^R=\max\{0,R_{\max}-R_{t-1}\}$ available revolver capacity. The waterfall is
+\begin{align}
+A_t^{\rm cash}&=\min\{M_t,\max(0,K_t)\},\\
+X_t^a&=\min\{M_t-A_t^{\rm cash},U_t^R\},& A_t&=A_t^{\rm cash}+X_t^a,\\
+U_t&=M_t-A_t,& K_t'&=K_t-A_t^{\rm cash},\\
+X_t^\ell&=\min\{\max(0,C_{\min}-K_t'),\max(0,U_t^R-X_t^a)\}.
+\end{align}
+Thus amortisation drawings go directly to the term lender. They do not increase
+retained cash. A negative operating balance remains negative unless a separate
+liquidity draw funds it. After these draws, excess cash repays the revolver first.
+If $K_t''=K_t'+X_t^\ell-Q_t$ is cash after that repayment, the optional sweep is
+\begin{equation}
+S_t=\min\{\max(0,K_t''-C_{\min}),s\max(0,K_t),\max(0,B_{t-1}-A_t)\}.
+\end{equation}
+The resulting accounting identities are
+\begin{align}
+C_t&=C_{t-1}+O_t-qL_{t-1}-A_t-S_t+X_t^a+X_t^\ell-Q_t,\\
+B_t+R_t&=B_{t-1}+R_{t-1}-A_t-S_t+X_t^a+X_t^\ell-Q_t.
+\end{align}
+Unpaid mandatory principal stays outstanding. Payment default means $U_t>0$.
+Reserve failure means $C_t<C_{\min}$, not a legal insolvency finding. Mandatory
+principal takes priority over the reserve. Simulation continues after failure for
+diagnostics, without a recovery or arrears catch-up model.
+
+\subsection{Covenant design and an unevaluated return objective}
+The historical conceptual objective can be written, for a decision vector $x$ and
+explicit uncertainty distribution $\mathcal P$, as
+\begin{align}
+\sup_x\quad &\E_{\theta\sim\mathcal P}[\mathrm{IRR}(x;\theta)]\label{eq:objective}\\
+\text{subject to}\quad &\Lev_t^a(x)+\epsilon_{\rm lev}(t)\le c^{\rm lev},\nonumber\\
+&\ICR_t^a(x)-\epsilon_{\rm icr}(t)\ge c^{\rm icr},\quad t=1,\ldots,T.\nonumber
+\end{align}
+This is a possible reduced-form design formulation, not a solved empirical
+optimization in the current benchmark. If only thresholds change and financing
+and cash flows are fixed, an individual deal's return does not change. Claims of
+return improvement require a defined financing decision and reoptimized feasible
+set. The implementation's sponsor vector is
+$[-E_{\rm sponsor},0,\ldots,0,E_{\rm exit}]$, with exit EBITDA multiple less sale
+costs, financial debt and leases, plus cash. No equity-return output is emitted
+by the benchmark, so no expected-IRR or IRR-improvement estimate is reported here.
+
+\subsection{Bayesian hierarchical calibration: separate research framework}
+The earlier framework contemplated bounded-support hierarchical parameters.
+For bounds $a_j<b_j$, one possible specification is
+\begin{align}
+z_{ij}&\sim\mathcal N(\mu_j,\sigma_j^2),&
+\theta_{ij}&=a_j+(b_j-a_j)\{1+\exp(-z_{ij})\}^{-1},\\
+\log\Lambda_i&\sim\mathcal N(\mu_\Lambda,\sigma_\Lambda^2),&
+\sigma_j&\sim\mathrm{HalfNormal}(s_j).
+\end{align}
+Growth shocks and cross-parameter dependence would require additional specified
+distributions. These equations preserve the conceptual distinction between
+parameter uncertainty and financial dynamics. They are not a description of a
+posterior estimated for the present results. The separate calibration module has
+optional PyMC and MAP/Laplace paths; the benchmark calls neither. It samples
+clipped scenario parameters directly. Consequently this paper reports no
+posterior credible frontier or empirical benefit from Bayesian calibration.
+
+\section{Deterministic Approximation Bounds}
+\subsection{Scope of the guarantees}
+We retain deterministic reasoning only for a pair of matched reduced-form paths
+with established component error budgets and positive denominators. A reference
+path below is not automatically the full financing simulation. Assumptions in
+Appendix~\ref{app:assumptions} are requirements to be checked, not consequences of
+the current synthetic sampler. In particular, no universal financial-default
+guarantee follows from bounding two covenant ratios.
+
+\begin{proposition}[Conditional ratio screening]\label{prop:screening}
+Suppose reference and analytic EBITDA and interest satisfy
+$E,E^a\ge e>0$ and $I,I^a\ge i>0$ at a given date. Suppose
+$|E^a-E|\le\epsilon_E$, $|N^a-N|\le\epsilon_N$,
+$|I^a-I|\le\epsilon_I$, and known upper bounds are
+$|E^a|\le\overline E$ and $|N^a|\le\overline N$. Then
+\begin{align}
+|\ICR^a-\ICR|&\le\epsilon_{\rm icr}
+ :=\frac{\epsilon_E}{i}+\frac{\overline E\epsilon_I}{i^2},\\
+|\Lev^a-\Lev|&\le\epsilon_{\rm lev}
+ :=\frac{\epsilon_N}{e}+\frac{\overline N\epsilon_E}{e^2}.
+\end{align}
+For matched debt and lease definitions and fixed rates,
+$\epsilon_N=\epsilon_D+\epsilon_L+\epsilon_C$ and
+$\epsilon_I=r_d\epsilon_D+r_L\epsilon_L$ suffice.
+\end{proposition}
+Cash cannot be omitted from net-debt error unless it is identical between paths.
+Different interest timing or rates require their own additional error budgets.
+For the rent-adjusted coverage numerator, a rent error must likewise enter the
+numerator budget. The proposition is deliberately conditional; the constants
+emitted by \texttt{analytic\_bounds.py} do not establish its premises.
+
+\begin{proposition}[Feasible-set monotonicity]\label{prop:frontier}
+Fix the cash-flow mapping, testing dates, coverage threshold and objective. If
+$c_1^{\rm lev}\le c_2^{\rm lev}$, the feasible sets defined by the same screening
+inequalities satisfy $\mathcal F(c_1^{\rm lev})\subseteq\mathcal F(c_2^{\rm lev})$.
+Their supremum objective values are therefore non-decreasing, when defined.
+\end{proposition}
+This is set inclusion, not a claim that relaxing a covenant changes a fixed
+transaction's IRR or induces a specific borrower response.
+
+\begin{proposition}[Conditional covenant certification]\label{prop:certification}
+Under Proposition~\ref{prop:screening} at every testing date, let
+$h_t^a=\min\{\ICR_t^a-c^{\rm icr},c^{\rm lev}-\Lev_t^a\}$ and
+$\epsilon_{\max}=\max_t\max\{\epsilon_{\rm icr}(t),\epsilon_{\rm lev}(t)\}$.
+If $h_t^a>\epsilon_{\max}$ at every date, the reference path strictly satisfies
+both ratio covenants at those dates.
+\end{proposition}
+This statement does not certify reserve adequacy, payment of principal, or the
+outcomes of the unmatched full simulation. No empirical certification percentage
+is reported.
+
+\section{IFRS-16 LBO Benchmark Generator}
+\subsection{Synthetic population and executable protocol}
+The authoritative procedure is \path{analysis/run_benchmark.py} in the
+repository \citep{repository}. With seed 42,
+it samples 200 scenarios from five synthetic operator templates with replacement,
+each with five annual observations. The 20-scenario smoke mode is only a separate
+software check. The metadata file \texttt{scenario\_parameters.csv} is checksummed
+but does not control sampling. There is no audited borrower or transaction panel.
+
+For each scenario, the sampler draws a base, downside or distressed regime with
+probabilities $(0.5,0.3,0.2)$. Growth is initially normal around the operator's mean
+with its supplied standard deviation and clipped to $[-0.12,0.18]$; margin has
+standard deviation 0.02 and is clipped to $[0.10,0.35]$. Sweep has standard
+deviation 0.04 and range $[0.30,0.85]$. Lease principal and additions have standard
+deviations 0.01 and 0.003 and ranges $[0.05,0.20]$ and $[0,0.05]$ respectively.
+Downside then subtracts 0.04 from growth and 0.03 from margin, multiplies debt by
+1.05, leases by 1.04 and cash by 0.85. Distress uses respective changes
+$-0.08,-0.06,1.20,1.10,0.60$. Final growth and margin floors are $-0.12$ and 0.08.
+Draws are constant scenario parameters, not five new annual random shocks.
+
+\begin{table}[H]\centering\small
+\caption{Material distinctions in the actual benchmark model pair.}
+\begin{tabularx}{\textwidth}{l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}\toprule
+Feature & Analytic screening & Full simulation\\\midrule
+Initial EBITDA & Operator template EBITDA & Revenue times drawn margin\\
+Growth timing & Applied at time 1 & Starts in year 2\\
+Cash & Initial 25; fixed 10 thereafter & Regime-adjusted template cash; reserve 25\\
+Financial interest & Weighted 0.062; closing debt & 0.06; opening term debt and revolver\\
+Lease interest & 0.045; closing leases & 0.05; opening leases\\
+Lease additions & Prior EBITDA basis & Current revenue basis\\
+Debt service & Capitalization and FCF sweep & Cash interest; mandatory principal 30; revolver\\
+Revolver capacity & None & 100 distressed; 200 otherwise\\
+Operating deductions & $(\alpha-\kappa)E^a$ & Explicit tax, working capital and capex\\
+\bottomrule\end{tabularx}\label{tab:families}
+\end{table}
+Analytic $\alpha$ is 0.72 in base and 0.68 otherwise; $\kappa$ is 0.10 in distress
+and 0.08 otherwise. Full-simulation depreciation, tax, capex and working-capital
+fractions are 0.03, 0.25, 0.04 and 0.02. Full scenario assumption records are
+archived alongside paths, so the table is not a substitute for executable inputs.
+
+\subsection{Failure outcome, score and uncertainty}
+The outcome is the union, over all five years, of nonpositive EBITDA, payment
+default, reserve funding deficit, leverage above 6.0 or coverage below 1.8.
+Equality at a covenant threshold is not a simulated breach. The minimum analytic
+headroom and ranking score are
+\begin{equation}
+H^a=\min\{6-\max_t\Lev_t^a,\min_t\ICR_t^a-1.8\},\qquad
+z=(1+\exp(2H^a))^{-1}.\label{eq:score}
+\end{equation}
+The score is not a calibrated probability of default. Classification declares
+failure for $z\ge0.5$, including exactly zero analytic headroom. Thus the decision
+boundary's equality convention differs from the simulation's strict breach test.
+No model fitting, train/test split, cross-validation or threshold optimization
+is used in this evaluation.
+
+AUC is computed across scenarios. Its percentile 95\% interval uses 500 scenario
+bootstrap attempts with seed 42, skipping single-class resamples. This is not an
+operator-clustered interval. Repeated scenarios share five template assumptions,
+so the interval does not establish out-of-sample borrower performance. There are
+no RMSE confidence intervals, permutation tests, calibration curves or Brier
+scores in the current report. Execution exceptions and a single-class full sample
+abort reporting instead of silently removing scenarios.
+
+\section{Empirical Validation}
+\subsection{Analytic versus simulation diagnostics}
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{F12_theoretical_guarantees}
+\caption{Replacement for the historical theoretical-guarantees plot: signed
+analytic-minus-simulation leverage and ICR differences over 1,000 scenario-years.
+Zero is an equality reference, not an error bound. The distributions combine
+structural, timing, input and approximation differences; they do not test a
+universal deterministic guarantee. Source: archived regenerated scenario paths,
+seed 42; exact source revision in Appendix~\ref{app:computation}.}
+\label{fig:theoretical_bounds}\end{figure}
+
+\begin{table}[H]\centering
+\caption{Current cross-model discrepancy metrics, in ratio points.}
+\begin{tabular}{lr}\toprule Metric & Value\\\midrule
+\paperinput{metrics_table.tex}
+\bottomrule\end{tabular}\label{tab:errors}\end{table}
+Leverage and ICR MAE are averaged across scenarios after computing each scenario's
+five-year MAE. Their reported RMSE is the mean of the 200 scenario-level
+five-year RMSEs, not the pooled root mean square across all 1,000 observations.
+Minimum headroom is one scalar per scenario; its RMSE is the square root of the
+mean of 200 squared headroom differences. This distinction is necessary for exact
+replication. The old headroom table used a different and unreproduced protocol;
+Table~\ref{tab:errors} is a new evaluation, not an update to that table's cells.
+
+\subsection{Benchmark performance analysis}
+The AUC is 0.947222 with a scenario-bootstrap 95\% interval
+$[0.897410,0.982827]$. At the unchanged 0.5 threshold the false-positive rate is
+0 and the false-negative rate is 0.85. There are 3 true positives, 17 false
+negatives, 180 true negatives and no false positives. Good ordering of failures
+relative to nonfailures therefore coexists with poor failure detection at this
+particular threshold. It would be inappropriate to describe the classifier as
+conservative certification of the full financing model.
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{F14_method_comparison}
+\caption{Current method comparison: the analytic score's ROC against full-simulation
+financial-failure labels, and cross-model MAE/RMSE. The diagonal is a chance
+reference, not a reproduced traditional or Bayesian comparator. Error aggregation
+follows Table~\ref{tab:errors}; headroom and individual ratio errors measure
+different quantities. Source: benchmark JSON, seed 42.}
+\label{fig:benchmark_performance}\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{F13_benchmark_overview}
+\caption{Synthetic benchmark overview: realized regime counts and operator-template
+sampling frequencies among 200 scenarios. These are synthetic archetypes, not a
+geographic borrower dataset. Source: benchmark scenario records, seed 42.}
+\label{fig:benchmark_overview}\end{figure}
+
+\subsection{Sensitivity and certification scope}
+The benchmark fixes annual testing and the two stated covenant thresholds. It
+does not evaluate quarterly testing, equity cures, hedging interventions,
+interest-rate floors or optimized covenant packages. The historical IRR
+sensitivity table has no reproducible counterpart and is not reported as a
+current result. A future sensitivity experiment must define interventions,
+matched financing inputs and a sponsor-return protocol before computing effects.
+Likewise, heuristic diagnostic envelopes in the JSON are not established
+component budgets for Proposition~\ref{prop:screening}. No bound utilization,
+false non-certification, or time-point certification rate is inferred from them.
+
+\subsection{Breach composition analysis}
+Twenty of 200 scenarios financially fail; 180 do not. The mutually exclusive
+priority labels identify 17 payment defaults and 3 other combined reserve/covenant
+failures. A payment-default label may also involve reserve and covenant failures.
+The separate flags in Figure~\ref{fig:breach_composition} preserve that overlap.
+The JSON field \texttt{failed\_scenario\_count} is zero: it counts execution
+exceptions, not these 20 financial failures.
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{F16_breach_composition}
+\caption{Financial-failure composition. Left: disjoint priority labels, with payment
+default preceding combined reserve/covenant failure. Right: overlapping payment,
+reserve and covenant flags; these counts must not be added as if disjoint.
+Source: full benchmark JSON, seed 42. No base-versus-optimized intervention is
+claimed.}
+\label{fig:breach_composition}\end{figure}
+
+\subsection{Failure-mode diagnostics}
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{F15_failure_modes}
+\caption{Analytic ranking-score distributions by realized financial failure and
+the confusion matrix at 0.5. Actual simulation outcomes index rows; analytic
+classifications index columns. The 17 missed failures make the distinction
+between ranking discrimination and threshold performance visible. Source:
+benchmark scenario records, seed 42.}
+\label{fig:failure_modes}\end{figure}
+The evidence describes failure detection conditional on the current DGP. It does
+not identify a causal failure mechanism from growth volatility or validate old
+percentages assigned to assumption-edge violations. Both model structure and
+starting inputs can explain discrepancies. Attribution requires controlled
+one-change-at-a-time or matched-model experiments beyond this evaluation.
+
+\section{Accor SA Dual-Convention Analysis}\label{sec:accor}
+\subsection{Illustrative real-company inputs}
+We retain an illustrative real-company accounting-convention case study using
+the repository's reported/reconstructed Accor inputs for 2019--2023. This is not
+predictive validation. The CSV includes report, page and reconstruction notes;
+these annotations are provenance claims in the repository, not an independent
+audit of the cited filings. We reproduce the supplied values without asserting
+that each value is an audited consolidated-statement line item. The old
+2018--2022 table is not the input to the current script.
+
+\begin{table}[H]\centering\small
+\caption{Stipulated Accor case-study inputs (EUR millions) from
+\texttt{data/case\_study/accor.csv}. Rent and interest are supplied inputs.}
+\begin{tabular}{rrrrrrr}\toprule
+Year & Revenue & EBITDA & Net debt & Leases & Rent & Interest\\\midrule
+\paperinput{accor_inputs.tex}
+\bottomrule\end{tabular}\label{tab:accor_data}\end{table}
+The case-study script allocates supplied net debt 80/20 to two financial-debt
+fields, sets cash to zero because the supplied quantity is already net, and sets
+the financial rate to interest expense divided by net debt. The split therefore
+does not change aggregate financial interest. It assumes a lease rate of 4\%
+and uses supplied lease expense as rent. Including leases on top of the supplied
+net debt is a stipulated bridge; it requires that the supplied net-debt field
+exclude those leases for an economic interpretation without double counting.
+The script does not independently establish that reporting convention from filings.
+
+\subsection{Dual-convention ratios and hypothetical thresholds}
+\begin{table}[H]\centering\small
+\caption{Regenerated Accor ratios. F denotes the stipulated frozen-GAAP helper;
+16 denotes the lease-inclusive helper. Undefined 2020 ratios are not zeros.}
+\begin{tabular}{rrrrr}\toprule
+Year & ICR F & ICR 16 & Leverage F & Leverage 16\\\midrule
+\paperinput{accor_ratios.tex}
+\bottomrule\end{tabular}\label{tab:accor_ratios}\end{table}
+Across the four positive-EBITDA years, the arithmetic mean ICR changes from
+4.764x in the stipulated frozen-GAAP calculation to 2.464x in the IFRS-16
+calculation. Mean leverage changes from 4.559x to 9.323x. The negative-EBITDA
+2020 observation is excluded from these ratio means and explicitly classified as
+a failure in both views. These quantities describe the supplied inputs and
+stipulated conventions; they are not estimates of a predictive model's accuracy.
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{accor_case_study}
+\caption{Regenerated Accor accounting-convention illustration. Dashed thresholds
+(ICR at least 4.0x and leverage at most 3.5x) are hypothetical, not Accor's actual
+contractual covenants. The shaded 2020 year has negative EBITDA and undefined
+ratios; gaps are intentional. Source: repository case-study CSV and the current
+case-study helper, with its stipulated 4\% lease rate.}
+\label{fig:accor_ratios}\end{figure}
+Including the 2020 failure, the hypothetical tests fail in 5/5 years under the
+lease-inclusive calculation and 3/5 under the stipulated frozen-GAAP view.
+The example demonstrates sensitivity to definitions. It does not establish
+actual contractual breaches, prove that one convention protects a borrower from
+distress, or show that a redesigned covenant would improve investment returns.
+
+\section{Limitations and Future Work}
+The benchmark is synthetic, uses five archetypes and contains no audited
+transaction dataset. Its AUC and interval are conditional on the specified DGP,
+seed, outcome definition and model assumptions. There is no calibrated
+probability-of-default interpretation or independent borrower test set.
+The bootstrap samples scenarios rather than operator clusters and does not
+quantify uncertainty about selecting the templates or the financial model.
+
+Structural, timing and input differences between the two model families preclude
+interpreting observed discrepancies as pure analytic approximation error.
+The conditional mathematical guarantees require positive denominator floors and
+component budgets that the benchmark does not establish. Cash, payment default
+and reserve adequacy require explicit treatment beyond ratio certification.
+
+The full model has simplified taxes and lease schedules, no complete loss
+carryforward, no separate right-of-use depreciation schedule, no default recovery
+model and no arrears catch-up. Negative cash and negative exit residuals are
+diagnostic; the latter are not limited-liability equity payoffs. Comprehensive
+input-domain validation is not implemented. The Accor exercise is illustrative
+rather than predictive validation, and reconstructed inputs require independent
+filing reconciliation before making company-specific economic claims.
+
+Future work should first match the model inputs, dates, rates and cash
+definitions, then isolate approximation components. A separate empirical study
+could evaluate operator-held-out or transaction-held-out performance and score
+calibration. Return optimization would require an explicit financing decision,
+default/recovery treatment and a reproducible return protocol. These extensions
+are research tasks, not findings of this revision.
+
+\section{Conclusion}
+The repaired engine supports a transparent synthetic evaluation of analytic
+covenant screening against explicit financing dynamics. Ranking discrimination
+and threshold performance give materially different assessments of this
+workflow. Conditional mathematical screening and the Accor convention example
+remain useful when their assumptions and input provenance are explicit. The
+present evidence does not demonstrate calibrated borrower default probabilities,
+universal simulation error bounds or an equity-return uplift.
+
+\section*{Acknowledgments}
+The implementation and reproducibility artifacts use the open-source scientific
+Python and LaTeX ecosystems.
+
+\begin{thebibliography}{99}
+\bibitem[Dichev and Skinner(2002)]{dichev2002quality}
+Dichev, I.~D., and Skinner, D.~J. (2002).
+Large-sample evidence on the debt covenant hypothesis.
+\emph{Journal of Accounting Research}, 40(4), 1091--1123.
+\url{https://doi.org/10.1111/1475-679X.00083}.
+\bibitem[IFRS Foundation(2016)]{ifrs2016leases}
+IFRS Foundation (2016). \emph{IFRS 16: Leases.}
+International Accounting Standards Board.
+\url{https://www.ifrs.org/issued-standards/list-of-standards/ifrs-16-leases/}.
+\bibitem[Nini et~al.(2009)]{nini2009creditor}
+Nini, G., Smith, D.~C., and Sufi, A. (2009).
+Creditor control rights and firm investment policy.
+\emph{Journal of Financial Economics}, 92(3), 400--420.
+\url{https://doi.org/10.1016/j.jfineco.2008.04.008}.
+\bibitem[Bhardwaj(2026)]{repository}
+Bhardwaj, A. (2026). \emph{IFRS-16 LBO Engine}, source code and
+reported/reconstructed Accor case-study inputs.
+\url{https://github.com/Aniket2002/ifrs16-lbo-engine}.
+Exact revision and input hashes accompany this paper.
+\end{thebibliography}
+
+\newpage\appendix
+\section{Mathematical Proofs}\label{app:proofs}
+\subsection{Exact ratio perturbation}
+For nonzero $y,\widehat y$,
+\begin{equation}
+\frac{x}{y}-\frac{\widehat x}{\widehat y}
+=\frac{x-\widehat x}{y}
+ +\frac{\widehat x(\widehat y-y)}{y\widehat y}.
+\label{eq:ratioidentity}
+\end{equation}
+If both denominator magnitudes are at least $b>0$, taking absolute values gives
+$|x/y-\widehat x/\widehat y|\le|x-\widehat x|/b+
+|\widehat x|\,|\widehat y-y|/b^2$. A floor on only the unperturbed denominator
+does not suffice. For example, $x=\widehat x=1$, $y=1$,
+$\widehat y=1/2$ gives difference 1, exceeding the erroneous first-order bound
+$|\widehat y-y|/y^2=1/2$. Thus the historical inequality cannot be treated as a
+finite-perturbation theorem.
+
+\begin{proof}[Proof of Proposition~\ref{prop:screening}]
+Apply \eqref{eq:ratioidentity} with $(x,y)=(E,I)$ and then $(N,E)$.
+Use the respective common denominator floors $i$ and $e$ and the stated analytic
+numerator bounds. The triangle inequality gives
+$|N^a-N|\le|D^a-D|+|L^a-L|+|C^a-C|$ for matched definitions.
+With nonnegative identical rates and timing,
+$|I^a-I|\le r_d|D^a-D|+r_L|L^a-L|$. Substitution yields the result.
+\end{proof}
+\begin{proof}[Proof of Proposition~\ref{prop:frontier}]
+Every $x$ satisfying $\Lev_t^a(x)+\epsilon_{\rm lev}(t)\le c_1^{\rm lev}$
+also satisfies the inequality with $c_2^{\rm lev}$. All other constraints and the
+objective are unchanged, so set inclusion and monotonicity of the supremum follow.
+No continuity or strict improvement is implied.
+\end{proof}
+\begin{proof}[Proof of Proposition~\ref{prop:certification}]
+At each date, $\ICR_t\ge\ICR_t^a-\epsilon_{\rm icr}(t)>c^{\rm icr}$
+and $\Lev_t\le\Lev_t^a+\epsilon_{\rm lev}(t)<c^{\rm lev}$.
+These are the only events certified by the premise.
+\end{proof}
+
+\section{Theoretical Assumptions}\label{app:assumptions}
+\begin{assumption}[Matched definitions]\label{ass:growth}
+The two theoretical paths have the same testing dates, accounting definitions,
+units, recurrence coefficients and interest timing. Any differing cash flows,
+initial values or inputs have explicitly established error budgets.
+\end{assumption}
+\begin{assumption}[Positive denominator floors]\label{ass:margins}
+Both EBITDA paths exceed a known $e>0$ and both applicable interest paths exceed
+a known $i>0$ at each test. If either floor fails, no ratio certification is made.
+\end{assumption}
+\begin{assumption}[Finite perturbations]\label{ass:sweep}
+Component perturbations are bounded in absolute value; analytic numerator upper
+bounds are finite. Cash error enters net debt. Debt, lease and rent conventions
+are fixed for each ratio comparison.
+\end{assumption}
+\begin{assumption}[Reduced-form recurrences]\label{ass:rates}
+For the recurrence lemma below, both paths use the same debt coefficient
+$a=1+r_d\ge0$, sweep $s\ge0$, and the same nonnegative projection. Lease paths
+use a common $q\in[0,1]$ and explicitly bounded addition differences.
+\end{assumption}
+These assumptions replace incompatible historical growth, CPI and quarterly
+testing assertions. They do not claim that the full benchmark meets the
+matched-model conditions.
+
+\newpage
+\section{Explicit Error Bound Derivations}\label{app:error_bounds}
+\begin{lemma}[Matched recurrence stability]\label{lem:error_bounds}
+Consider the matched recurrences
+\[
+D_{t+1}=\max(0,aD_t-sF_t),\qquad
+\widehat D_{t+1}=\max(0,a\widehat D_t-s\widehat F_t),
+\]
+with
+$|F_t-\widehat F_t|\le\delta F_t$. Then
+\begin{equation}
+|D_t-\widehat D_t|\le a^t\epsilon_D(0)
+ +s\sum_{k=0}^{t-1}a^{t-1-k}\delta F_k.\label{eq:debtbudget}
+\end{equation}
+For lease recurrences $L_{t+1}=\max(0,(1-q)L_t+A_t^L)$ with identical $q$,
+\begin{equation}
+|L_t-\widehat L_t|\le(1-q)^t\epsilon_L(0)
+ +\sum_{k=0}^{t-1}(1-q)^{t-1-k}\delta A_k^L.
+\label{eq:leasebudget}
+\end{equation}
+\end{lemma}
+\begin{proof}
+The map $x\mapsto\max(0,x)$ is 1-Lipschitz. Hence the debt difference at $t+1$
+is at most $a$ times the difference at $t$ plus $s\delta F_t$.
+Iteration proves \eqref{eq:debtbudget}; replacing $a$ with $1-q$ and the forcing
+error with $\delta A_t^L$ proves \eqref{eq:leasebudget}.
+\end{proof}
+These formulas propagate known forcing errors; they do not establish those
+errors from an arbitrary FCF conversion assumption. If a forcing bound has the
+form $\delta F_k\le b(1+g)^k$, its sum is
+\begin{equation}
+\sum_{k=0}^{t-1}a^{t-1-k}(1+g)^k=
+\begin{cases}\displaystyle\frac{a^t-(1+g)^t}{a-(1+g)},&a\ne1+g,\\
+t a^{t-1},&a=1+g.
+\end{cases}
+\end{equation}
+For a separately stipulated CPI-indexed payment model, preserve the conventional
+algebraic schedule $L_{t+1}=(1+r_L)L_t-P_t$, with
+$P_t=P_0(1+\pi)^t$. It is not the current run-off implementation. For
+$-1<\pi_{\min}\le\pi,\widehat\pi\le\pi_{\max}$, the mean-value theorem yields
+\begin{equation}
+|P_t(\pi)-P_t(\widehat\pi)|\le
+P_0t(1+\pi_{\max})^{t-1}|\pi-\widehat\pi|\quad(t\ge1),
+\end{equation}
+and payment differences can be propagated as in \eqref{eq:debtbudget} with
+coefficient $1+r_L$. This avoids the historical expression with denominator
+$1-(1+\pi_{\min})^{-T}$, which is negative for $\pi_{\min}=-0.02$ and $T>0$.
+No numeric CPI bound is transferred to the full simulation.
+
+Finally, for constant growth $g,\widehat g\in[g_-,g_+]$ with $g_->-1$ and the
+same starting EBITDA,
+\begin{equation}
+|E_0(1+g)^t-E_0(1+\widehat g)^t|
+\le |E_0|t(1+g_+)^{t-1}|g-\widehat g|.
+\end{equation}
+This finite-perturbation bound follows from the mean-value theorem. A capex
+conversion parameter changes FCF, not this EBITDA growth identity. None of these
+statements supplies a numerical certification rate for the empirical experiment.
+
+\section{Benchmark Generator Details}\label{app:benchmark}
+The archive contains the complete input assumptions for both model families,
+scenario-level outcomes and the 1,000 annual simulation and analytic observations.
+The figure generator reconstructs the seed-42 draws and checks the analytic
+scores, simulated maximum leverage and minimum coverage against the archived
+benchmark before plotting. Figures and tables use the current numerical output;
+the original figures' filenames are retained to make replacement traceable.
+
+\newpage
+\section{Computational Environment and Reproducibility}\label{app:computation}
+\begingroup\small\raggedright
+\paperinput{provenance.tex}
+\endgroup
+The source revision identifies the exact committed manuscript and generation
+code. A subsequent artifact-only commit stores the generated provenance, figures,
+benchmark and PDF: a commit cannot embed its own final hash in its own contents.
+The artifact manifest records actual SHA-256 checksums, including the environment
+export. No release tag, DOI deposit, historical environment hash or fixed timing
+claim is asserted. The repository license is MIT.
+
+From the repository root, with dependencies installed, run:
+\begin{verbatim}
+python -m ruff check .
+python -m ruff format --check .
+python -m pytest -q --cov=src/lbo --cov-fail-under=52
+python -m analysis.run_benchmark --seed 42
+python -m analysis.scripts.generate_paper_v2_figures --run-benchmark
+latexmk -pdf -outdir=paper paper/ifrs16_lbo_ssrn_v2.tex
+\end{verbatim}
+The figure command archives a fresh full report in
+\path{results/paper_v2/benchmark_seed42.json}; the standalone benchmark otherwise
+overwrites its output directory. When latexmk is absent, use repeated pdflatex
+passes or the documented Tectonic fallback in \path{paper/REPRODUCE_V2.md}.
+Financial quantities are reproducible for fixed code, inputs, seed and dependencies;
+wall-clock measurements are environment-dependent. Local validation and PDF
+inspection records are archived separately from the scientific claims.
+\end{document}

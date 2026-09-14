@@ -218,6 +218,16 @@ analysis/paper/figures/
 calibration_diagnostics.png
 calibration_summary.json
 
+# Reviewed SSRN v2 publication artifacts
+!paper/ifrs16_lbo_ssrn_v2.pdf
+!paper/figures/v2/*.pdf
+!paper/figures/v2/*.png
+paper/*.aux
+paper/*.out
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+
 # IDEs
 .vscode/
 .idea/
